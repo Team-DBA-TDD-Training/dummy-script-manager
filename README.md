@@ -28,3 +28,6 @@ Script Manager
 Docker Image -> CodeBuild -> Elastic Container Registry -> CodeDeploy -> Elastic Container Service
 
 Docker Image -> Elastic Beanstalk 
+
+# Branching strategy
+Feature Branching
