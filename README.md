@@ -31,3 +31,13 @@ Docker Image -> Elastic Beanstalk
 
 # Branching strategy
 Feature Branching
+
+# Use Cases
+
+1. The user opens the application and writes a script using the code editor, the script is saved to a database.
+2. The user can view saved scripts.
+3. The saved scripts can be updated as needed.
+4. When a script is no longer needed it can be deleted.
+5. The user can create scripts with assistance of AI Helper.
+
+
