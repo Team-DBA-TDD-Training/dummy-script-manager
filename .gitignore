@@ -23,6 +23,8 @@ dist/
 target/
 dist/
 
+build/
+
 # JetBrains IDE
 .idea/
 
@@ -48,3 +50,5 @@ Thumbs.db
 *.mov
 *.wmv
 
+# environment variables
+.env
