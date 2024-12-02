@@ -16,3 +16,9 @@
 | `GET`       | `/scripts/:id`      | Retrieve a specific script|
 | `PUT`       | `/scripts/:id`      | Update an existing script |
 | `DELETE`    | `/scripts/:id`      | Delete a specific script  |
+
+# Suggested Deployment Architechture
+
+Docker Image -> CodeBuild -> Elastic Container Registry -> CodeDeploy -> Elastic Container Service
+
+Docker Image -> Elastic Beanstalk 
