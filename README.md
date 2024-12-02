@@ -2,7 +2,7 @@ Script Manager
 
 # Architecture
 
-![System Architecture](./src/main/system.png)
+![System Architecture](system.png)
 
 # Tech Stack
 
