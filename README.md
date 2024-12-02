@@ -16,13 +16,15 @@
 
 ## RESTful API Endpoints
 
-| HTTP Method | Endpoint       | Description                |
-| ----------- | -------------- | -------------------------- |
-| `POST`      | `/scripts`     | Create a new script        |
-| `GET`       | `/scripts`     | Retrieve all scripts       |
-| `GET`       | `/scripts/:id` | Retrieve a specific script |
-| `PUT`       | `/scripts/:id` | Update an existing script  |
-| `DELETE`    | `/scripts/:id` | Delete a specific script   |
+| HTTP Method | Endpoint       | Description                  |
+| ----------- | -------------- | -----------------------------|
+| `POST`      | `/scripts`     | Create a new script          |
+| `GET`       | `/scripts`     | Retrieve all scripts         |
+| `GET`       | `/scripts/:id` | Retrieve a specific script   |
+| `PUT`       | `/scripts/:id` | Update an existing script    |
+| `DELETE`    | `/scripts/:id` | Delete a specific script(s)  |
+| `Favorite`. | `/scripts/:id` | Mark a script as favorite.   |
+| `Unfavorite`| `/scripts/:id` | Unmark a script as favorite. |
 
 ## External Systems
 
