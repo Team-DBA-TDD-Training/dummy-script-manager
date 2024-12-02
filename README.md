@@ -1,9 +1,15 @@
+Script Manager
+
+# Architecture
+
+![System Architecture](./src/main/system.png)
+
 # Tech Stack
 
 |               | Frontend   | Backend       | Database       |
 |---------------|------------|---------------|----------------|
 | **Framework** | React      | Express.js    | MongoDB        |
-| **Hosting**   | AWS S3     | AWS EB        | MongoDB Atlas  |
+| **Hosting**   | AWS S3     | AWS EB or ECS      | MongoDB Atlas  |
 | **Language**  | TypeScript | TypeScript    | NoSQL          |
 
 
