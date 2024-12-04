@@ -24,7 +24,7 @@ If needed, follow the official documentation [here](https://nodejs.org/en/learn/
 - Create a test mongodb database on your local machine
 - Create '.env' file inside the backend folder with the command:
 ```
-  touch .env
+touch .env
  ```
 
 Add the following credential to the created file 
