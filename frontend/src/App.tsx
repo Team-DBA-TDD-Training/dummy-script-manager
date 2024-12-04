@@ -1,15 +1,11 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import HistoryPanel from "./HistoryPanel.tsx";
+import MainScreen from "./components/MainScreen";
 
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
     <>
-      <HistoryPanel></HistoryPanel>
+    <MainScreen></MainScreen>
     </>
   );
 }
