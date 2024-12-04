@@ -4,72 +4,20 @@ import { FaCross, FaEdit, FaStar } from "react-icons/fa";
 import {AiOutlineStar, AiTwotoneDelete } from "react-icons/ai";
 import Switch from '@mui/material/Switch';
 import { CloseFullscreen, CloseOutlined } from "@mui/icons-material";
+import { useEffect, useState } from "react";
+import { API_SERVER_URL } from "./Variables.ts";
 
 const HistoryPanel = () => {
 
-  const scripts : Script[] = [{id: 1, title: "Script 1", description:"", code: "db.getCollection(\"film_list\")\n" +
-      "        .find({\n" +
-      "            \"length\": {\n" +
-      "                $gte: NumberInt(94)\n" +
-      "            },\n" +
-      "            \"category\": \"Horror\"\n" +
-      "        })", isFavorite: true, createdAt:"", lastUpdatedAt:"22-12-2014"},
-    {id: 2, title: "Script 2", description:"", code: "db.getCollection(\"film_list\")\n" +
-        "        .aggregate({\n" +
-        "            \"length\": {\n" +
-        "                $gte: NumberInt(94)\n" +
-        "            },\n" +
-        "            \"category\": \"Horror\"\n" +
-        "        })", isFavorite: false, createdAt:"", lastUpdatedAt:"22-12-2014"},
-    {id: 3, title: "Script 3", description:"", code: "db.getCollection(\"film_list\")\n" +
-        "        .aggregate({\n" +
-        "            \"length\": {\n" +
-        "                $gte: NumberInt(94)\n" +
-        "            },\n" +
-        "            \"category\": \"Horror\"\n" +
-        "        })", isFavorite: false, createdAt:"", lastUpdatedAt:"22-12-2014"},
-    {id: 4, title: "Script 1", description:"", code: "db.getCollection(\"film_list\")\n" +
-        "        .find({\n" +
-        "            \"length\": {\n" +
-        "                $gte: NumberInt(94)\n" +
-        "            },\n" +
-        "            \"category\": \"Horror\"\n" +
-        "        })", isFavorite: true, createdAt:"", lastUpdatedAt:"22-12-2014"},
-    {id: 5, title: "Script 2", description:"", code: "db.getCollection(\"film_list\")\n" +
-        "        .aggregate({\n" +
-        "            \"length\": {\n" +
-        "                $gte: NumberInt(94)\n" +
-        "            },\n" +
-        "            \"category\": \"Horror\"\n" +
-        "        })", isFavorite: false, createdAt:"", lastUpdatedAt:"22-12-2014"},
-    {id: 6, title: "Script 3", description:"", code: "db.getCollection(\"film_list\")\n" +
-        "        .aggregate({\n" +
-        "            \"length\": {\n" +
-        "                $gte: NumberInt(94)\n" +
-        "            },\n" +
-        "            \"category\": \"Horror\"\n" +
-        "        })", isFavorite: false, createdAt:"", lastUpdatedAt:"22-12-2014"},
-    {id: 7, title: "Script 1", description:"", code: "db.getCollection(\"film_list\")\n" +
-        "        .find({\n" +
-        "            \"length\": {\n" +
-        "                $gte: NumberInt(94)\n" +
-        "            },\n" +
-        "            \"category\": \"Horror\"\n" +
-        "        })", isFavorite: true, createdAt:"", lastUpdatedAt:"22-12-2014"},
-    {id: 8, title: "Script 2", description:"", code: "db.getCollection(\"film_list\")\n" +
-        "        .aggregate({\n" +
-        "            \"length\": {\n" +
-        "                $gte: NumberInt(94)\n" +
-        "            },\n" +
-        "            \"category\": \"Horror\"\n" +
-        "        })", isFavorite: false, createdAt:"", lastUpdatedAt:"22-12-2014"},
-    {id: 9, title: "Script 3", description:"", code: "db.getCollection(\"film_list\")\n" +
-        "        .aggregate({\n" +
-        "            \"length\": {\n" +
-        "                $gte: NumberInt(94)\n" +
-        "            },\n" +
-        "            \"category\": \"Horror\"\n" +
-        "        })", isFavorite: false, createdAt:"", lastUpdatedAt:"22-12-2014"}]
+  const [ scripts, setScripts ] = useState<Script[]>([]);
+  useEffect(() => {
+     fetch(API_SERVER_URL)
+      .then(response => response.json())
+       .then( data => {
+           const scripts = data as unknown as Script[];
+           setScripts(scripts);
+       })
+  }, []);
 
   return (
     <Panel>
@@ -111,6 +59,7 @@ const Panel = styled.div`
   background-color: #EFF1EC;
   padding: 20px 16px 10px 20px;
   overflow: scroll;
+  color: black;
 `
 const Header = styled.div`
   display: flex;
@@ -123,6 +72,7 @@ const Card = styled.div`
   background-color: white;
   padding: 8px;
   text-align: left;
+  width: 100%;
 `
 
 const ListItem = styled.div`
