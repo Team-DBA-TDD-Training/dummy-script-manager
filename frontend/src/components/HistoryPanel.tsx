@@ -5,7 +5,7 @@ import {AiOutlineStar, AiTwotoneDelete } from "react-icons/ai";
 import Switch from '@mui/material/Switch';
 import { CloseFullscreen, CloseOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { API_SERVER_URL } from "./Variables.ts";
+import { API_SERVER_URL } from "../Variables.ts";
 
 const HistoryPanel = () => {
 
