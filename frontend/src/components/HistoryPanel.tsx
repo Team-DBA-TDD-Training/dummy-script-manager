@@ -1,9 +1,9 @@
-import { Script } from "./Script.ts";
+import { Script } from "../Script.ts";
 import styled from "styled-components";
-import { FaCross, FaEdit, FaStar } from "react-icons/fa";
+import { FaEdit, FaStar } from "react-icons/fa";
 import {AiOutlineStar, AiTwotoneDelete } from "react-icons/ai";
 import Switch from '@mui/material/Switch';
-import { CloseFullscreen, CloseOutlined } from "@mui/icons-material";
+import { CloseOutlined } from "@mui/icons-material";
 
 const HistoryPanel = () => {
 
@@ -111,6 +111,7 @@ const Panel = styled.div`
   background-color: #EFF1EC;
   padding: 20px 16px 10px 20px;
   overflow: scroll;
+  color: black
 `
 const Header = styled.div`
   display: flex;
