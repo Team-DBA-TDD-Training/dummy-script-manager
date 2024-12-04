@@ -22,7 +22,12 @@ If needed, follow the official documentation [here](https://nodejs.org/en/learn/
 
 ### Backend
 - Create a test mongodb database on your local machine
-- Create '.env' file inside the backend folder with the following credentials
+- Create '.env' file inside the backend folder with the command:
+```
+  touch .env
+ ```
+
+Add the following credential to the created file 
 ```
 MONGO_DB_URI=<your local URI goes here>
 NODE_ENV=development
