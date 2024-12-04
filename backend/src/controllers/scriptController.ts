@@ -7,8 +7,8 @@ export const createScript = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const { name, code } = req.body;
-    const script = new Script({ name, code });
+    const { title, code, description,isFavorite  } = req.body;
+    const script = new Script({ title, code,  description, isFavorite });
     await script.save();
     res.status(201).json(script);
   } catch (error) {
