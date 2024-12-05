@@ -129,7 +129,9 @@ const ScriptTitle = styled.div`
 const ScriptBody = styled.div`
   font-weight: 200;
   font-size: 10px;
- `
+  overflow: hidden;
+  height: 46px;
+`
 const ScriptDate = styled.div`
   font-weight: 200;
   font-size: 8px;
