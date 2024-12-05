@@ -6,6 +6,7 @@ import Switch from '@mui/material/Switch';
 import { CloseOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import {DELETE_SCRIPTS_API_URL, FETCH_ALL_SCRIPTS_API_URL } from "../REQUEST_URLs.ts";
+import { useAppContext } from "../AppContextProvider.tsx";
 
 const HistoryPanel = () => {
 
@@ -13,6 +14,11 @@ const HistoryPanel = () => {
   const [ selectedScripts, setSelectedScripts ] = useState<string[]>([]);
   const [ favoritesOnly, setFavoritesOnly ] = useState<boolean>(false);
   const [ selectionLength, setSelectionLength ] = useState<number>(0);
+  const { state, dispatch } = useAppContext();
+
+  const toggleHistoryPanel = () => {
+    dispatch({ type: "TOGGLE" });
+  }
   const refreshScriptHistory = ()=>{
     fetch(FETCH_ALL_SCRIPTS_API_URL)
       .then(response => response.json())
@@ -59,12 +65,12 @@ const HistoryPanel = () => {
     <Panel>
       <Header>
         <div>History</div>
-        <CloseOutlined/>
+        <CloseOutlined onClick={toggleHistoryPanel} style={{cursor: "pointer"}}/>
       </Header>
       <Row>
        <Toolbar>
-           <FaEdit style={{color: selectionLength === 1 ? "black" : "grey"}}/>
-           <AiTwotoneDelete onClick={onDelete} style={{color: selectionLength ? "black" : "grey"}}/>
+           <FaEdit style={selectionLength === 1 ? {color:  "black", cursor: "pointer"} : {color: "grey"}}/>
+           <AiTwotoneDelete onClick={onDelete} style={selectionLength ? {color:  "black", cursor: "pointer"} : {color: "grey"}}/>
        </Toolbar>
         <StyledSwitch onChange={() => {
           setFavoritesOnly(val => !val)
