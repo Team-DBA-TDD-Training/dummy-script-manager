@@ -24,7 +24,7 @@ const StyledButton = styled.button`
 
   &:hover {
     background-color: #878b77; 
-    color: #5B5E4E; 
+    color: white; 
     border-color: #5B5E4E;
   }
 
