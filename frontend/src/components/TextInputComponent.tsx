@@ -2,10 +2,11 @@ import styled from "styled-components";
 export interface TextInputProps {
     width: string;
     height: string;
+    placeholder?: string
 }
 
 const TextInputComponent = (props: TextInputProps) => {
-    return <StyledTextInput $width={props.width} $height={props.height}></StyledTextInput>
+    return <StyledTextInput $width={props.width} $height={props.height} placeholder={props.placeholder!}></StyledTextInput>
 }
 
 interface InputProps {
@@ -15,6 +16,7 @@ interface InputProps {
 
 const StyledTextInput = styled.input<InputProps>`
     margin: 5px;
+    padding: 5px;
     background-color: white;
     width: ${(props) => `${props.$width}`};
     height: ${(props) => `${props.$height}`};

@@ -15,6 +15,7 @@ interface InputProps {
 
 const StyledTextInput = styled.textarea<InputProps>`
     margin: 5px;
+    padding: 5px;
     background-color: white;
     width: ${(props) => `${props.$width}`};
     height: ${(props) => `${props.$height}`};
