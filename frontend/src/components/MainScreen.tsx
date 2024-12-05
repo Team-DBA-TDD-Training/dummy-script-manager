@@ -3,20 +3,24 @@ import TextInputComponent from "./TextInputComponent";
 import TextAreaComponent from "./TextAreaComponent";
 import ToolBar from "./ToolBar";
 import HistoryPanel from "./HistoryPanel";
+import { useAppContext } from "../AppContextProvider";
 
 const MainScreen = () => {
-    return <StyledBackground>
-        <StyledContainer>
-            <ToolBar></ToolBar>
-            <TextInputComponent width={'541px'} height={'40px'}></TextInputComponent>
-            <TextInputComponent width={'541px'} height={'40px'}></TextInputComponent>
-            <TextAreaComponent width={'541px'} height={'300px'}></TextAreaComponent>
-            <a>Ask AI Helper</a>
-        </StyledContainer>
-        <StyledContainer>
-            <HistoryPanel></HistoryPanel>
-        </StyledContainer>
-    </StyledBackground>
+    const { state } = useAppContext();
+    return (
+            <StyledBackground>
+                <StyledContainer>
+                    <ToolBar></ToolBar>
+                    <TextInputComponent width={'541px'} height={'40px'}></TextInputComponent>
+                    <TextInputComponent width={'541px'} height={'40px'}></TextInputComponent>
+                    <TextAreaComponent width={'541px'} height={'300px'}></TextAreaComponent>
+                    <a>Ask AI Helper</a>
+                </StyledContainer>
+                <StyledContainer>
+                    {state.isOn && <HistoryPanel />}
+                </StyledContainer>
+            </StyledBackground>
+    )
 }
 
 const StyledBackground = styled.div`
