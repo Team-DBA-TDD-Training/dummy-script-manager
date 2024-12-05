@@ -52,10 +52,10 @@ export const updateScript = async (
   next: NextFunction
 ): Promise<void> =>{
   try {
-    const { name, code } = req.body;
+    const { title, code } = req.body;
     const script = await Script.findByIdAndUpdate(
       req.params.id,
-      { name, code },
+      { title, code },
       { new: true }
     );
     if (!script) {
@@ -74,7 +74,8 @@ export const deleteScript = async (
   next: NextFunction
 ) : Promise<void> => {
   try {
-    const script = await Script.findByIdAndDelete(req.params.id);
+    const ids = req.params.ids.split(',');
+    const script = await Script.deleteMany({ _id: { $in: ids } });
     if (!script) {
         res.status(404).json({ message: "Script not found" });
     } else {

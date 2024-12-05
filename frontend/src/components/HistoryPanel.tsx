@@ -3,21 +3,53 @@ import styled from "styled-components";
 import { FaEdit, FaStar } from "react-icons/fa";
 import {AiOutlineStar, AiTwotoneDelete } from "react-icons/ai";
 import Switch from '@mui/material/Switch';
-import { CloseFullscreen, CloseOutlined } from "@mui/icons-material";
+import { CloseOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { API_SERVER_URL } from "./Variables.ts";
+import {DELETE_SCRIPTS_API_URL, FETCH_ALL_SCRIPTS_API_URL } from "../REQUEST_URLs.ts";
 
 const HistoryPanel = () => {
 
   const [ scripts, setScripts ] = useState<Script[]>([]);
-  useEffect(() => {
-     fetch(API_SERVER_URL)
+  const [ selectedScripts, setSelectedScripts ] = useState<string[]>([]);
+
+  const refreshScriptHistory = ()=>{
+    fetch(FETCH_ALL_SCRIPTS_API_URL)
       .then(response => response.json())
-       .then( data => {
-           const scripts = data as unknown as Script[];
-           setScripts(scripts);
-       })
+      .then( data => {
+        const scripts = data as unknown as Script[];
+        setScripts(scripts);
+      })
+  }
+
+  useEffect(() => {
+    refreshScriptHistory()
   }, []);
+
+  const onDelete = () => {
+    const requestOptions = {
+      method: 'DELETE'
+    };
+    if (selectedScripts.length > 0){
+      const deleteReq = DELETE_SCRIPTS_API_URL + selectedScripts.toString();
+        fetch(deleteReq, requestOptions)
+          .then(response => {
+            if(response.status === 200) {
+              refreshScriptHistory();
+              setSelectedScripts([]);
+            }
+          })
+    }
+  }
+
+  const onScriptItemSelected = (_id: string) => {
+      if(selectedScripts.includes(_id)) {
+        setSelectedScripts(selectedScripts.filter(x => x!==_id));
+      }
+      else{
+        selectedScripts.push(_id);
+        setSelectedScripts(selectedScripts);
+      }
+  }
 
   return (
     <Panel>
@@ -27,13 +59,15 @@ const HistoryPanel = () => {
       </Header>
       <Row>
        <Toolbar>
-         <FaEdit/> <AiTwotoneDelete/>
+         <FaEdit /> <AiTwotoneDelete onClick={onDelete} />
        </Toolbar>
         <StyledSwitch>Favorites only<Switch /></StyledSwitch>
       </Row>
     {scripts.map(script =>  {
-      return <ListItem key={script.id}>
-          <Checkbox type={"checkbox"}/>
+      return <ListItem key={script._id}>
+          <Checkbox type={"checkbox"} onClick={() => {
+            onScriptItemSelected(script._id);
+          }}/>
           <Card>
             <Row>
               <ScriptTitle>{script.title}</ScriptTitle>
