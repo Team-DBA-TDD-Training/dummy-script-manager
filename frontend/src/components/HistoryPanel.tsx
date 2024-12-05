@@ -14,7 +14,7 @@ const HistoryPanel = () => {
   const [ selectedScripts, setSelectedScripts ] = useState<string[]>([]);
   const [ favoritesOnly, setFavoritesOnly ] = useState<boolean>(false);
   const [ selectionLength, setSelectionLength ] = useState<number>(0);
-  const { state, dispatch } = useAppContext();
+  const { dispatch } = useAppContext();
 
   const toggleHistoryPanel = () => {
     dispatch({ type: "TOGGLE" });
