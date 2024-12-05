@@ -11,6 +11,7 @@ const HistoryPanel = () => {
 
   const [ scripts, setScripts ] = useState<Script[]>([]);
   const [ selectedScripts, setSelectedScripts ] = useState<string[]>([]);
+  const [ favoritesOnly, setFavoritesOnly ] = useState<boolean>(false);
 
   const refreshScriptHistory = ()=>{
     fetch(FETCH_ALL_SCRIPTS_API_URL)
@@ -61,9 +62,14 @@ const HistoryPanel = () => {
        <Toolbar>
          <FaEdit /> <AiTwotoneDelete onClick={onDelete} />
        </Toolbar>
-        <StyledSwitch>Favorites only<Switch /></StyledSwitch>
+        <StyledSwitch onChange={() => {
+          setFavoritesOnly(val => !val)
+        }}>
+          Favorites only
+          <Switch />
+        </StyledSwitch>
       </Row>
-    {scripts.map(script =>  {
+    {(favoritesOnly ? scripts.filter(x=>x.isFavorite) : scripts).map(script =>  {
       return <ListItem key={script._id}>
           <Checkbox type={"checkbox"} onClick={() => {
             onScriptItemSelected(script._id);
