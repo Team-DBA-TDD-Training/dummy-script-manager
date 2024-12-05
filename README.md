@@ -50,7 +50,8 @@
 2. The user can view saved scripts.
 3. The saved scripts can be updated as needed.
 4. The user can delete a script when it is no longer needed.
-5. The user can create scripts with assistance of AI Helper.
+5. Scripts can be marked as favorite and the user can toggle between showing all scripts or favorite scripts only.
+6. The user can create scripts with assistance of AI Helper.
 
 ![Use Cases Diagram](script-manager-use-case.png)
 
