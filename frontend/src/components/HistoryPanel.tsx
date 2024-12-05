@@ -12,7 +12,7 @@ const HistoryPanel = () => {
   const [ scripts, setScripts ] = useState<Script[]>([]);
   const [ selectedScripts, setSelectedScripts ] = useState<string[]>([]);
   const [ favoritesOnly, setFavoritesOnly ] = useState<boolean>(false);
-
+  const [ selectionLength, setSelectionLength ] = useState<number>(0);
   const refreshScriptHistory = ()=>{
     fetch(FETCH_ALL_SCRIPTS_API_URL)
       .then(response => response.json())
@@ -44,9 +44,12 @@ const HistoryPanel = () => {
 
   const onScriptItemSelected = (_id: string) => {
       if(selectedScripts.includes(_id)) {
+        setSelectionLength(selectedScripts.length-1);
         setSelectedScripts(selectedScripts.filter(x => x!==_id));
+
       }
       else{
+        setSelectionLength(selectedScripts.length+1);
         selectedScripts.push(_id);
         setSelectedScripts(selectedScripts);
       }
@@ -60,7 +63,8 @@ const HistoryPanel = () => {
       </Header>
       <Row>
        <Toolbar>
-         <FaEdit /> <AiTwotoneDelete onClick={onDelete} />
+           <FaEdit style={{color: selectionLength === 1 ? "black" : "grey"}}/>
+           <AiTwotoneDelete onClick={onDelete} style={{color: selectionLength ? "black" : "grey"}}/>
        </Toolbar>
         <StyledSwitch onChange={() => {
           setFavoritesOnly(val => !val)
