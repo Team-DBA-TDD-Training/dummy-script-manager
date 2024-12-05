@@ -71,9 +71,9 @@ const HistoryPanel = () => {
           <Card>
             <Row>
               <ScriptTitle>{script.title}</ScriptTitle>
-              <FavoriteDiv>
+              <div>
                 {script.isFavorite ? <FaStar/> : <AiOutlineStar />}
-              </FavoriteDiv>
+              </div>
             </Row>
             <ScriptBody>{script.code}</ScriptBody>
             <ScriptDate>Last updated at: {script.lastUpdatedAt}</ScriptDate>
@@ -151,6 +151,4 @@ const Toolbar = styled.div`
 
 const StyledSwitch = styled.div`
   font-size: 12px;
-`
-const FavoriteDiv = styled.div`
 `
