@@ -4,16 +4,22 @@ import { Script } from "./Script";
 interface State {
   showHistory: boolean;
   scripts: Script[];
+  currentScript: Script;
 }
 
 type Action =
   | { type: "TOGGLE" }
-  | { type: "UPDATE_SCRIPTS"; payload: Script[] };
+  | { type: "UPDATE_SCRIPTS"; payload: Script[] }
+  | { type: "SET_CURRENT_SCRIPT"; payload: Script };
 
 
 const initialState: State = {
   showHistory: false,
   scripts: [],
+  currentScript: {
+    title: "",
+    code: ""
+  }
 };
 
 const reducer = (state: State, action: Action): State => {
@@ -22,6 +28,8 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, showHistory: !state.showHistory };
     case "UPDATE_SCRIPTS":
       return { ...state, scripts: action.payload };
+    case "SET_CURRENT_SCRIPT":
+      return { ...state, currentScript: action.payload };
     default:
       return state;
   }

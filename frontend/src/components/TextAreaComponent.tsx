@@ -2,10 +2,11 @@ import styled from "styled-components";
 export interface TextInputProps {
     width: string;
     height: string;
+    value?: string
 }
 
 const TextAreaComponent = (props: TextInputProps) => {
-    return <StyledTextInput $width={props.width} $height={props.height}></StyledTextInput>
+    return <StyledTextInput value={props.value} $width={props.width} $height={props.height}></StyledTextInput>
 }
 
 interface InputProps {

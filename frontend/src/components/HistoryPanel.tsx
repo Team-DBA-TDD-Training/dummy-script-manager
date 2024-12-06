@@ -25,10 +25,16 @@ const HistoryPanel = () => {
   }
   const refreshScriptHistory = ()=>{
     fetch(FETCH_ALL_SCRIPTS_API_URL)
-      .then(response => response.json())
+      .then(response => {
+      if(response.ok) {
+        return response.json();
+      }
+    })
       .then( data => {
-        const scripts = data as unknown as Script[];
-        dispatch({ type: "UPDATE_SCRIPTS", payload: scripts });
+        if(data) {
+          const scripts = data as unknown as Script[];
+          dispatch({ type: "UPDATE_SCRIPTS", payload: scripts });
+        }
       })
   }
 
@@ -37,7 +43,7 @@ const HistoryPanel = () => {
   }, []);
 
 
-  const createScript = () => {
+  const createScriptOnServer = () => {
     const data = {
       title : "new script",
       code: "new code",
@@ -55,17 +61,26 @@ const HistoryPanel = () => {
     fetch(CREATE_SCRIPTS_API_URL, requestOptions)
       .then(response => {
         if(response.ok) {
-          refreshScriptHistory();
+          return response.json();
         }
-      });
+      })
+      .then( data => {
+        if(data) {
+          const scripts = data as unknown as Script[];
+          dispatch({ type: "UPDATE_SCRIPTS", payload: scripts });
+        }
+      })
   }
 
   const OnEditClicked = () => {
     if(selectedScripts.length === 1) {
-      updateScript(selectedScripts[0]);
+      dispatch(
+        { type: "SET_CURRENT_SCRIPT",
+          payload: state.scripts.find(x => x._id === selectedScripts[0])
+        });
     }
   }
-  const updateScript = (_id: string) => {
+  const updateScriptOnServer = (_id: string) => {
     const data = {
       title : "updated name ",
       code: "updated code",
@@ -83,13 +98,20 @@ const HistoryPanel = () => {
 
     fetch(UPDATE_SCRIPTS_API_URL+ _id, requestOptions)
       .then(response => {
-        if(response.ok) {
-          refreshScriptHistory();
+      if(response.ok) {
+        return response.json();
+      }
+    })
+      .then( data => {
+        if(data) {
+          const scripts = data as unknown as Script[];
+          dispatch({ type: "UPDATE_SCRIPTS", payload: scripts });
         }
-      });
+      })
   }
 
   const onDeleteClicked = () => {
+    debugger;
     if (selectedScripts.length > 0){
       deleteScripts(selectedScripts.toString());
     }
@@ -98,21 +120,24 @@ const HistoryPanel = () => {
     const requestOptions = {
       method: 'DELETE'
     };
-    if (selectedScripts.length > 0){
       const deleteReq = DELETE_SCRIPTS_API_URL + ids;
         fetch(deleteReq, requestOptions)
           .then(response => {
             if(response.ok) {
-              refreshScriptHistory();
-              setSelectedScripts([]);
-            }})
-    }
+              return response.json();
+            }
+          })
+          .then( data => {
+            if(data) {
+              const scripts = data as unknown as Script[];
+              dispatch({ type: "UPDATE_SCRIPTS", payload: scripts });
+            }
+          })
   }
   const onScriptItemSelected = (_id: string) => {
       if(selectedScripts.includes(_id)) {
         setSelectionLength(selectedScripts.length-1);
         setSelectedScripts(selectedScripts.filter(x => x!==_id));
-
       }
       else{
         setSelectionLength(selectedScripts.length+1);

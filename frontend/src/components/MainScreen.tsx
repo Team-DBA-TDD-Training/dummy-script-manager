@@ -11,9 +11,9 @@ const MainScreen = () => {
             <StyledBackground>
                 <StyledContainer>
                     <ToolBar></ToolBar>
-                    <TextInputComponent width={'541px'} height={'40px'} placeholder="script name"></TextInputComponent>
-                    <TextInputComponent width={'541px'} height={'40px'} placeholder="script description"></TextInputComponent>
-                    <TextAreaComponent width={'541px'} height={'300px'}></TextAreaComponent>
+                    <TextInputComponent value={state.currentScript.title} width={'541px'} height={'40px'} placeholder="script name"></TextInputComponent>
+                    <TextInputComponent value={state.currentScript.description} width={'541px'} height={'40px'} placeholder="script description"></TextInputComponent>
+                    <TextAreaComponent value={state.currentScript.code} width={'541px'} height={'300px'}></TextAreaComponent>
                     <a>Ask AI Helper</a>
                 </StyledContainer>
                 <StyledContainer>
