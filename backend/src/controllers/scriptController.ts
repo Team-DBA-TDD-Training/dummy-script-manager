@@ -7,8 +7,8 @@ export const createScript = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const { title, code, description,isFavorite  } = req.body;
-    const script = new Script({ title, code,  description, isFavorite });
+    const { title, code, description  } = req.body;
+    const script = new Script({ title, code,  description });
     await script.save();
     res.status(201).json(script);
   } catch (error) {
@@ -52,10 +52,10 @@ export const updateScript = async (
   next: NextFunction
 ): Promise<void> =>{
   try {
-    const { title, code } = req.body;
+    const { title, code, description, lastUpdatedAt } = req.body;
     const script = await Script.findByIdAndUpdate(
       req.params.id,
-      { title, code },
+      { title, code, description, lastUpdatedAt },
       { new: true }
     );
     if (!script) {

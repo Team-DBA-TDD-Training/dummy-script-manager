@@ -5,7 +5,12 @@ import {AiOutlineStar, AiTwotoneDelete } from "react-icons/ai";
 import Switch from '@mui/material/Switch';
 import { CloseOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import {DELETE_SCRIPTS_API_URL, FETCH_ALL_SCRIPTS_API_URL } from "../REQUEST_URLs.ts";
+import {
+  CREATE_SCRIPTS_API_URL,
+  DELETE_SCRIPTS_API_URL,
+  FETCH_ALL_SCRIPTS_API_URL,
+  UPDATE_SCRIPTS_API_URL
+} from "../REQUEST_URLs.ts";
 import { useAppContext } from "../AppContextProvider.tsx";
 
 const HistoryPanel = () => {
@@ -32,22 +37,78 @@ const HistoryPanel = () => {
     refreshScriptHistory()
   }, []);
 
-  const onDelete = () => {
+
+  const createScript = () => {
+    const data = {
+      title : "new script",
+      code: "new code",
+      description: "some description"
+    }
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    };
+
+    fetch(CREATE_SCRIPTS_API_URL, requestOptions)
+      .then(response => {
+        if(response.ok) {
+          refreshScriptHistory();
+        }
+      });
+  }
+
+  const OnEditClicked = () => {
+    if(selectedScripts.length === 1) {
+      updateScript(selectedScripts[0]);
+    }
+  }
+  const updateScript = (_id: string) => {
+    const data = {
+      title : "updated name ",
+      code: "updated code",
+      description: "updated description",
+      lastUpdatedAt: Date.now().toString()
+    }
+    const requestOptions = {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    };
+
+    fetch(UPDATE_SCRIPTS_API_URL+ _id, requestOptions)
+      .then(response => {
+        if(response.ok) {
+          refreshScriptHistory();
+        }
+      });
+  }
+
+  const onDeleteClicked = () => {
+    if (selectedScripts.length > 0){
+      deleteScripts(selectedScripts.toString());
+    }
+  }
+  const deleteScripts = (ids: string) => {
     const requestOptions = {
       method: 'DELETE'
     };
     if (selectedScripts.length > 0){
-      const deleteReq = DELETE_SCRIPTS_API_URL + selectedScripts.toString();
+      const deleteReq = DELETE_SCRIPTS_API_URL + ids;
         fetch(deleteReq, requestOptions)
           .then(response => {
-            if(response.status === 200) {
+            if(response.ok) {
               refreshScriptHistory();
               setSelectedScripts([]);
-            }
-          })
+            }})
     }
   }
-
   const onScriptItemSelected = (_id: string) => {
       if(selectedScripts.includes(_id)) {
         setSelectionLength(selectedScripts.length-1);
@@ -69,8 +130,8 @@ const HistoryPanel = () => {
       </Header>
       <Row>
        <Toolbar>
-           <FaEdit style={selectionLength === 1 ? {color:  "black", cursor: "pointer"} : {color: "grey"}}/>
-           <AiTwotoneDelete onClick={onDelete} style={selectionLength ? {color:  "black", cursor: "pointer"} : {color: "grey"}}/>
+           <FaEdit onClick={OnEditClicked} style={selectionLength === 1 ? {color:  "black", cursor: "pointer"} : {color: "grey"}}/>
+           <AiTwotoneDelete onClick={onDeleteClicked} style={selectionLength ? {color:  "black", cursor: "pointer"} : {color: "grey"}}/>
        </Toolbar>
         <StyledSwitch onChange={() => {
           setFavoritesOnly(val => !val)
