@@ -17,7 +17,7 @@ const MainScreen = () => {
                     <a>Ask AI Helper</a>
                 </StyledContainer>
                 <StyledContainer>
-                    {state.isOn && <HistoryPanel />}
+                    {state.showHistory && <HistoryPanel />}
                 </StyledContainer>
             </StyledBackground>
     )

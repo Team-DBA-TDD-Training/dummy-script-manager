@@ -2,7 +2,7 @@ import React, { createContext, useReducer, ReactNode, useContext } from "react";
 import { Script } from "./Script";
 
 interface State {
-  isOn: boolean;
+  showHistory: boolean;
   scripts: Script[];
 }
 
@@ -12,14 +12,14 @@ type Action =
 
 
 const initialState: State = {
-  isOn: false,
+  showHistory: false,
   scripts: [],
 };
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "TOGGLE":
-      return { ...state, isOn: !state.isOn };
+      return { ...state, showHistory: !state.showHistory };
     case "UPDATE_SCRIPTS":
       return { ...state, scripts: action.payload };
     default:

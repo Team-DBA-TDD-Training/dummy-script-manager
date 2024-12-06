@@ -12,7 +12,7 @@ const ToolBar = () => {
     return <StyledDiv>
         <ToolBarButton caption="New Script" onClick={()=>{}}></ToolBarButton>
         <ToolBarButton caption="Save Script" onClick={()=>{}}></ToolBarButton>
-        <ToolBarButton caption={state.isOn ? "Hide History" : "Show History"} onClick={toggleHistoryPanel}></ToolBarButton>
+        <ToolBarButton caption={state.showHistory ? "Hide History" : "Show History"} onClick={toggleHistoryPanel}></ToolBarButton>
     </StyledDiv>
 }
 
