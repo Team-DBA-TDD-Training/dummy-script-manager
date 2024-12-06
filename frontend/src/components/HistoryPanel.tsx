@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import {
   CREATE_SCRIPTS_API_URL,
   DELETE_SCRIPTS_API_URL,
-  FETCH_ALL_SCRIPTS_API_URL,
+  FETCH_ALL_SCRIPTS_API_URL, MARK_FAVORITE_API_URL, UNMARK_FAVORITE_API_URL,
   UPDATE_SCRIPTS_API_URL
 } from "../REQUEST_URLs.ts";
 import { useAppContext } from "../AppContextProvider.tsx";
@@ -52,7 +52,6 @@ const HistoryPanel = () => {
   }
 
   const onDeleteClicked = () => {
-    debugger;
     if (selectedScripts.length > 0){
       deleteScripts(selectedScripts.toString());
     }
@@ -86,6 +85,27 @@ const HistoryPanel = () => {
         setSelectedScripts(selectedScripts);
       }
   }
+  const markUnmarkFavorite = (URL: string) => {
+    const requestOptions = {
+      method: "PUT",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    };
+    fetch(URL, requestOptions)
+      .then(response => {
+        if(response.ok) {
+          return response.json();
+        }
+      })
+      .then( data => {
+        if(data) {
+          const scripts = data as unknown as Script[];
+          dispatch({ type: "UPDATE_SCRIPTS", payload: scripts });
+        }
+      })
+  }
 
   return (
     <Panel>
@@ -114,7 +134,18 @@ const HistoryPanel = () => {
             <Row>
               <ScriptTitle>{script.title}</ScriptTitle>
               <div>
-                {script.isFavorite ? <FaStar/> : <AiOutlineStar />}
+                {
+                  script.isFavorite ? <FaStar
+                    onClick={()=> {
+                      markUnmarkFavorite(UNMARK_FAVORITE_API_URL+script._id)
+                    }}
+                    style={{cursor: "pointer"}}/> :
+                  <AiOutlineStar
+                    onClick={()=> {
+                      markUnmarkFavorite(MARK_FAVORITE_API_URL+script._id)
+                    }}
+                    style={{cursor: "pointer"}}/>
+                }
               </div>
             </Row>
             <ScriptBody>{script.code}</ScriptBody>
