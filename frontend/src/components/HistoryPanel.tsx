@@ -10,11 +10,10 @@ import { useAppContext } from "../AppContextProvider.tsx";
 
 const HistoryPanel = () => {
 
-  const [ scripts, setScripts ] = useState<Script[]>([]);
   const [ selectedScripts, setSelectedScripts ] = useState<string[]>([]);
   const [ favoritesOnly, setFavoritesOnly ] = useState<boolean>(false);
   const [ selectionLength, setSelectionLength ] = useState<number>(0);
-  const { dispatch } = useAppContext();
+  const { state, dispatch } = useAppContext();
 
   const toggleHistoryPanel = () => {
     dispatch({ type: "TOGGLE" });
@@ -24,7 +23,7 @@ const HistoryPanel = () => {
       .then(response => response.json())
       .then( data => {
         const scripts = data as unknown as Script[];
-        setScripts(scripts);
+        dispatch({ type: "UPDATE_SCRIPTS", payload: scripts });
       })
   }
 
@@ -79,7 +78,7 @@ const HistoryPanel = () => {
           <Switch />
         </StyledSwitch>
       </Row>
-    {(favoritesOnly ? scripts.filter(x=>x.isFavorite) : scripts).map(script =>  {
+    {(favoritesOnly ? state.scripts.filter(x=>x.isFavorite) : state.scripts).map(script =>  {
       return <ListItem key={script._id}>
           <Checkbox type={"checkbox"} onClick={() => {
             onScriptItemSelected(script._id);
