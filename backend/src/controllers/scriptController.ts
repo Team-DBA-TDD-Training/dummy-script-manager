@@ -11,7 +11,7 @@ export const createScript = async (
     const script = new Script({ title, code,  description, isFavorite });
     await script.save();
     const refreshedData = await Script.find();
-    res.status(201).json(refreshedData );
+    res.status(201).json(refreshedData);
   } catch (error) {
     next(error);
   }
@@ -62,6 +62,50 @@ export const updateScript = async (
     const refreshedData = await Script.find();
     if (!script) {
       res.status(404).json({ message: "Script not found" });
+    } else {
+      res.status(200).json(refreshedData);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const markFavorite = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> =>{
+  try {
+    const script = await Script.findByIdAndUpdate(
+      req.params.id,
+      { isFavorite: true},
+      { new: true }
+    );
+    const refreshedData = await Script.find();
+    if (!script) {
+      res.status(404).json({ message: "Encountered error" });
+    } else {
+      res.status(200).json(refreshedData);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const unMarkFavorite = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> =>{
+  try {
+    const script = await Script.findByIdAndUpdate(
+      req.params.id,
+      { isFavorite: false},
+      { new: true }
+    );
+    const refreshedData = await Script.find();
+    if (!script) {
+      res.status(404).json({ message: "Encountered error" });
     } else {
       res.status(200).json(refreshedData);
     }
