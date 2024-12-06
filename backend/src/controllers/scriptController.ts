@@ -7,10 +7,11 @@ export const createScript = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const { title, code, description  } = req.body;
-    const script = new Script({ title, code,  description });
+    const { title, code, description, isFavorite  } = req.body;
+    const script = new Script({ title, code,  description, isFavorite });
     await script.save();
-    res.status(201).json(script);
+    const refreshedData = await Script.find();
+    res.status(201).json(refreshedData );
   } catch (error) {
     next(error);
   }
@@ -58,16 +59,16 @@ export const updateScript = async (
       { title, code, description, lastUpdatedAt },
       { new: true }
     );
+    const refreshedData = await Script.find();
     if (!script) {
       res.status(404).json({ message: "Script not found" });
     } else {
-      res.status(200).json(script);
+      res.status(200).json(refreshedData);
     }
   } catch (error) {
     next(error);
   }
 };
-
 export const deleteScript = async (
   req: Request,
   res: Response,
@@ -76,10 +77,11 @@ export const deleteScript = async (
   try {
     const ids = req.params.ids.split(',');
     const script = await Script.deleteMany({ _id: { $in: ids } });
+    const refreshedData = await Script.find();
     if (!script) {
         res.status(404).json({ message: "Script not found" });
     } else {
-        res.status(200).json({ message: "Script deleted successfully" });
+        res.status(200).json(refreshedData);
     }
   } catch (error) {
     next(error);
