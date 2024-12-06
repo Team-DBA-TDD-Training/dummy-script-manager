@@ -1,30 +1,36 @@
 import React, { createContext, useReducer, ReactNode, useContext } from "react";
+import { Script } from "./Script";
 
 interface State {
   isOn: boolean;
+  scripts: Script[];
 }
 
-type Action = { type: "TOGGLE" };
+type Action =
+  | { type: "TOGGLE" }
+  | { type: "UPDATE_SCRIPTS"; payload: Script[] };
+
 
 const initialState: State = {
   isOn: false,
+  scripts: [],
 };
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "TOGGLE":
       return { ...state, isOn: !state.isOn };
+    case "UPDATE_SCRIPTS":
+      return { ...state, scripts: action.payload };
     default:
       return state;
   }
 };
 
-
 const AppContext = createContext<{
   state: State;
   dispatch: React.Dispatch<Action>;
 } | null>(null);
-
 
 interface AppProviderProps {
   children: ReactNode;
@@ -43,7 +49,7 @@ export const AppContextProvider: React.FC<AppProviderProps> = ({ children }) => 
 export const useAppContext = () => {
   const context = useContext(AppContext);
   if (!context) {
-    throw new Error("useToggle must be used within a AppContextProvider");
+    throw new Error("useAppContext must be used within a AppContextProvider");
   }
   return context;
 };
