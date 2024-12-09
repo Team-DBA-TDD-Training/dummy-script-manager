@@ -3,11 +3,9 @@ import ToolBarButton from "./ToolBarButton";
 import { useAppContext } from "../AppContextProvider";
 import {
   CREATE_SCRIPTS_API_URL,
-  UPDATE_SCRIPTS_API_URL,
+  UPDATE_SCRIPTS_API_URL
 } from "../REQUEST_URLs.ts";
 import { Script } from "../Script.ts";
-import { useState } from "react";
-import NavConfirmationDialog from "./NavConfirmationDialog.tsx";
 
 const ToolBar = () => {
   const { state, dispatch } = useAppContext();
@@ -21,15 +19,15 @@ const ToolBar = () => {
       title: state.currentScript.title,
       code: state.currentScript.code,
       description: state.currentScript.description,
-      lastUpdatedAt: Date.now().toString(),
+      lastUpdatedAt: Date.now().toString()
     };
     const requestOptions = {
       method: method,
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     };
 
     return fetch(URL, requestOptions).then((response) => {
@@ -45,57 +43,66 @@ const ToolBar = () => {
         dispatch({ type: "UPDATE_SCRIPTS", payload: scripts });
         dispatch({
           type: "SET_HAS_UNSAVED_CHANGES",
-          payload: false,
+          payload: false
         });
         dispatch({
           type: "SET_CURRENT_SCRIPT",
           payload: {
             ...state.currentScript,
-            _id: scripts[scripts.length - 1]._id,
-          },
+            _id: scripts[scripts.length - 1]._id
+          }
         });
       }
     });
   };
   const updateScript = () => {
-    CreateOrUpdateScript(
+    return CreateOrUpdateScript(
       "PUT",
-      CREATE_SCRIPTS_API_URL + state.currentScript._id,
+      UPDATE_SCRIPTS_API_URL + state.currentScript._id
     ).then((data) => {
       if (data) {
         const scripts = data as unknown as Script[];
         dispatch({ type: "UPDATE_SCRIPTS", payload: scripts });
         dispatch({
           type: "SET_HAS_UNSAVED_CHANGES",
-          payload: false,
+          payload: false
         });
       }
     });
   };
 
   const onNewScriptClicked = () => {
-    if (state.hasUnsavedChanged) {
-      // show dialog
-    } else {
+    if (state.hasUnsavedChanged && state.currentScript._id) {
+     updateScript().then(data => {
+       dispatch({
+         type: "SET_IS_NEW",
+         payload: true
+       });
+       dispatch({
+         type: "SET_CURRENT_SCRIPT",
+         payload: { title: "", description: "", code: "" }
+       });
+     });
+    }
+    else {
       dispatch({
         type: "SET_IS_NEW",
-        payload: true,
+        payload: true
       });
       dispatch({
         type: "SET_CURRENT_SCRIPT",
-        payload: { title: "", description: "", code: "" },
+        payload: { title: "", description: "", code: "" }
       });
     }
+
   };
 
   const onSaveScriptClicked = () => {
-    debugger;
     if (state.isNew) {
-      debugger;
       createScript();
       dispatch({
         type: "SET_IS_NEW",
-        payload: false,
+        payload: false
       });
     } else {
       updateScript();
