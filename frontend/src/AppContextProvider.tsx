@@ -5,12 +5,16 @@ interface State {
   showHistory: boolean;
   scripts: Script[];
   currentScript: Script;
+  isNew: boolean;
+  hasUnsavedChanged: boolean;
 }
 
 type Action =
   | { type: "TOGGLE" }
   | { type: "UPDATE_SCRIPTS"; payload: Script[] }
-  | { type: "SET_CURRENT_SCRIPT"; payload: Script };
+  | { type: "SET_CURRENT_SCRIPT"; payload: Script }
+  | { type: "SET_IS_NEW"; payload: boolean }
+  | { type: "SET_HAS_UNSAVED_CHANGES"; payload: boolean };
 
 const initialState: State = {
   showHistory: false,
@@ -19,6 +23,8 @@ const initialState: State = {
     title: "",
     code: "",
   },
+  isNew: false,
+  hasUnsavedChanged: false,
 };
 
 const reducer = (state: State, action: Action): State => {
@@ -29,6 +35,10 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, scripts: action.payload };
     case "SET_CURRENT_SCRIPT":
       return { ...state, currentScript: action.payload };
+    case "SET_IS_NEW":
+      return { ...state, isNew: action.payload };
+    case "SET_HAS_UNSAVED_CHANGES":
+      return { ...state, hasUnsavedChanged: action.payload };
     default:
       return state;
   }

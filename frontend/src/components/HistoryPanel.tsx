@@ -4,14 +4,12 @@ import { FaEdit, FaStar } from "react-icons/fa";
 import { AiOutlineStar, AiTwotoneDelete } from "react-icons/ai";
 import Switch from "@mui/material/Switch";
 import { CloseOutlined } from "@mui/icons-material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
-  CREATE_SCRIPTS_API_URL,
   DELETE_SCRIPTS_API_URL,
   FETCH_ALL_SCRIPTS_API_URL,
   MARK_FAVORITE_API_URL,
-  UNMARK_FAVORITE_API_URL,
-  UPDATE_SCRIPTS_API_URL,
+  UNMARK_FAVORITE_API_URL
 } from "../REQUEST_URLs.ts";
 import { useAppContext } from "../AppContextProvider.tsx";
 
@@ -24,7 +22,7 @@ const HistoryPanel = () => {
   const toggleHistoryPanel = () => {
     dispatch({ type: "TOGGLE" });
   };
-  const refreshScriptHistory = () => {
+  const refreshScriptHistory = useCallback(() => {
     fetch(FETCH_ALL_SCRIPTS_API_URL)
       .then((response) => {
         if (response.ok) {
@@ -37,17 +35,21 @@ const HistoryPanel = () => {
           dispatch({ type: "UPDATE_SCRIPTS", payload: scripts });
         }
       });
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     refreshScriptHistory();
-  }, []);
+  }, [refreshScriptHistory]);
 
   const OnEditClicked = () => {
     if (selectedScripts.length === 1) {
       dispatch({
+        type: "SET_IS_NEW",
+        payload: false
+      });
+      dispatch({
         type: "SET_CURRENT_SCRIPT",
-        payload: state.scripts.find((x) => x._id === selectedScripts[0]),
+        payload: state.scripts.find((x) => x._id === selectedScripts[0])
       });
     }
   };
@@ -59,7 +61,7 @@ const HistoryPanel = () => {
   };
   const deleteScripts = (ids: string) => {
     const requestOptions = {
-      method: "DELETE",
+      method: "DELETE"
     };
     const deleteReq = DELETE_SCRIPTS_API_URL + ids;
     fetch(deleteReq, requestOptions)
@@ -72,6 +74,7 @@ const HistoryPanel = () => {
         if (data) {
           const scripts = data as unknown as Script[];
           dispatch({ type: "UPDATE_SCRIPTS", payload: scripts });
+          setSelectedScripts([]);
         }
       });
   };
@@ -90,8 +93,8 @@ const HistoryPanel = () => {
       method: "PUT",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     };
     fetch(URL, requestOptions)
       .then((response) => {
@@ -145,15 +148,15 @@ const HistoryPanel = () => {
         </StyledSwitch>
       </Row>
       {(favoritesOnly
-        ? state.scripts.filter((x) => x.isFavorite)
-        : state.scripts
+          ? state.scripts.filter((x) => x.isFavorite)
+          : state.scripts
       ).map((script) => {
         return (
           <ListItem key={script._id}>
             <Checkbox
               type={"checkbox"}
               onClick={() => {
-                onScriptItemSelected(script._id);
+                onScriptItemSelected(script._id!);
               }}
             />
             <Card>
@@ -164,7 +167,7 @@ const HistoryPanel = () => {
                     <FaStar
                       onClick={() => {
                         markUnmarkFavorite(
-                          UNMARK_FAVORITE_API_URL + script._id,
+                          UNMARK_FAVORITE_API_URL + script._id
                         );
                       }}
                       style={{ cursor: "pointer" }}
