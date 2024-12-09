@@ -76,6 +76,7 @@ const HistoryPanel = () => {
         if (data) {
           const scripts = data as unknown as Script[];
           dispatch({ type: "UPDATE_SCRIPTS", payload: scripts });
+          setSelectedScripts([]);
         }
       });
   };
