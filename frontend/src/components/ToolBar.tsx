@@ -49,14 +49,20 @@ const ToolBar = () => {
   const onUpdateScript = () => {
     CreateOrUpdateScript(
       "PUT",
-      CREATE_SCRIPTS_API_URL + state.currentScript._id,
+      CREATE_SCRIPTS_API_URL + state.currentScript._id
     );
   };
 
   return (
     <StyledDiv>
-      <ToolBarButton caption="New Script" onClick={() => {}}></ToolBarButton>
-      <ToolBarButton caption="Save Script" onClick={() => {}}></ToolBarButton>
+      <ToolBarButton
+        caption="New Script"
+        onClick={onSaveNewScript}
+      ></ToolBarButton>
+      <ToolBarButton
+        caption="Save Script"
+        onClick={onUpdateScript}
+      ></ToolBarButton>
       <ToolBarButton
         caption={state.showHistory ? "Hide History" : "Show History"}
         onClick={toggleHistoryPanel}
