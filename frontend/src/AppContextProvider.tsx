@@ -36,7 +36,6 @@ const reducer = (state: State, action: Action): State => {
     case "SET_CURRENT_SCRIPT":
       return { ...state, currentScript: action.payload };
     case "SET_IS_NEW":
-      debugger;
       return { ...state, isNew: action.payload };
     case "SET_HAS_UNSAVED_CHANGES":
       return { ...state, hasUnsavedChanged: action.payload };

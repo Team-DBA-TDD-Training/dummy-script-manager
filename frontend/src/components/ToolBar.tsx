@@ -73,18 +73,17 @@ const ToolBar = () => {
 
   const onNewScriptClicked = () => {
     if (state.hasUnsavedChanged && state.currentScript._id) {
-     updateScript().then(data => {
-       dispatch({
-         type: "SET_IS_NEW",
-         payload: true
-       });
-       dispatch({
-         type: "SET_CURRENT_SCRIPT",
-         payload: { title: "", description: "", code: "" }
-       });
-     });
-    }
-    else {
+      updateScript().then(() => {
+        dispatch({
+          type: "SET_IS_NEW",
+          payload: true
+        });
+        dispatch({
+          type: "SET_CURRENT_SCRIPT",
+          payload: { title: "", description: "", code: "" }
+        });
+      });
+    } else {
       dispatch({
         type: "SET_IS_NEW",
         payload: true
@@ -94,7 +93,6 @@ const ToolBar = () => {
         payload: { title: "", description: "", code: "" }
       });
     }
-
   };
 
   const onSaveScriptClicked = () => {
