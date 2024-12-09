@@ -157,7 +157,7 @@ const HistoryPanel = () => {
             <Checkbox
               type={"checkbox"}
               onClick={() => {
-                onScriptItemSelected(script._id);
+                onScriptItemSelected(script._id!);
               }}
             />
             <Card>
