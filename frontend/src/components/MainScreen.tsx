@@ -6,22 +6,34 @@ import HistoryPanel from "./HistoryPanel";
 import { useAppContext } from "../AppContextProvider";
 
 const MainScreen = () => {
-    const { state } = useAppContext();
-    return (
-            <StyledBackground>
-                <StyledContainer>
-                    <ToolBar></ToolBar>
-                    <TextInputComponent value={state.currentScript.title} width={'541px'} height={'40px'} placeholder="script name"></TextInputComponent>
-                    <TextInputComponent value={state.currentScript.description} width={'541px'} height={'40px'} placeholder="script description"></TextInputComponent>
-                    <TextAreaComponent value={state.currentScript.code} width={'541px'} height={'300px'}></TextAreaComponent>
-                    <a>Ask AI Helper</a>
-                </StyledContainer>
-                <StyledContainer>
-                    {state.showHistory && <HistoryPanel />}
-                </StyledContainer>
-            </StyledBackground>
-    )
-}
+  const { state } = useAppContext();
+  return (
+    <StyledBackground>
+      <StyledContainer>
+        <ToolBar></ToolBar>
+        <TextInputComponent
+          value={state.currentScript.title}
+          width={"541px"}
+          height={"40px"}
+          placeholder="script name"
+        ></TextInputComponent>
+        <TextInputComponent
+          value={state.currentScript.description}
+          width={"541px"}
+          height={"40px"}
+          placeholder="script description"
+        ></TextInputComponent>
+        <TextAreaComponent
+          value={state.currentScript.code}
+          width={"541px"}
+          height={"300px"}
+        ></TextAreaComponent>
+        <a>Ask AI Helper</a>
+      </StyledContainer>
+      <StyledContainer>{state.showHistory && <HistoryPanel />}</StyledContainer>
+    </StyledBackground>
+  );
+};
 
 const StyledBackground = styled.div`
   width: 100vw;
@@ -36,7 +48,7 @@ const StyledBackground = styled.div`
 `;
 
 const StyledContainer = styled.div`
-    width: 100%;
+  width: 100%;
   height: 100%;
   background-color: #e8ebe0;
   display: flex;
@@ -46,6 +58,6 @@ const StyledContainer = styled.div`
   align-self: center;
   padding-left: 25px;
   margin-top: 40px;
-`
+`;
 
 export default MainScreen;

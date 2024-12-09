@@ -12,14 +12,13 @@ type Action =
   | { type: "UPDATE_SCRIPTS"; payload: Script[] }
   | { type: "SET_CURRENT_SCRIPT"; payload: Script };
 
-
 const initialState: State = {
   showHistory: false,
   scripts: [],
   currentScript: {
     title: "",
-    code: ""
-  }
+    code: "",
+  },
 };
 
 const reducer = (state: State, action: Action): State => {
@@ -44,7 +43,9 @@ interface AppProviderProps {
   children: ReactNode;
 }
 
-export const AppContextProvider: React.FC<AppProviderProps> = ({ children }) => {
+export const AppContextProvider: React.FC<AppProviderProps> = ({
+  children,
+}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
