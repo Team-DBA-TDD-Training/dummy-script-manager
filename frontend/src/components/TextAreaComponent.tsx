@@ -4,11 +4,19 @@ export interface TextInputProps {
   width: string;
   height: string;
   value?: string;
+  onChange?: (value: string) => void;
 }
 
 const TextAreaComponent = (props: TextInputProps) => {
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (props.onChange) {
+      props.onChange(event.target.value);
+    }
+  };
+
   return (
     <StyledTextInput
+      onChange={handleChange}
       value={props.value}
       $width={props.width}
       $height={props.height}

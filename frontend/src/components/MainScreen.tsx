@@ -6,24 +6,46 @@ import HistoryPanel from "./HistoryPanel";
 import { useAppContext } from "../AppContextProvider";
 
 const MainScreen = () => {
-  const { state } = useAppContext();
+  const { state, dispatch } = useAppContext();
+  const handleScriptTitle = (value: string) => {
+    dispatch({
+      type: "SET_CURRENT_SCRIPT",
+      payload: { ...state.currentScript, title: value },
+    });
+  };
+  const handleScriptDescription = (value: string) => {
+    dispatch({
+      type: "SET_CURRENT_SCRIPT",
+      payload: { ...state.currentScript, description: value },
+    });
+  };
+  const handleScriptCode = (value: string) => {
+    dispatch({
+      type: "SET_CURRENT_SCRIPT",
+      payload: { ...state.currentScript, code: value },
+    });
+  };
+
   return (
     <StyledBackground>
       <StyledContainer>
         <ToolBar></ToolBar>
         <TextInputComponent
+          onChange={handleScriptTitle}
           value={state.currentScript.title}
           width={"541px"}
           height={"40px"}
           placeholder="script name"
         ></TextInputComponent>
         <TextInputComponent
+          onChange={handleScriptDescription}
           value={state.currentScript.description}
           width={"541px"}
           height={"40px"}
           placeholder="script description"
         ></TextInputComponent>
         <TextAreaComponent
+          onChange={handleScriptCode}
           value={state.currentScript.code}
           width={"541px"}
           height={"300px"}
