@@ -12,17 +12,29 @@ const MainScreen = () => {
       type: "SET_CURRENT_SCRIPT",
       payload: { ...state.currentScript, title: value },
     });
+    dispatch({
+      type: "SET_HAS_UNSAVED_CHANGES",
+      payload: true,
+    });
   };
   const handleScriptDescription = (value: string) => {
     dispatch({
       type: "SET_CURRENT_SCRIPT",
       payload: { ...state.currentScript, description: value },
     });
+    dispatch({
+      type: "SET_HAS_UNSAVED_CHANGES",
+      payload: true,
+    });
   };
   const handleScriptCode = (value: string) => {
     dispatch({
       type: "SET_CURRENT_SCRIPT",
       payload: { ...state.currentScript, code: value },
+    });
+    dispatch({
+      type: "SET_HAS_UNSAVED_CHANGES",
+      payload: true,
     });
   };
 
