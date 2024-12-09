@@ -46,6 +46,10 @@ const HistoryPanel = () => {
   const OnEditClicked = () => {
     if (selectedScripts.length === 1) {
       dispatch({
+        type: "SET_IS_NEW",
+        payload: false,
+      });
+      dispatch({
         type: "SET_CURRENT_SCRIPT",
         payload: state.scripts.find((x) => x._id === selectedScripts[0]),
       });
