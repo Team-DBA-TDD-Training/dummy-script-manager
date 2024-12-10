@@ -110,6 +110,19 @@ const HistoryPanel = () => {
       });
   };
 
+  function formatDate(isoDate: string): string {
+    const date = new Date(isoDate);
+
+    const day = date.getUTCDate().toString().padStart(2, "0");
+    const month = (date.getUTCMonth() + 1).toString().padStart(2, "0");
+    const year = date.getUTCFullYear();
+
+    const hours = date.getUTCHours().toString().padStart(2, "0");
+    const minutes = date.getUTCMinutes().toString().padStart(2, "0");
+
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
+  }
+
   return (
     <Panel>
       <Header>
@@ -183,7 +196,9 @@ const HistoryPanel = () => {
                 </div>
               </Row>
               <ScriptBody>{script.code}</ScriptBody>
-              <ScriptDate>Last updated at: {script.lastUpdatedAt}</ScriptDate>
+              <ScriptDate>
+                Last updated at: {formatDate(script.lastUpdatedAt!)}
+              </ScriptDate>
             </Card>
           </ListItem>
         );
