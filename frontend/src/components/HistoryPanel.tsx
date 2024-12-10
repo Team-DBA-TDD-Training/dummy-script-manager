@@ -196,7 +196,8 @@ export default HistoryPanel;
 
 const Panel = styled.div`
   width: 295px;
-  height: 612px;
+  height: 100%;
+  margin: 20px;
   background-color: #eff1ec;
   padding: 20px 16px 10px 20px;
   overflow: scroll;
