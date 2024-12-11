@@ -51,7 +51,7 @@ Thumbs.db
 *.wmv
 
 # environment variables
-.env
+.env*
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
