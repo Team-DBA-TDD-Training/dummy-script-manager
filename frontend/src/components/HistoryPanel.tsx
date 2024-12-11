@@ -12,6 +12,7 @@ import {
   UNMARK_FAVORITE_API_URL
 } from "../REQUEST_URLs.ts";
 import { useAppContext } from "../AppContextProvider.tsx";
+import { Tooltip, tooltipClasses, TooltipProps } from "@mui/material";
 
 const HistoryPanel = () => {
   const [selectedScripts, setSelectedScripts] = useState<string[]>([]);
@@ -137,6 +138,13 @@ const HistoryPanel = () => {
     return `${day}/${month}/${year} ${hours}:${minutes}`;
   }
 
+  const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))({
+    [`& .${tooltipClasses.tooltip}`]: {
+      maxWidth: 210
+    }
+  });
   return (
     <Panel>
       <Header>
@@ -186,33 +194,36 @@ const HistoryPanel = () => {
                 onScriptItemSelected(script._id!);
               }}
             />
+
             <Card>
-              <Row>
-                <ScriptTitle>{script.title}</ScriptTitle>
-                <div>
-                  {script.isFavorite ? (
-                    <FaStar
-                      onClick={() => {
-                        markUnmarkFavorite(
-                          UNMARK_FAVORITE_API_URL + script._id
-                        );
-                      }}
-                      style={{ cursor: "pointer" }}
-                    />
-                  ) : (
-                    <AiOutlineStar
-                      onClick={() => {
-                        markUnmarkFavorite(MARK_FAVORITE_API_URL + script._id);
-                      }}
-                      style={{ cursor: "pointer" }}
-                    />
-                  )}
-                </div>
-              </Row>
-              <ScriptBody>{script.code}</ScriptBody>
-              <ScriptDate>
-                Last updated at: {formatDate(script.lastUpdatedAt!)}
-              </ScriptDate>
+              <CustomWidthTooltip title={script.description} placement="left" arrow>
+                <Row>
+                  <ScriptTitle>{script.title}</ScriptTitle>
+                  <div>
+                    {script.isFavorite ? (
+                      <FaStar
+                        onClick={() => {
+                          markUnmarkFavorite(
+                            UNMARK_FAVORITE_API_URL + script._id
+                          );
+                        }}
+                        style={{ cursor: "pointer" }}
+                      />
+                    ) : (
+                      <AiOutlineStar
+                        onClick={() => {
+                          markUnmarkFavorite(MARK_FAVORITE_API_URL + script._id);
+                        }}
+                        style={{ cursor: "pointer" }}
+                      />
+                    )}
+                  </div>
+                </Row>
+                <ScriptBody>{script.code}</ScriptBody>
+                <ScriptDate>
+                  Last updated at: {formatDate(script.lastUpdatedAt!)}
+                </ScriptDate>
+              </CustomWidthTooltip>
             </Card>
           </ListItem>
         );
