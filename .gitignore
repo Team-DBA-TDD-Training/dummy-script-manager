@@ -51,6 +51,8 @@ Thumbs.db
 *.wmv
 
 # environment variables
+.env
+package-lock.json
 .env*
 
 # Elastic Beanstalk Files

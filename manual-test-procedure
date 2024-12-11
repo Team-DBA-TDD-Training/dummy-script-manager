@@ -1,0 +1,40 @@
+Manual test procedure
+
+Scenario 1: Create script
+1. Inform script name
+2. Inform script description
+3. Inform script
+4. Click 'Save Script'
+5. Click 'Show History'
+6. History pane opens and the newly saved script is present
+
+Scenario 2: Edit script
+Prerequisites: At least one script is available
+1. In the History panel select one script by clicking the checkbox
+2. Click the edit icon
+3. The script opens in the editor and the fields name and description are correctly populated
+4. Edit one of the fields
+5. Click 'Save Script'
+6. The script updates in the side panel
+7. 'Last updated at' date updates
+
+Scenario 3: Delete one script
+Prerequisites: At least one script is available
+1. In the History panel select one script by clicking the checkbox
+2. Click the delete icon
+3. Script is removed from the History panel
+
+Scenario 4: Mark/Unmark script as favorite
+Prerequisites: At least one script is available
+1. In the side panel mark a script as favorite by click the star icon
+2. The star icon changes color to black
+3. Click the star icon again
+4. The star icon goes back to the initial state
+
+Scenario 5: Show only scripts marked favorites
+Prerequisites: Two or more scripts are available and at least one of them is marked as favorite
+1. Open the History panel
+2. Toggle on the 'Favorites only'
+3. Only scripts marked as favorite are displayed
+4. Toggle off the 'Favorites only'
+5. All scripts are displayed
