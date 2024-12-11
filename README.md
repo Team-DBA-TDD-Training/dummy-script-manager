@@ -118,3 +118,5 @@ The backend should start running in the following URL: [http://localhost:5000](h
 
 The frontend should start running in the following URL: [http://localhost:5173/](http://localhost:5173/)
 
+### Manual Testing
+[Link to the Manual Test Procedure](manual-test-procedure)
