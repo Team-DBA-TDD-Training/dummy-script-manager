@@ -1,4 +1,4 @@
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+export const API_BASE_URL = 'http://localhost:5001/api/scripts';
 
 export const FETCH_ALL_SCRIPTS_API_URL = API_BASE_URL + "/";
 

@@ -1,45 +1,28 @@
-import { Script } from "../Script.ts";
-import styled from "styled-components";
-import { FaEdit, FaStar } from "react-icons/fa";
-import { AiOutlineStar, AiTwotoneDelete } from "react-icons/ai";
-import Switch from "@mui/material/Switch";
 import { CloseOutlined } from "@mui/icons-material";
-import { useCallback, useEffect, useState } from "react";
+import Switch from "@mui/material/Switch";
+import { useState } from "react";
+import { AiOutlineStar, AiTwotoneDelete } from "react-icons/ai";
+import { FaEdit, FaStar } from "react-icons/fa";
+import styled from "styled-components";
+import { useAppContext } from "../AppContextProvider.tsx";
+import { useScripts } from "../hooks/scripts.tsx";
 import {
   DELETE_SCRIPTS_API_URL,
-  FETCH_ALL_SCRIPTS_API_URL,
   MARK_FAVORITE_API_URL,
-  UNMARK_FAVORITE_API_URL,
+  UNMARK_FAVORITE_API_URL
 } from "../REQUEST_URLs.ts";
-import { useAppContext } from "../AppContextProvider.tsx";
+import { Script } from "../Script.ts";
 
 const HistoryPanel = () => {
   const [selectedScripts, setSelectedScripts] = useState<string[]>([]);
   const [favoritesOnly, setFavoritesOnly] = useState<boolean>(false);
   const [selectionLength, setSelectionLength] = useState<number>(0);
+  const {scripts, loading: loadingScripts} = useScripts();
   const { state, dispatch } = useAppContext();
 
   const toggleHistoryPanel = () => {
     dispatch({ type: "TOGGLE" });
   };
-  const refreshScriptHistory = useCallback(() => {
-    fetch(FETCH_ALL_SCRIPTS_API_URL)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        if (data) {
-          const scripts = data as unknown as Script[];
-          dispatch({ type: "UPDATE_SCRIPTS", payload: scripts });
-        }
-      });
-  }, [dispatch]);
-
-  useEffect(() => {
-    refreshScriptHistory();
-  }, [refreshScriptHistory]);
 
   const OnEditClicked = () => {
     const currentScript = state.scripts.find(
@@ -92,6 +75,7 @@ const HistoryPanel = () => {
       setSelectedScripts(selectedScripts);
     }
   };
+
   const markUnmarkFavorite = (URL: string) => {
     const requestOptions = {
       method: "PUT",
@@ -164,9 +148,10 @@ const HistoryPanel = () => {
           <Switch />
         </StyledSwitch>
       </Row>
+      {loadingScripts && <ListItem>Loading scripts</ListItem>}
       {(favoritesOnly
-        ? state.scripts.filter((x) => x.isFavorite)
-        : state.scripts
+        ? scripts.filter((x) => x.isFavorite)
+        : scripts
       ).map((script) => {
         return (
           <ListItem key={script._id}>
