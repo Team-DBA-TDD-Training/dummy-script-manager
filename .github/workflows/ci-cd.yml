@@ -72,7 +72,7 @@ jobs:
       - name: Run EB Init
         run: |
           cd backend
-          eb init -p node.js -r us-east-1 --application-name tdd-team-training
+          eb init -p "Node.js 22 running on 64bit Amazon Linux 2023" -r "us-east-1" "script-manager"
 
       - name: Deploy to AWS Elastic Beanstalk
         run: |
