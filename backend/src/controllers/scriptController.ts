@@ -7,10 +7,11 @@ export const createScript = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const { title, code, description,isFavorite  } = req.body;
+    const { title, code, description, isFavorite  } = req.body;
     const script = new Script({ title, code,  description, isFavorite });
     await script.save();
-    res.status(201).json(script);
+    const refreshedData = await Script.find();
+    res.status(201).json(refreshedData);
   } catch (error) {
     next(error);
   }
@@ -52,33 +53,79 @@ export const updateScript = async (
   next: NextFunction
 ): Promise<void> =>{
   try {
-    const { name, code } = req.body;
+    const { title, code, description, lastUpdatedAt } = req.body;
     const script = await Script.findByIdAndUpdate(
       req.params.id,
-      { name, code },
+      { title, code, description, lastUpdatedAt },
       { new: true }
     );
+    const refreshedData = await Script.find();
     if (!script) {
       res.status(404).json({ message: "Script not found" });
     } else {
-      res.status(200).json(script);
+      res.status(200).json(refreshedData);
     }
   } catch (error) {
     next(error);
   }
 };
 
+export const markFavorite = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> =>{
+  try {
+    const script = await Script.findByIdAndUpdate(
+      req.params.id,
+      { isFavorite: true},
+      { new: true }
+    );
+    const refreshedData = await Script.find();
+    if (!script) {
+      res.status(404).json({ message: "Encountered error" });
+    } else {
+      res.status(200).json(refreshedData);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const unMarkFavorite = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> =>{
+  try {
+    const script = await Script.findByIdAndUpdate(
+      req.params.id,
+      { isFavorite: false},
+      { new: true }
+    );
+    const refreshedData = await Script.find();
+    if (!script) {
+      res.status(404).json({ message: "Encountered error" });
+    } else {
+      res.status(200).json(refreshedData);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
 export const deleteScript = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) : Promise<void> => {
   try {
-    const script = await Script.findByIdAndDelete(req.params.id);
+    const ids = req.params.ids.split(',');
+    const script = await Script.deleteMany({ _id: { $in: ids } });
+    const refreshedData = await Script.find();
     if (!script) {
         res.status(404).json({ message: "Script not found" });
     } else {
-        res.status(200).json({ message: "Script deleted successfully" });
+        res.status(200).json(refreshedData);
     }
   } catch (error) {
     next(error);

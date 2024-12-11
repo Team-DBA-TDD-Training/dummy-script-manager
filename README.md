@@ -50,7 +50,8 @@
 2. The user can view saved scripts.
 3. The saved scripts can be updated as needed.
 4. The user can delete a script when it is no longer needed.
-5. The user can create scripts with assistance of AI Helper.
+5. Scripts can be marked as favorite and the user can toggle between showing all scripts or favorite scripts only.
+6. The user can create scripts with assistance of AI Helper.
 
 ![Use Cases Diagram](script-manager-use-case.png)
 
@@ -59,15 +60,15 @@
 Before you start:
 
 - Make sure Node.js is installed running the following command:
-```
-node --version
-```
+
+        node --version
+
 
 - Make sure npm is installed running the following command:
-```
-npm --version
-```
-If needed, follow the official documentation [here](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs) to install both Node.js and npm.
+
+        npm --version
+
+    If needed, follow the official documentation [here](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs) to install both Node.js and npm.
 
 - Make sure to set up git in your local machine, the official documentation can be found [here](https://docs.github.com/en/get-started/getting-started-with-git/set-up-git).
 
@@ -76,49 +77,44 @@ If needed, follow the official documentation [here](https://nodejs.org/en/learn/
 ### Backend
 - Create a test mongodb database on your local machine
 - Create '.env' file inside the backend folder with the command:
-```
-touch .env
- ```
 
-Add the following credential to the created file
-```
-MONGO_DB_URI=<your local URI goes here>
-NODE_ENV=development
-PORT=5000
-```
+        touch .env
+
+
+    Add the following credential to the created file
+
+        MONGO_DB_URI=<your local URI goes here>
+        NODE_ENV=development
+        PORT=5000
 
 - Open a terminal and navigate to the backend folder:
-```
-cd backend/
-```
+
+        cd backend/
+
 
 - Run the following commands:
 
-```
-npm install 
-```
 
-```
-npm run dev
-```
+        npm install 
+
+        npm run dev
+
 
 The backend should start running in the following URL: [http://localhost:5000](http://localhost:5000)
 
 ### Frontend
 
 - Open a terminal and navigate to the frontend folder:
-```
-cd frontend/
-```
+
+        cd frontend/
+
 
 - Run the following commands:
-```
-npm install 
-```
 
-```
-npm run dev
-```
+        npm install 
+
+        npm run dev
+
 
 The frontend should start running in the following URL: [http://localhost:5173/](http://localhost:5173/)
 

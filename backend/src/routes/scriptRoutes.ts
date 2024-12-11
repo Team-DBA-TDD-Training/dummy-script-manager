@@ -4,7 +4,7 @@ import {
   getScriptById,
   createScript,
   updateScript,
-  deleteScript,
+  deleteScript, markFavorite, unMarkFavorite
 } from "../controllers/scriptController";
 import { generateScript } from '../controllers/aiController';
 
@@ -16,6 +16,8 @@ router.post('/ai', generateScript)
 router.get("/:id", getScriptById); // GET /api/scripts/:id
 router.post("/", createScript); // POST /api/scripts
 router.put("/:id", updateScript); // PUT /api/scripts/:id
-router.delete("/:id", deleteScript); // DELETE /api/scripts/:id
+router.delete("/:ids", deleteScript); // DELETE /api/scripts/:id
+router.put("/markFavorite/:id", markFavorite); // PUT /api/scripts/markFavorite/:id
+router.put("/unMarkFavorite/:id", unMarkFavorite); // PUT /api/scripts/unMarkFavorite/:id
 
 export default router;
