@@ -2,6 +2,7 @@ import styled from "styled-components";
 import TextInputComponent from "./TextInputComponent";
 import TextAreaComponent from "./TextAreaComponent";
 import ToolBar from "./ToolBar";
+import AiHelper from './AiHelper';
 import HistoryPanel from "./HistoryPanel";
 import { useAppContext } from "../AppContextProvider";
 
@@ -62,7 +63,7 @@ const MainScreen = () => {
           width={"541px"}
           height={"300px"}
         ></TextAreaComponent>
-        <a>Ask AI Helper</a>
+        <AiHelper callback={handleScriptCode}/>
       </StyledContainer>
       <StyledContainer>{state.showHistory && <HistoryPanel />}</StyledContainer>
     </StyledBackground>
