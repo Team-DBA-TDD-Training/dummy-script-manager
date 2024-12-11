@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-frontend:
+  frontend:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -25,16 +25,23 @@ jobs:
         run: |
           npm run build:frontend
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
       - name: Deploy to S3
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
           npm run deploy:frontend
 
-  build-backend:
+  backend:
     runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -62,10 +69,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install awsebcli
 
+      - name: Run EB Init
+        run: |
+          cd backend
+          eb init -p node.js -r us-east-1 --application-name tdd-team-training
+
       - name: Deploy to AWS Elastic Beanstalk
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: "us-east-1"
         run: |
           npm run deploy:backend
