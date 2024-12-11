@@ -7,7 +7,7 @@
     "dev": "nodemon src/server.ts",
     "build": "tsc",
     "test": "jasmine",
-    "deploy": ""
+    "deploy": "eb deploy"
   },
   "author": "",
   "license": "ISC",

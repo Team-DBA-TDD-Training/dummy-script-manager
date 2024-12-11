@@ -1,5 +1,6 @@
 {
   "name": "tdd-administration-team",
+  "private": true,
   "scripts": {
     "install": "npm run install:frontend && npm run install:backend",
     "install:frontend": "cd frontend && npm install",
