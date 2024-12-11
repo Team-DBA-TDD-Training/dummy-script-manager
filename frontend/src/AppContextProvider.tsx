@@ -23,7 +23,7 @@ const initialState: State = {
     title: "",
     code: "",
   },
-  isNew: false,
+  isNew: true,
   hasUnsavedChanged: false,
 };
 

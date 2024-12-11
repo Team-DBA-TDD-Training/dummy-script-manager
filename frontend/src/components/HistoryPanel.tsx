@@ -9,7 +9,7 @@ import {
   DELETE_SCRIPTS_API_URL,
   FETCH_ALL_SCRIPTS_API_URL,
   MARK_FAVORITE_API_URL,
-  UNMARK_FAVORITE_API_URL,
+  UNMARK_FAVORITE_API_URL
 } from "../REQUEST_URLs.ts";
 import { useAppContext } from "../AppContextProvider.tsx";
 
@@ -49,23 +49,33 @@ const HistoryPanel = () => {
     if (currentScript) {
       dispatch({
         type: "SET_IS_NEW",
-        payload: false,
+        payload: false
       });
       dispatch({
         type: "SET_CURRENT_SCRIPT",
-        payload: currentScript,
+        payload: currentScript
       });
     }
   };
 
   const onDeleteClicked = () => {
     if (selectedScripts.length > 0) {
+      if (state.currentScript._id && selectedScripts.includes(state.currentScript._id)) {
+        dispatch({
+          type: "SET_CURRENT_SCRIPT",
+          payload: { title: "", description: "", code: "", _id: "" }
+        });
+        dispatch({
+          type: "SET_IS_NEW",
+          payload: true
+        });
+      }
       deleteScripts(selectedScripts.toString());
     }
   };
   const deleteScripts = (ids: string) => {
     const requestOptions = {
-      method: "DELETE",
+      method: "DELETE"
     };
     const deleteReq = DELETE_SCRIPTS_API_URL + ids;
     fetch(deleteReq, requestOptions)
@@ -97,8 +107,8 @@ const HistoryPanel = () => {
       method: "PUT",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     };
     fetch(URL, requestOptions)
       .then((response) => {
@@ -165,8 +175,8 @@ const HistoryPanel = () => {
         </StyledSwitch>
       </Row>
       {(favoritesOnly
-        ? state.scripts.filter((x) => x.isFavorite)
-        : state.scripts
+          ? state.scripts.filter((x) => x.isFavorite)
+          : state.scripts
       ).map((script) => {
         return (
           <ListItem key={script._id}>
