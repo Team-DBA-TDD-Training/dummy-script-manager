@@ -42,7 +42,7 @@ const StyledTextInput = styled.textarea<InputProps>`
   box-shadow: none;
   border: 1px solid;
   border-color: #c2bfbf;
-  font-size: 21px;
+  font-size: 16px;
   resize: vertical;
 `;
 

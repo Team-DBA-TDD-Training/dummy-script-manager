@@ -48,20 +48,22 @@ const MainScreen = () => {
           value={state.currentScript.title}
           width={"541px"}
           height={"40px"}
-          placeholder="script name"
+          isBold={true}
+          placeholder="Script name"
         ></TextInputComponent>
         <TextInputComponent
           onChange={handleScriptDescription}
           value={state.currentScript.description}
           width={"541px"}
           height={"40px"}
-          placeholder="script description"
+          placeholder="Script description"
         ></TextInputComponent>
         <TextAreaComponent
           onChange={handleScriptCode}
           value={state.currentScript.code}
           width={"541px"}
           height={"300px"}
+          placeholder={"Write your script here.."}
         ></TextAreaComponent>
         <AiHelper callback={handleScriptCode}/>
       </StyledContainer>
