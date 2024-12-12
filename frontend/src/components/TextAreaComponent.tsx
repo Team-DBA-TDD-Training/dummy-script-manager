@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export interface TextInputProps {
+  placeholder?: string;
   width: string;
   height: string;
   value?: string;
@@ -16,6 +17,7 @@ const TextAreaComponent = (props: TextInputProps) => {
 
   return (
     <StyledTextInput
+      placeholder={props.placeholder}
       onChange={handleChange}
       value={props.value}
       $width={props.width}

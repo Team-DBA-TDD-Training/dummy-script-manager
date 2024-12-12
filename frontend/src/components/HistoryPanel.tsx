@@ -9,7 +9,7 @@ import {
   DELETE_SCRIPTS_API_URL,
   FETCH_ALL_SCRIPTS_API_URL,
   MARK_FAVORITE_API_URL,
-  UNMARK_FAVORITE_API_URL
+  UNMARK_FAVORITE_API_URL,
 } from "../REQUEST_URLs.ts";
 import { useAppContext } from "../AppContextProvider.tsx";
 import { Tooltip, tooltipClasses, TooltipProps } from "@mui/material";
@@ -50,25 +50,28 @@ const HistoryPanel = () => {
     if (currentScript) {
       dispatch({
         type: "SET_IS_NEW",
-        payload: false
+        payload: false,
       });
       dispatch({
         type: "SET_CURRENT_SCRIPT",
-        payload: currentScript
+        payload: currentScript,
       });
     }
   };
 
   const onDeleteClicked = () => {
     if (selectedScripts.length > 0) {
-      if (state.currentScript._id && selectedScripts.includes(state.currentScript._id)) {
+      if (
+        state.currentScript._id &&
+        selectedScripts.includes(state.currentScript._id)
+      ) {
         dispatch({
           type: "SET_CURRENT_SCRIPT",
-          payload: { title: "", description: "", code: "", _id: "" }
+          payload: { title: "", description: "", code: "", _id: "" },
         });
         dispatch({
           type: "SET_IS_NEW",
-          payload: true
+          payload: true,
         });
       }
       deleteScripts(selectedScripts.toString());
@@ -76,7 +79,7 @@ const HistoryPanel = () => {
   };
   const deleteScripts = (ids: string) => {
     const requestOptions = {
-      method: "DELETE"
+      method: "DELETE",
     };
     const deleteReq = DELETE_SCRIPTS_API_URL + ids;
     fetch(deleteReq, requestOptions)
@@ -108,8 +111,8 @@ const HistoryPanel = () => {
       method: "PUT",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     };
     fetch(URL, requestOptions)
       .then((response) => {
@@ -142,9 +145,10 @@ const HistoryPanel = () => {
     <Tooltip {...props} classes={{ popper: className }} />
   ))({
     [`& .${tooltipClasses.tooltip}`]: {
-      maxWidth: 210
-    }
+      maxWidth: 210,
+    },
   });
+
   return (
     <Panel>
       <Header>
@@ -183,8 +187,8 @@ const HistoryPanel = () => {
         </StyledSwitch>
       </Row>
       {(favoritesOnly
-          ? state.scripts.filter((x) => x.isFavorite)
-          : state.scripts
+        ? state.scripts.filter((x) => x.isFavorite)
+        : state.scripts
       ).map((script) => {
         return (
           <ListItem key={script._id}>
@@ -196,33 +200,41 @@ const HistoryPanel = () => {
             />
 
             <Card>
-              <CustomWidthTooltip title={script.description} placement="left" arrow>
-                <Row>
-                  <ScriptTitle>{script.title}</ScriptTitle>
-                  <div>
-                    {script.isFavorite ? (
-                      <FaStar
-                        onClick={() => {
-                          markUnmarkFavorite(
-                            UNMARK_FAVORITE_API_URL + script._id
-                          );
-                        }}
-                        style={{ cursor: "pointer" }}
-                      />
-                    ) : (
-                      <AiOutlineStar
-                        onClick={() => {
-                          markUnmarkFavorite(MARK_FAVORITE_API_URL + script._id);
-                        }}
-                        style={{ cursor: "pointer" }}
-                      />
-                    )}
-                  </div>
-                </Row>
-                <ScriptBody>{script.code}</ScriptBody>
-                <ScriptDate>
-                  Last updated at: {formatDate(script.lastUpdatedAt!)}
-                </ScriptDate>
+              <CustomWidthTooltip
+                title={script.description}
+                placement="left"
+                arrow
+              >
+                <>
+                  <Row>
+                    <ScriptTitle>{script.title}</ScriptTitle>
+                    <div>
+                      {script.isFavorite ? (
+                        <FaStar
+                          onClick={() => {
+                            markUnmarkFavorite(
+                              UNMARK_FAVORITE_API_URL + script._id
+                            );
+                          }}
+                          style={{ cursor: "pointer" }}
+                        />
+                      ) : (
+                        <AiOutlineStar
+                          onClick={() => {
+                            markUnmarkFavorite(
+                              MARK_FAVORITE_API_URL + script._id
+                            );
+                          }}
+                          style={{ cursor: "pointer" }}
+                        />
+                      )}
+                    </div>
+                  </Row>
+                  <ScriptBody>{script.code}</ScriptBody>
+                  <ScriptDate>
+                    Last updated at: {formatDate(script.lastUpdatedAt!)}
+                  </ScriptDate>
+                </>
               </CustomWidthTooltip>
             </Card>
           </ListItem>
