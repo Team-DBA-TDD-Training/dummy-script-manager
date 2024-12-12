@@ -205,7 +205,7 @@ const HistoryPanel = () => {
                 placement="left"
                 arrow
               >
-                <>
+                <div>
                   <Row>
                     <ScriptTitle>{script.title}</ScriptTitle>
                     <div>
@@ -234,7 +234,7 @@ const HistoryPanel = () => {
                   <ScriptDate>
                     Last updated at: {formatDate(script.lastUpdatedAt!)}
                   </ScriptDate>
-                </>
+                </div>
               </CustomWidthTooltip>
             </Card>
           </ListItem>
