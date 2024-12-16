@@ -3,7 +3,7 @@ name: Commit stage pipeline
 on:
   push:
     branches:
-      - !main
+      - '!main'
       
 jobs:
 
