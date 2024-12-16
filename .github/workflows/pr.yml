@@ -25,3 +25,7 @@ jobs:
       - name: Build Backend
         run: |
           npm run build:backend
+
+      - name: Check lint in backend
+        run: |
+          npm run lint:backend

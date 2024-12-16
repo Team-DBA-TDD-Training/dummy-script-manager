@@ -1,7 +1,7 @@
 import { OpenAI } from "openai";
 import { Request, Response, NextFunction } from "express";
 
-export const generateScript = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const generateScript = async (req: Request, res: Response): Promise<void> => {
   const { message } = req.body;
   const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
