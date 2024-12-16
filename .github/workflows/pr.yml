@@ -1,0 +1,31 @@
+name: Commit stage pipeline
+
+on:
+  push:
+    branches:
+      - !main
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          npm run install:backend
+
+      - name: Build Backend
+        run: |
+          npm run build:backend
