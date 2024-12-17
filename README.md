@@ -2,6 +2,10 @@
 
     - Project Members: Aleksei Beliaev, Anam Sadiq, Deniz Kartal, Erdenezul Batmunkh, Marina Valcanaia
 
+## Project Board
+
+[Link to the project board](https://github.com/orgs/Team-DBA-TDD-Training/projects/1)
+
 ## Architecture
 
 ![System Architecture](system.png)
