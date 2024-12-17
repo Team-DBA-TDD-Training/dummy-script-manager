@@ -1,10 +1,6 @@
+#### (This project is licensed under the terms of the MIT license)
+
 # Script Manager
-
-    - Project Members: Aleksei Beliaev, Anam Sadiq, Deniz Kartal, Erdenezul Batmunkh, Marina Valcanaia
-
-## Project Board
-
-[Project board](https://github.com/orgs/Team-DBA-TDD-Training/projects/1)
 
 ## Contributors
 
@@ -20,6 +16,10 @@
 
 [Marina Merini Valcanaia](https://github.com/orgs/Team-DBA-TDD-Training/people/marinamv885)
 
+
+## Project Board
+
+[Project board](https://github.com/orgs/Team-DBA-TDD-Training/projects/1)
 
 ## Background Context
 
