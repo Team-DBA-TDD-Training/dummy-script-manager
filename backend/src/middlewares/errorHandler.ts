@@ -1,14 +1,8 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 
-export const errorHandler = (
-  err: any,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const statusCode = err.status || 500;
-  res.status(statusCode).json({
+export const errorHandler = (err: Error, _: Request, res: Response) => {
+  console.error(err);
+  res.status(500).json({
     error: "Internal Server Error",
-    message: err.message || "An unexpected error occurred",
   });
 };
