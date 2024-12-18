@@ -5,19 +5,19 @@ const ScriptSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    unique: true
+    unique: true,
   },
   description: {
     type: String,
-    trim: true
+    trim: true,
   },
   code: {
     type: String,
-    required: true
+    required: true,
   },
   isFavorite: {
     type: Boolean,
-    default: false
+    default: false,
   },
   createdAt: {
     type: Date,
@@ -26,7 +26,7 @@ const ScriptSchema = new mongoose.Schema({
   lastUpdatedAt: {
     type: Date,
     default: Date.now,
-}
+  },
 });
 
 export default mongoose.model("Script", ScriptSchema);
