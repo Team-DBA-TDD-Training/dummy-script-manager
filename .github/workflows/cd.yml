@@ -35,6 +35,7 @@ jobs:
 
       - name: Build, tag, and push the image to Amazon ECR
         id: build-image
+        working-directory: ./backend
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
