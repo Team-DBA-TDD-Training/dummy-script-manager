@@ -6,7 +6,7 @@ import Script from "../models/script";
 describe("Script controller", () => {
   const app = express();
   app.use("/api/scripts", scriptRoutes);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   let findSpy: jest.SpyInstance;
 
   describe("get scripts", () => {
