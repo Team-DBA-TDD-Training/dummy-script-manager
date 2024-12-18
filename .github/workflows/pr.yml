@@ -26,5 +26,6 @@ jobs:
           npm run build:backend
 
       - name: Check lint in backend
+        working-directory: ./backend
         run: |
-          npm run lint:backend
+          npm run lint
