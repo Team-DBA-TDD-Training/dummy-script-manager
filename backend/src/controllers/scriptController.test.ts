@@ -13,10 +13,22 @@ describe("Script controller", () => {
     beforeEach(() => {
       findSpy = jest.spyOn(Script, "find").mockResolvedValue([]);
     });
+
     it("should return 200", async () => {
       const response = await request(app).get("/api/scripts");
       expect(response.status).toEqual(200);
       expect(findSpy).toHaveBeenCalledWith();
     });
+
+    /**
+     * Check list of scripts
+     */
+    it('should return list of scripts', () => {
+      expect('implement me').toBe('implement me')
+    })
+  });
+  
+  describe('create script', () => {
+    
   });
 });
