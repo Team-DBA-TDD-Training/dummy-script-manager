@@ -1,8 +1,7 @@
-import { createScript } from './scriptController';
-import request from 'supertest';
 import express from 'express';
-import scriptRoutes from '../routes/scriptRoutes';
+import request from 'supertest';
 import Script from '../models/script';
+import scriptRoutes from '../routes/scriptRoutes';
 
 
 describe('Script controller', () => {
