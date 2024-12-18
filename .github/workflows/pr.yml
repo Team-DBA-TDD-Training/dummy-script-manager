@@ -2,11 +2,10 @@ name: Commit stage pipeline
 
 on:
   push:
-    branches:
-      - !main
+    branches-ignore:
+      - main
       
 jobs:
-
   backend:
     runs-on: ubuntu-latest
     steps:
@@ -25,3 +24,8 @@ jobs:
       - name: Build Backend
         run: |
           npm run build:backend
+
+      - name: Check lint in backend
+        working-directory: ./backend
+        run: |
+          npm run lint

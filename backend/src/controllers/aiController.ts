@@ -1,5 +1,5 @@
-import { OpenAI } from "openai";
 import { Request, Response } from "express";
+import { OpenAI } from "openai";
 
 export const generateScript = async (
   req: Request,

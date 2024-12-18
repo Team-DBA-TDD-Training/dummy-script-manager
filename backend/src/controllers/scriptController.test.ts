@@ -16,6 +16,7 @@ describe("Script controller", () => {
     it("should return 200", async () => {
       const response = await request(app).get("/api/scripts");
       expect(response.status).toEqual(200);
+      expect(findSpy).toHaveBeenCalledWith();
     });
   });
 });
