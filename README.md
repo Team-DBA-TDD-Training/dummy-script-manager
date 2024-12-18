@@ -1,6 +1,32 @@
+#### (This project is licensed under the terms of the MIT license)
+
 # Script Manager
 
-    - Project Members: Aleksei Beliaev, Anam Sadiq, Deniz Kartal, Erdenezul Batmunkh, Marina Valcanaia
+## Contributors
+
+(in alphabetical order)
+
+[Aleksei Beliaev](https://github.com/orgs/Team-DBA-TDD-Training/people/AleksBeliaevS3T)
+
+[Anam Sadiq](https://github.com/orgs/Team-DBA-TDD-Training/people/anamsadiq)
+
+[Deniz Kartal](https://github.com/orgs/Team-DBA-TDD-Training/people/dkartal)
+
+[Erdenezul Batmunkh](https://github.com/orgs/Team-DBA-TDD-Training/people/erden3zul-3t)
+
+[Marina Merini Valcanaia](https://github.com/orgs/Team-DBA-TDD-Training/people/marinamv885)
+
+
+## Project Board
+
+[Project board](https://github.com/orgs/Team-DBA-TDD-Training/projects/1)
+
+## Background Context
+
+This is a Test Driven Development (TDD) Sandbox project, being developed as part of TDD training offered by
+[Valentina Jemuović](https://www.linkedin.com/in/valentinajemuovic) via [Optivem Journal](https://journal.optivem.com/).
+Here we simulate Legacy Code in a Sandbox Project, so that we can learn to apply TDD transformation to the legacy code.
+This will consequently train and enable us to apply the same transformation to the Real Life Project.
 
 ## Architecture
 
