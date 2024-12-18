@@ -2,8 +2,8 @@ name: Commit stage pipeline
 
 on:
   push:
-    branches:
-      - '!main'
+    branches-ignore:
+      - main
       
 jobs:
   backend:
