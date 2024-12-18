@@ -4,7 +4,7 @@ name: Continious Delivery Pipeline
 on:
   push:
     branches:
-      - 44-create-a-registry-for-artifacts
+      - main
 
 jobs:
   build-image:
