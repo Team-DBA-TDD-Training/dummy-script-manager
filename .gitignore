@@ -53,6 +53,7 @@ Thumbs.db
 # environment variables
 .env
 package-lock.json
+yarn.lock
 .env*
 
 # Elastic Beanstalk Files
