@@ -8,7 +8,7 @@
     "build": "tsc",
     "test": "jest",
     "deploy": "eb deploy",
-    "lint": "npx eslint . --fix"
+    "lint": "npx eslint src/ --fix"
   },
   "author": "",
   "license": "ISC",
