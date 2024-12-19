@@ -42,9 +42,9 @@ jobs:
           npm run test:backend:contract
 
       - name: Check lint in backend
-          working-directory: ./backend
-          run: |
-            npm run lint
+        working-directory: ./backend
+        run: |
+          npm run lint
 
   frontend:
     runs-on: ubuntu-latest
