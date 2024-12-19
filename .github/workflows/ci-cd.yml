@@ -27,6 +27,22 @@ jobs:
         run: |
           npm run build:frontend
 
+       - name: Run Unit Tests
+        run: |
+          npm run test:frontend:unit
+
+      - name: Run Narrow Integration Tests
+        run: |
+          npm run test:frontend:integration
+
+      - name: Run Component Tests
+        run: |
+          npm run test:frontend:component
+
+      - name: Run Contract Provider Verification Tests
+        run: |
+          npm run test:frontend:contract
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -60,6 +76,22 @@ jobs:
       - name: Build Backend
         run: |
           npm run build:backend
+
+       - name: Run Unit Tests
+        run: |
+          npm run test:backend:unit
+
+      - name: Run Narrow Integration Tests
+        run: |
+          npm run test:backend:integration
+
+      - name: Run Component Tests
+        run: |
+          npm run test:backend:component
+
+      - name: Run Contract Provider Verification Tests
+        run: |
+          npm run test:backend:contract
 
       - name: Install Python 3.9
         uses: actions/setup-python@v2
