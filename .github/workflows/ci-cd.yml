@@ -27,7 +27,7 @@ jobs:
         run: |
           npm run build:frontend
 
-       - name: Run Unit Tests
+      - name: Run Unit Tests
         run: |
           npm run test:frontend:unit
 
@@ -77,7 +77,7 @@ jobs:
         run: |
           npm run build:backend
 
-       - name: Run Unit Tests
+      - name: Run Unit Tests
         run: |
           npm run test:backend:unit
 
