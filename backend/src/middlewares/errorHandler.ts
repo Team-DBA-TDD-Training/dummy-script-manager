@@ -1,13 +1,8 @@
-import { Request, Response, NextFunction } from "express";
+/* typescript-eslint-disable no-implicit-any */
+import { Request, Response } from "express";
 
-export const errorHandler = (
-  err: any,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const statusCode = err.status || 500;
-  res.status(statusCode).json({
+export const errorHandler = (err: Error, _req: Request, res: Response) => {
+  res.status(500).json({
     error: "Internal Server Error",
     message: err.message || "An unexpected error occurred",
   });

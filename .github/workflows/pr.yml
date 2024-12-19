@@ -6,7 +6,6 @@ on:
       - main
       
 jobs:
-
   backend:
     runs-on: ubuntu-latest
     steps:
@@ -41,6 +40,11 @@ jobs:
       - name: Run Contract Provider Verification Tests
         run: |
           npm run test:backend:contract
+
+      - name: Check lint in backend
+          working-directory: ./backend
+          run: |
+            npm run lint
 
   frontend:
     runs-on: ubuntu-latest
