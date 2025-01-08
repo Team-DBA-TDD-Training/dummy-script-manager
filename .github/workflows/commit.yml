@@ -21,10 +21,10 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        run: npm install
+        run: npm run install:backend
 
       - name: Build project
-        run: npm run build
+        run: npm run build:backend
 
       - name: Login to AWS ECR
         uses: aws-actions/amazon-ecr-login@v1
