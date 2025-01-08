@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  test-and-build:
+  backend:
     runs-on: ubuntu-latest
     env:
       MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
@@ -26,8 +26,30 @@ jobs:
       - name: Install dependencies
         run: npm run install:backend
 
-      - name: Build project
-        run: npm run build:backend
+      - name: Build Backend
+        run: |
+          npm run build:backend
+
+      - name: Run Unit Tests
+        run: |
+          npm run test:backend:unit
+
+      - name: Run Narrow Integration Tests
+        run: |
+          npm run test:backend:integration
+
+      - name: Run Component Tests
+        run: |
+          npm run test:backend:component
+
+      - name: Run Contract Provider Verification Tests
+        run: |
+          npm run test:backend:contract
+
+      - name: Run linter
+        working-directory: ./backend
+        run: |
+          npm run lint:backend
 
       - name: Login to AWS ECR
         uses: aws-actions/amazon-ecr-login@v1
@@ -46,3 +68,40 @@ jobs:
           docker build -t $ECR_REPOSITORY .
           docker tag $ECR_REPOSITORY:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:latest
           docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:latest
+
+  frontend:
+    runs-on: ubuntu-latest
+    env:
+      VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          npm run install:frontend
+
+      - name: Build Frontend
+        run: |
+          npm run build:frontend
+
+      - name: Run Unit Tests
+        run: |
+          npm run test:frontend:unit
+
+      - name: Run Narrow Integration Tests
+        run: |
+          npm run test:frontend:integration
+
+      - name: Run Component Tests
+        run: |
+          npm run test:frontend:component
+
+      - name: Run Contract Provider Verification Tests
+        run: |
+          npm run test:frontend:contract
