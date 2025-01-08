@@ -11,6 +11,10 @@ on:
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
+    env:
+      PORT: ${{ vars.PORT }}
+      MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
+      OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
