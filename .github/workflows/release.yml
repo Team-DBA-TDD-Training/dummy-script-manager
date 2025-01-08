@@ -1,0 +1,59 @@
+name: Release Stage
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Deployment target (uat or prod)"
+        required: true
+        default: "uat"
+env:
+  EB_APPLICATION_NAME: script-manager
+  EB_PROD_ENV: script-manager-prod
+  EB_UAT_ENV: script-manager-uat
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Generate Dockerrun.aws.json
+        env:
+          NAME: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ vars.ECR_REPOSITORY }}:latest
+        run: |
+          cat > Dockerrun.aws.json << EOF
+          {
+            "AWSEBDockerrunVersion": "1",
+            "Image": {
+              "Name": "${NAME}",
+              "Update": "true"
+            },
+            "Ports": [
+              {
+                "ContainerPort": 3000,
+                "HostPort": 80
+              }
+            ]
+          }
+          EOF
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: ${{ env.EB_APPLICATION_NAME }}
+          environment_name: ${{ github.event.inputs.environment == 'uat' && env.EB_UAT_ENV || env.EB_PROD_ENV }}
+          VERSION_LABEL: "release-${{ github.run_number }}-${{ github.event.inputs.environment }}-$(date +%s)"
+          region: ${{ secrets.AWS_REGION }}
+          deployment_package: Dockerrun.aws.json
