@@ -1,10 +1,16 @@
 name: Release Stage
 
 on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+
   workflow_dispatch:
     inputs:
       environment:
-        description: "Deployment target (uat or prod)"
+        description: "Deployment target (acceptance, uat or prod)"
         required: true
         default: "uat"
 

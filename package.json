@@ -4,6 +4,7 @@
   "scripts": {
     "install:frontend": "cd frontend && npm install",
     "install:backend": "cd backend && npm install",
+    "install:system-test":"cd system-test && npm install",
     "dev:frontend": "cd frontend && npm run dev",
     "dev:backend": "cd backend && npm run dev",
     "start:frontend": "cd frontend && npm run start",
@@ -20,6 +21,10 @@
     "test:backend:unit": "cd backend && npm run test src/tests/unit",
     "test:smoke": "cd system_tests && npm run test",
     "test:backend": "cd backend && npm run test",
+    "test:acceptance": "cd system-test && npm run test acceptance",
+    "test:e2e": "cd system-test && npm run test e2e",
+    "test:external-contract": "cd system-test && npm run test external-contract",
+    "test:smoke": "cd system-test && npm run test smoke",
     "lint:backend": "cd backend && npm run lint",
     "deploy:frontend": "cd frontend && npm run deploy",
     "deploy:backend": "cd backend && npm run deploy"
