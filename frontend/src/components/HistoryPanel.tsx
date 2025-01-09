@@ -150,7 +150,7 @@ const HistoryPanel = () => {
   });
 
   return (
-    <Panel>
+    <Panel className="history">
       <Header>
         <div>History</div>
         <CloseOutlined
