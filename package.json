@@ -18,6 +18,7 @@
     "test:backend:contract": "cd backend && npm run test src/tests/contract",
     "test:backend:integration": "cd backend && npm run test src/tests/integration",
     "test:backend:unit": "cd backend && npm run test src/tests/unit",
+    "test:smoke": "cd system_tests && npm run test",
     "test:backend": "cd backend && npm run test",
     "lint:backend": "cd backend && npm run lint",
     "deploy:frontend": "cd frontend && npm run deploy",
