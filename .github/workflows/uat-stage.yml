@@ -8,6 +8,7 @@ jobs:
     uses: ./.github/workflows/release.yml
     with:
       environment: uat
+    secrets: inherit
 
   system-tests:
     runs-on: ubuntu-latest
