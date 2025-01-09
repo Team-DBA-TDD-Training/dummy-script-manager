@@ -19,6 +19,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 22
+          
+      - name: Install testing dependencies
+        run:
+          npm install
 
       - name: Login to AWS ECR
         uses: aws-actions/amazon-ecr-login@v1
