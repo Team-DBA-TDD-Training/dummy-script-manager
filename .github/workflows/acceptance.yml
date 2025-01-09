@@ -51,6 +51,10 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: | 
           docker-compose up -d
+      - name: Run acceptance tests
+        working-directory: ./system-test
+        run: |
+          
 
       - name: Stop docker-compose
         working-directory: ./system-test
