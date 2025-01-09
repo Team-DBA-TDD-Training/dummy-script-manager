@@ -9,7 +9,7 @@ services:
 
   # Node api service
   api:
-    image: 615299730005.dkr.ecr.eu-central-1.amazonaws.com/tdd-backend
+    image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY
     ports:
       # local->container
       - 3000:3000
