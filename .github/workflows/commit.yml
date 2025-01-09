@@ -47,7 +47,6 @@ jobs:
           npm run test:backend:contract
 
       - name: Run linter
-        working-directory: ./backend
         run: |
           npm run lint:backend
 
