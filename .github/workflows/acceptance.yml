@@ -50,7 +50,7 @@ jobs:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: | 
-          docker-compose up
+          docker-compose up -d
 
       - name: Stop docker-compose
         working-directory: ./system-test
