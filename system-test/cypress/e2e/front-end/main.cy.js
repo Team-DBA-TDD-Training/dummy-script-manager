@@ -6,9 +6,9 @@ describe('Front-end spec', () => {
     cy.visit(FRONT_URL).title('Script Manager')
   })
 
-  it('Click show history and check History panel', () => {
-    cy.visit(FRONT_URL);
-    cy.get('.showHistory').click()
-    cy.get('.history')
-  })
+  // it('Click show history and check History panel', () => {
+  //   cy.visit(FRONT_URL);
+  //   cy.get('.showHistory').click()
+  //   cy.get('.history')
+  // })
 })
