@@ -24,5 +24,8 @@
     "transformIgnorePatterns": [
       "node_modules/(?!variables/.*)"
     ]
+  },
+  "dependencies": {
+    "cypress": "^13.17.0"
   }
 }
