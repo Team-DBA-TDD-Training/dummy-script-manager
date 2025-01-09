@@ -22,5 +22,10 @@ jobs:
           echo "Checking if the backend server is up..."
           curl -f ${{ vars.BACKEND_UAT_ENV_URL }}|| exit 1
 
+      - name: Install Dependencies
+        run: |
+          npm run install:system-test
+
       - name: Run Smoke Tests
-        run: echo "Running smoke tests..."
+        run: |
+          npm run test:smoke
