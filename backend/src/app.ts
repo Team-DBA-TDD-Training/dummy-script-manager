@@ -9,6 +9,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+/**
+ * Basic health check
+ */
 app.get("/", (_req, res) => {
   res.send("Tdd team training");
 });
