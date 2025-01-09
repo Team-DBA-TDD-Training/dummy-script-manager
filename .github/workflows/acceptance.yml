@@ -19,10 +19,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 22
-          
-      - name: Install testing dependencies
-        run:
-          npm install
 
       - name: Login to AWS ECR
         uses: aws-actions/amazon-ecr-login@v1
@@ -46,6 +42,11 @@ jobs:
         run: |
           curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           chmod +x /usr/local/bin/docker-compose
+
+      - name: Install testing dependencies
+        working-directory: ./system-test
+        run:
+          npm install
 
       - name: Run docker-compose
         working-directory: ./system-test
