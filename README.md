@@ -2,6 +2,13 @@
 
 # Script Manager
 
+## Pipeline Dashboards
+
+### Component Stages
+| Component | Commit Stage | UAT Stage | Production Stage |
+| --------- | ------------ | --------- | ---------------- |
+| front-end | [![Commit](https://github.com/eam-DBA-TDD-Training/dummy-script-manager/actions/workflows/commit.yml/badge.svg)]| | |
+
 ## Contributors
 
 (in alphabetical order)
