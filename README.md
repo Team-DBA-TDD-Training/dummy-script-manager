@@ -7,7 +7,7 @@
 ### Component Stages
 | Component | Commit Stage | UAT Stage | Production Stage |
 | --------- | ------------ | --------- | ---------------- |
-| front-end | [![Commit](https://github.com/eam-DBA-TDD-Training/dummy-script-manager/actions/workflows/commit.yml/badge.svg)]| | |
+| front-end | [![Commit](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/commit.yml/badge.svg)]| | |
 
 ## Contributors
 
