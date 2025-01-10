@@ -1,9 +1,9 @@
-name: CI/CD Pipeline
+name: Frontend
 
 on:
   push:
     branches:
-      - main
+      - get-rid-of-deprecated-ci-cd-pipeline
 
 jobs:
   frontend:
