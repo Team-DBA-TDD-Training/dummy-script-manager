@@ -3,7 +3,7 @@ name: Frontend
 on:
   push:
     branches:
-      - get-rid-of-deprecated-ci-cd-pipeline
+      - main
 
 jobs:
   frontend:
