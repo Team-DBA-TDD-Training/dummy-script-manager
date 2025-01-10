@@ -6,16 +6,26 @@ services:
     container_name: db_container
     image: mongo:latest
     restart: always
-
   # Node api service
   api:
-    image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY
+    image: script-manager
     ports:
       # local->container
-      - 3000:3000
+      - 4000:4000
     environment:
-      PORT: 3000
+      PORT: 4000
       MONGO_DB_URI: mongodb://mongo_db:27017/script
       OPENAI_API_KEY: sk_test
     depends_on: 
       - mongo_db
+  # react app
+  frontend:
+    image: script-manager-frontend
+    ports:
+      - 3000:3000
+    environment:
+      VITE_API_BASE_URL: http://api:4000
+      REACT_APP_VITE_API_BASE_URL: http://api:4000
+    depends_on:
+      - api
+    

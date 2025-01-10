@@ -1,4 +1,5 @@
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:4000';
+console.log(API_BASE_URL)
 
 export const FETCH_ALL_SCRIPTS_API_URL = API_BASE_URL + "/";
 export const URL_AI_HELPER = new URL('/api/scripts/ai', API_BASE_URL)
