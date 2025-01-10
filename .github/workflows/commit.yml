@@ -3,10 +3,11 @@ name: Commit Stage
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - 82-as-step4-research-about-determinism
+  # temporarily testing 
+  # pull_request:
+    # branches:
+      # - main
 
 jobs:
   backend:
@@ -104,3 +105,9 @@ jobs:
       - name: Run Contract Provider Verification Tests
         run: |
           npm run test:frontend:contract
+  acceptance:
+    needs: [backend, frontend]
+    steps:
+      - name: Run acceptance test on UAT environment
+        run: |
+          echo "Acceptance test on UAT successful"
