@@ -117,6 +117,7 @@ const ToolBar = () => {
         onClick={onSaveScriptClicked}
       ></ToolBarButton>
       <ToolBarButton
+      className="showHistory"
         caption={state.showHistory ? "Hide History" : "Show History"}
         onClick={toggleHistoryPanel}
       ></ToolBarButton>

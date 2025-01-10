@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:acceptance": "cypress run"
   },
   "author": "",
   "license": "ISC",
@@ -23,5 +24,8 @@
     "transformIgnorePatterns": [
       "node_modules/(?!variables/.*)"
     ]
+  },
+  "dependencies": {
+    "cypress": "^13.17.0"
   }
 }

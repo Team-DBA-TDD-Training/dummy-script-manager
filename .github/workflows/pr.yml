@@ -1,4 +1,4 @@
-name: PR stage
+name: Pre-commit stage
 
 on:
   pull_request:
