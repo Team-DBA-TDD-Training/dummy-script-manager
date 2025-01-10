@@ -8,7 +8,7 @@ services:
     restart: always
   # Node api service
   api:
-    image: script-manager
+    image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY
     ports:
       # local->container
       - 4000:4000
@@ -25,7 +25,6 @@ services:
       - 3000:3000
     environment:
       VITE_API_BASE_URL: http://api:4000
-      REACT_APP_VITE_API_BASE_URL: http://api:4000
     depends_on:
       - api
     

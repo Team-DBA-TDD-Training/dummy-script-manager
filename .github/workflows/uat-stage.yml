@@ -31,5 +31,4 @@ jobs:
         run: |
           echo "Checking if the backend server is up..."
           curl -f ${{ vars.BACKEND_UAT_ENV_URL }}|| exit 1
-      - name: Run acceptance tests on UAT environment
 
