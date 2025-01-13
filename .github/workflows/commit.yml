@@ -9,8 +9,6 @@ jobs:
   backend:
     runs-on: ubuntu-latest
     env:
-      MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
-      OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
       NODE_ENV: test
     steps:
       - name: Checkout repository
@@ -52,15 +50,18 @@ jobs:
           ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
+          MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
         run: |
-          docker build -t $ECR_REPOSITORY .
+          docker build \
+            --build-arg MONGO_DB_URI=$MONGO_DB_URI \
+            --build-arg OPENAI_KEY=$OPENAI_KEY \
+            -t $ECR_REPOSITORY .
           docker tag $ECR_REPOSITORY:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:latest
           docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:latest
 
   frontend:
     runs-on: ubuntu-latest
-    env:
-      VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -98,8 +99,11 @@ jobs:
           ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY_FRONTEND }}
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
         run: |
-          docker build -t $ECR_REPOSITORY .
+          docker build \
+            --build-arg VITE_API_BASE_URL=$VITE_API_BASE_URL \
+            -t $ECR_REPOSITORY .
           docker tag $ECR_REPOSITORY:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:latest
           docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:latest
 
