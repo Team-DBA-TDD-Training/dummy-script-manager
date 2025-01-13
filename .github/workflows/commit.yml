@@ -3,7 +3,7 @@ name: Commit Stage
 on:
   push:
     branches:
-      - main
+      - dockerize-frontend
 
 jobs:
   backend:
@@ -28,20 +28,11 @@ jobs:
         run: |
           npm run build:backend
 
-      - name: Run Unit Tests
+      - name: Run Tests
         run: |
           npm run test:backend:unit
-
-      - name: Run Narrow Integration Tests
-        run: |
           npm run test:backend:integration
-
-      - name: Run Component Tests
-        run: |
           npm run test:backend:component
-
-      - name: Run Contract Provider Verification Tests
-        run: |
           npm run test:backend:contract
 
       - name: Run linter
@@ -87,21 +78,30 @@ jobs:
         run: |
           npm run build:frontend
 
-      - name: Run Unit Tests
+      - name: Run Tests
         run: |
           npm run test:frontend:unit
-
-      - name: Run Narrow Integration Tests
-        run: |
           npm run test:frontend:integration
-
-      - name: Run Component Tests
-        run: |
           npm run test:frontend:component
-
-      - name: Run Contract Provider Verification Tests
-        run: |
           npm run test:frontend:contract
+
+      - name: Login to AWS ECR
+        uses: aws-actions/amazon-ecr-login@v1
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+
+      - name: Build and push Docker image
+        working-directory: ./frontend
+        env:
+          ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY_FRONTEND }}
+          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: |
+          docker build -t $ECR_REPOSITORY .
+          docker tag $ECR_REPOSITORY:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:latest
+          docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:latest
 
   acceptance-test:
     runs-on: ubuntu-latest
@@ -121,8 +121,7 @@ jobs:
 
       - name: Install testing dependencies
         working-directory: ./system-test
-        run:
-          npm install
+        run: npm install
 
       - name: Install docker compose
         run: |
@@ -142,7 +141,7 @@ jobs:
           ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
-        run: | 
+        run: |
           docker-compose up -d
 
       - name: Run acceptance tests
@@ -152,7 +151,5 @@ jobs:
 
       - name: Stop docker-compose
         working-directory: ./system-test
-        run: | 
+        run: |
           docker-compose down
-
-  
