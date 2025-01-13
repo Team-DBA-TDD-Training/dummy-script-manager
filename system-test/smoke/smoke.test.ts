@@ -1,6 +1,6 @@
 const frisby = require('frisby');
 const Joi = frisby.Joi;
-export const REST_API_BASE_URL = import.meta.env.REST_API_BASE_URL;
+export const REST_API_BASE_URL = process.env.REST_API_BASE_URL;
 export const SCRIPT_API_EXT = '/api/scripts';
 
 describe("Tests health checks", () => {
