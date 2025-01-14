@@ -16,6 +16,9 @@ on:
 
 jobs:
   deploy:
+    strategy:
+      matrix:
+        service: [backend, frontend]
     runs-on: ubuntu-latest
 
     steps:
@@ -32,7 +35,8 @@ jobs:
 
       - name: Generate Dockerrun.aws.json
         env:
-          NAME: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ vars.ECR_REPOSITORY }}:latest
+          NAME: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ matrix.service == 'backend' && vars.ECR_REPOSITORY || vars.ECR_REPOSITORY_FRONTEND }}:latest
+          CONTAINER_PORT: ${{ matrix.service == 'backend' && '3000' || '80' }}
         run: |
           cat > Dockerrun.aws.json << EOF
           {
@@ -43,19 +47,20 @@ jobs:
             },
             "Ports": [
               {
-                "ContainerPort": 3000,
+                "ContainerPort": ${CONTAINER_PORT},
                 "HostPort": 80
               }
             ]
           }
           EOF
-      - name: Deploy to EB
+
+      - name: Deploy Backend to EB
         uses: einaregilsson/beanstalk-deploy@v21
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: ${{ vars.EB_APPLICATION_NAME }}
-          environment_name: ${{ github.event.inputs.environment == 'uat' && vars.EB_UAT_ENV || vars.EB_PROD_ENV }}
+          application_name: ${{ matrix.service == 'backend' && vars.EB_APPLICATION_NAME || vars.EB_APPLICATION_NAME_FRONTEND }}
+          environment_name: ${{ github.event.inputs.environment == 'uat' && (matrix.service == 'backend' && vars.EB_UAT_ENV || vars.EB_UAT_ENV_FRONTEND) || (matrix.service == 'backend' && vars.EB_PROD_ENV || vars.EB_PROD_ENV_FRONTEND) }}
           VERSION_LABEL: "release-${{ github.run_number }}-${{ github.event.inputs.environment }}-$(date +%s)"
           region: ${{ secrets.AWS_REGION }}
           deployment_package: Dockerrun.aws.json
