@@ -3,7 +3,7 @@ name: Commit Stage
 on:
   push:
     branches:
-      - dockerize-frontend
+      - main
 
 jobs:
   backend:
