@@ -8,7 +8,6 @@ on:
 jobs:
   acceptance-test:
     runs-on: ubuntu-latest
-    needs: [backend, frontend]
     env:
       MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
       OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
