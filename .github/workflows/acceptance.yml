@@ -50,7 +50,7 @@ jobs:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
-          echo (aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails[0].imagePushedAt')
+          aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails[0].imagePushedAt'
 
       # - name: Run docker-compose
       #   working-directory: ./system-test
