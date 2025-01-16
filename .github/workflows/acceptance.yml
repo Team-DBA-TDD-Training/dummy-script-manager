@@ -50,7 +50,10 @@ jobs:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
-          aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails[0].imagePushedAt'
+          CURRENT_TIME=$(date +%s)
+          LAST_UPDATED=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails[0].imagePushedAt')
+          DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
+          echo $DIFF_MINUTES
 
       # - name: Run docker-compose
       #   working-directory: ./system-test
