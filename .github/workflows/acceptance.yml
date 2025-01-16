@@ -52,7 +52,9 @@ jobs:
         run: |
           CURRENT_TIME=$(date +%s)
           LAST_UPDATED=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails[0].imagePushedAt')
+          LAST_UPDATED_EPOCH=$(date -d "$LAST_UPDATED" +%s)
           DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
+          echo $LAST_UPDATED
           echo $DIFF_MINUTES
 
       # - name: Run docker-compose
