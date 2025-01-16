@@ -44,7 +44,7 @@ jobs:
           DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
           echo $LAST_UPDATED
           echo $DIFF_MINUTES
-          if [ "$DIFF_MINUTES" -le 9000 ]; then
+          if [ "$DIFF_MINUTES" -le "9000" ]; then
             IMAGE_UPDATED=true
           fi
           echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
