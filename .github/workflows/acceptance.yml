@@ -1,14 +1,9 @@
 name: Acceptance Stage
 
 on:
-  push:
-    branches:
-      - 193-move-acceptance-test-stage-to-a-separate-file
-
-# on:
-#   workflow_dispatch:
-#   schedule:
-#     - cron: '*/5 * * * *'
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
 jobs:
   acceptance-test:
     runs-on: ubuntu-latest
@@ -44,7 +39,7 @@ jobs:
           DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
           echo $LAST_UPDATED
           echo $DIFF_MINUTES
-          if [ "$DIFF_MINUTES" -le "9000" ]; then
+          if [ "$DIFF_MINUTES" -le 5 ]; then
             IMAGES_UPDATED=true
           fi
           echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
