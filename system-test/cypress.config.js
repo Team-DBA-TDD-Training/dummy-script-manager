@@ -18,6 +18,7 @@ const getBaseUrl = () => {
 module.exports = defineConfig({
   e2e: {
     baseUrl: getBaseUrl(),
+    specPattern: ['cypress/e2e/front-end/**/*.cy.{js,jsx,ts,tsx}'],
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
