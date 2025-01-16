@@ -45,7 +45,7 @@ jobs:
           echo $LAST_UPDATED
           echo $DIFF_MINUTES
           if [ "$DIFF_MINUTES" -le "9000" ]; then
-            IMAGE_UPDATED=true
+            IMAGES_UPDATED=true
           fi
           echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
 
