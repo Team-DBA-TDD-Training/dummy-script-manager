@@ -161,6 +161,7 @@ const HistoryPanel = () => {
       <Row>
         <Toolbar>
           <FaEdit
+            id={"edit-icon-test-id"}
             onClick={OnEditClicked}
             style={
               selectionLength === 1
@@ -193,6 +194,7 @@ const HistoryPanel = () => {
         return (
           <ListItem key={script._id}>
             <Checkbox
+              id={"checkbox-test-id" + script._id}
               type={"checkbox"}
               onClick={() => {
                 onScriptItemSelected(script._id!);

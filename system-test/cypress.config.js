@@ -20,7 +20,12 @@ module.exports = defineConfig({
     baseUrl: getBaseUrl(),
     specPattern: ['cypress/e2e/front-end/**/*.cy.{js,jsx,ts,tsx}'],
     setupNodeEvents(on, config) {
-      // implement node event listeners here
+      on('task', {
+        log(message) {
+          console.log(message);
+          return null;
+        },
+      });
     },
   },
 });
