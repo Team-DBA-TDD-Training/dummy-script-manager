@@ -33,8 +33,8 @@ describe('E2E flow feature tests', () => {
     cy.visit(FRONTEND_URL).title('Script Manager');
     cy.contains('button','Show History').click();
     cy.wait(1000);
-    cy.get('[id^="checkbox-test-id"]').eq(0).check({ force: true });
-    cy.get('[id^=edit-icon-test-id]').click();
+    cy.get('[data-testid^="checkbox-test-id"]').eq(0).check({ force: true });
+    cy.get('[data-testid^=edit-icon-test-id]').click();
     cy.get('input[placeholder="Script name"]').clear().type(titleEdited);
     cy.get('input[placeholder="Script description"]').clear().type(descEdited);
     cy.get('textarea[placeholder="Write your script here.."]').clear().type(codeEdited);
