@@ -3,7 +3,7 @@ name: Commit Stage
 on:
   push:
     branches:
-      - main
+      - Script-manager-105-e2e-tests
 
 jobs:
   backend:
