@@ -9,6 +9,8 @@ services:
     environment:
       NODE_ENV: development
       MONGO_DB_URI: mongodb://mongo:27017/scripts
+      OPENAI_BASE_URL: http://localhost:8000/ai
+      OPENAI_API_KEY: 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
     depends_on:
       - mongo
     networks:

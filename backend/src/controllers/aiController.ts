@@ -24,9 +24,10 @@ export const generateScript = async (
         },
       ],
     });
-
-    const code = JSON.parse(response.choices[0].message.content ?? "{}");
-    res.status(201).json(code);
+    console.info(response.choices[0].message.content);
+    console.info(JSON.stringify(response, null, 2))
+    const code = response.choices[0].message.content ?? "{\"code\":\"\"}";
+    res.status(201).json({ code });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
