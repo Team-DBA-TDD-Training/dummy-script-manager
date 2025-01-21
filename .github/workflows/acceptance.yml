@@ -10,8 +10,6 @@ on:
 jobs:
   check-images:
     runs-on: ubuntu-latest
-    outputs:
-      should-deploy: ${{ steps.set-output.outputs.trigger }}
     env:
       MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
       OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
@@ -59,13 +57,13 @@ jobs:
           DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
           if [ "$DIFF_MINUTES" -le 7000 ]; then
             IMAGES_UPDATED=true
-            echo "::set-output name=trigger::true"
+            echo "deploy=true" >> $GITHUB_OUTPUT
           fi
           echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
 
   trigger-uat-release:
     needs: check-images
-    if: ${{ needs.set-condition.outputs.should-deploy == 'true' }}
+    if: ${{ GITHUB_ENV.IAMGES_UPDATED == 'true' }}
     uses: ./.github/workflows/release.yml
     with:
       environment: acceptance
