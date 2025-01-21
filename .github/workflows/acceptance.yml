@@ -9,7 +9,6 @@ on:
     # - cron: '*/5 * * * *'
 jobs:
   check_images:
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -61,12 +60,12 @@ jobs:
           fi
           echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
 
-  trigger-uat-release:
-    uses: ./.github/workflows/release.yml
-    needs: [check_images]
-    with:
-      environment: uat
-    secrets: inherit
+  # trigger-uat-release:
+  #   uses: ./.github/workflows/release.yml
+  #   needs: [check_images]
+  #   with:
+  #     environment: uat
+  #   secrets: inherit
 
   acceptance-test:
     runs-on: ubuntu-latest
