@@ -69,9 +69,14 @@ jobs:
             ["uat_frontend"]="${{ vars.EB_UAT_ENV_FRONTEND }}"
             ["acceptance_backend"]="${{ vars.EB_ACCEPTANCE_BACKEND }}"
             ["acceptance_frontend"]="${{ vars.EB_ACCEPTANCE_FRONTEND }}"
-            ["production_backend"]="${{ vars.EB_PROD_ENV }}"
-            ["production_frontend"]="${{ vars.EB_PROD_ENV_FRONTEND }}"
+            ["prod_backend"]="${{ vars.EB_PROD_ENV }}"
+            ["prod_frontend"]="${{ vars.EB_PROD_ENV_FRONTEND }}"
           )
+
+          if [[ -z "${{ github.event.inputs.environment }}" ]]; then
+            echo "missing environment variable."
+            exit 1
+          fi
 
           key="${{ github.event.inputs.environment }}_${{ matrix.service }}"
           environment_name=${env_map[$key]}
