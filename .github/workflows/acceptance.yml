@@ -52,7 +52,7 @@ jobs:
         if: env.IMAGES_UPDATED == 'false'
         env: 
           ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY_FRONTEND }}
-        run: 
+        run: |
           IMAGES_UPDATED=false
           CURRENT_TIME=$(date +%s)
           LAST_UPDATED=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails[0].imagePushedAt')
