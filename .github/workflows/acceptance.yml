@@ -75,9 +75,10 @@ jobs:
     with:
       environment: acceptance
     secrets: inherit
+
   finish:
     needs: check-images
-    if: ${{ failure() && steps.check-images.conclusion == 'failure' }}
+    if: ${{ failure() && needs.check-images.conclusion == 'failure' }}
     steps:
       - name: Exit with success
         run: |
