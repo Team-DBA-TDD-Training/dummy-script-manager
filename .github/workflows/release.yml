@@ -65,12 +65,12 @@ jobs:
         id: set-environment
         run: |
           declare -A env_map=(
-            ["uat_backend"]="${{ vars.EB_UAT_BACKEND }}"
-            ["uat_frontend"]="${{ vars.EB_UAT_FRONTEND }}"
+            ["uat_backend"]="${{ vars.EB_UAT_ENV }}"
+            ["uat_frontend"]="${{ vars.EB_UAT_ENV_FRONTEND }}"
             ["acceptance_backend"]="${{ vars.EB_ACCEPTANCE_BACKEND }}"
             ["acceptance_frontend"]="${{ vars.EB_ACCEPTANCE_FRONTEND }}"
-            ["production_backend"]="${{ vars.EB_PRODUCTION_BACKEND }}"
-            ["production_frontend"]="${{ vars.EB_PRODUCTION_FRONTEND }}"
+            ["production_backend"]="${{ vars.EB_PROD_ENV }}"
+            ["production_frontend"]="${{ vars.EB_PROD_ENV_FRONTEND }}"
           )
 
           key="${{ github.event.inputs.environment }}_${{ matrix.service }}"
