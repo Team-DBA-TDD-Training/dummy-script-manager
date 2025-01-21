@@ -17,7 +17,6 @@ jobs:
 
   acceptance-test:
     runs-on: ubuntu-latest
-    needs: [trigger-uat-release]
     env:
       MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
       OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
