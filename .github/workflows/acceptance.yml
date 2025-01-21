@@ -73,9 +73,6 @@ jobs:
           fi
           echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
 
-        if: env.IMAGES_UPDATED == 'false'
-        run: echo "Workflow checked for updates but found no recent image updates."
-
       - name: Stop Workflow if No Images Have Updated Recently
         if: env.IMAGES_UPDATED == 'false'
         run: exit 0
