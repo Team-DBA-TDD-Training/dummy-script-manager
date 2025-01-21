@@ -22,6 +22,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Validate Required Secrets
+        run: |
+          if [[ -z "${{ secrets.AWS_REGION }}" || -z "${{ secrets.AWS_ACCESS_KEY_ID }}" || -z "${{ secrets.AWS_SECRET_ACCESS_KEY }}" ]]; then
+            echo "Missing Secrets"
+            exit 1
+          fi
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -54,13 +61,47 @@ jobs:
           }
           EOF
 
+      - name: Set Environment Name
+        id: set-environment
+        run: |
+          declare -A env_map=(
+            ["uat_backend"]="${{ vars.EB_UAT_BACKEND }}"
+            ["uat_frontend"]="${{ vars.EB_UAT_FRONTEND }}"
+            ["acceptance_backend"]="${{ vars.EB_ACCEPTANCE_BACKEND }}"
+            ["acceptance_frontend"]="${{ vars.EB_ACCEPTANCE_FRONTEND }}"
+            ["production_backend"]="${{ vars.EB_PRODUCTION_BACKEND }}"
+            ["production_frontend"]="${{ vars.EB_PRODUCTION_FRONTEND }}"
+          )
+
+          key="${{ github.event.inputs.environment }}_${{ matrix.service }}"
+          environment_name=${env_map[$key]}
+
+          if [[ -z "$environment_name" ]]; then
+            echo "Unknown environment or service: $key"
+            exit 1
+          fi
+
+          echo "environment_name=$environment_name" >> $GITHUB_ENV
+          echo "Environment Name is set to: $environment_name"
+
+      - name: Set Timestamp for Version Label
+        id: set-timestamp
+        run: echo "version_timestamp=$(date +%s)" >> $GITHUB_ENV
+
+      - name: Log Environment Variables
+        run: |
+          echo "Environment: ${{ github.event.inputs.environment }}"
+          echo "Service: ${{ matrix.service }}"
+          echo "Environment Name: ${{ env.environment_name }}"
+          echo "Version Timestamp: ${{ env.version_timestamp }}"
+
       - name: Deploy Backend to EB
         uses: einaregilsson/beanstalk-deploy@v21
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: ${{ matrix.service == 'backend' && vars.EB_APPLICATION_NAME || vars.EB_APPLICATION_NAME_FRONTEND }}
-          environment_name: ${{ github.event.inputs.environment == 'uat' && (matrix.service == 'backend' && vars.EB_UAT_ENV || vars.EB_UAT_ENV_FRONTEND) || (matrix.service == 'backend' && vars.EB_PROD_ENV || vars.EB_PROD_ENV_FRONTEND) }}
-          VERSION_LABEL: "release-${{ github.run_number }}-${{ github.event.inputs.environment }}-$(date +%s)"
+          environment_name: ${{ env.environment_name }}
+          VERSION_LABEL: "release-${{ github.run_number }}-${{ github.event.inputs.environment }}-${{ env.version_timestamp }}"
           region: ${{ secrets.AWS_REGION }}
           deployment_package: Dockerrun.aws.json
