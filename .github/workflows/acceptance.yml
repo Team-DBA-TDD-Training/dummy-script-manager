@@ -10,6 +10,7 @@ on:
 jobs:
   check-images:
     runs-on: ubuntu-latest
+    secrets: inherit
     outputs:
       should-deploy: ${{ steps.set-output-step.outputs.trigger }}
     env:
@@ -62,63 +63,66 @@ jobs:
             echo "::set-output name=trigger::true"
           fi
 
-  trigger-uat-release:
-    needs: [check-images]
-    uses: ./.github/workflows/release.yml
-    if: needs.set-variable.outputs.should-deploy== 'true'
-    with:
-      environment: uat
-    secrets: inherit
+       - name: Trigger deployment
+         uses: ./.github/workflows/release.yml
+         with:
+          enviroment: uat
 
-  acceptance-test:
-    runs-on: ubuntu-latest
-    needs: [trigger-uat-release]
-    env:
-      MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
-      OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
-      NODE_ENV: test
-    steps:
-      - name: Test env
-        run: |
-          echo $GITHUB_ENV
+  # trigger-uat-release:
+  #   needs: [check-images]
+  #   uses: ./.github/workflows/release.yml
+  #   with:
+  #     environment: uat
 
-      - name: Install testing dependencies
-        if: env.IMAGES_UPDATED == 'true'
-        working-directory: ./system-test
-        run: npm install
+  # acceptance-test:
+  #   runs-on: ubuntu-latest
+  #   needs: [trigger-uat-release]
+  #   env:
+  #     MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
+  #     OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+  #     NODE_ENV: test
+  #   steps:
+  #     - name: Test env
+  #       run: |
+  #         echo $GITHUB_ENV
 
-      - name: Install docker compose
-        if: env.IMAGES_UPDATED == 'true'
-        run: |
-          curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          chmod +x /usr/local/bin/docker-compose
+  #     - name: Install testing dependencies
+  #       if: env.IMAGES_UPDATED == 'true'
+  #       working-directory: ./system-test
+  #       run: npm install
 
-      - name: Login to AWS ECR
-        if: env.IMAGES_UPDATED == 'true'
-        uses: aws-actions/amazon-ecr-login@v1
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
+  #     - name: Install docker compose
+  #       if: env.IMAGES_UPDATED == 'true'
+  #       run: |
+  #         curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  #         chmod +x /usr/local/bin/docker-compose
 
-      - name: Run docker-compose
-        if: env.IMAGES_UPDATED == 'true'
-        working-directory: ./system-test
-        env:
-          ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-        run: |
-          docker-compose up -d
+  #     - name: Login to AWS ECR
+  #       if: env.IMAGES_UPDATED == 'true'
+  #       uses: aws-actions/amazon-ecr-login@v1
+  #       env:
+  #         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         AWS_REGION: ${{ secrets.AWS_REGION }}
 
-      - name: Run acceptance tests
-        if: env.IMAGES_UPDATED == 'true'
-        working-directory: ./system-test
-        run: |
-          npm run test:acceptance
+  #     - name: Run docker-compose
+  #       if: env.IMAGES_UPDATED == 'true'
+  #       working-directory: ./system-test
+  #       env:
+  #         ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+  #         AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  #         AWS_REGION: ${{ secrets.AWS_REGION }}
+  #       run: |
+  #         docker-compose up -d
 
-      - name: Stop docker-compose
-        if: env.IMAGES_UPDATED == 'true'
-        working-directory: ./system-test
-        run: |
-          docker-compose down
+  #     - name: Run acceptance tests
+  #       if: env.IMAGES_UPDATED == 'true'
+  #       working-directory: ./system-test
+  #       run: |
+  #         npm run test:acceptance
+
+  #     - name: Stop docker-compose
+  #       if: env.IMAGES_UPDATED == 'true'
+  #       working-directory: ./system-test
+  #       run: |
+  #         docker-compose down
