@@ -3,7 +3,7 @@ name: Pre-commit stage
 on:
   pull_request:
     branches:
-      - main
+      - master #fixme
 
 jobs:
   backend:
