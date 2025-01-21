@@ -69,10 +69,6 @@ jobs:
           fi
           echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
 
-      - name: Stop Workflow if No Images Have Updated Recently
-        if: env.IMAGES_UPDATED == 'false'
-        run: exit 1
-
   trigger-uat-release:
     needs: [check-images]
     uses: ./.github/workflows/release.yml
