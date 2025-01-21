@@ -64,7 +64,7 @@ jobs:
 
   trigger-uat-release:
     needs: [check-images]
-    if: env.should_trigger == 'true'
+    if: $GITHUB_ENV.should_trigger == 'true'
     uses: ./.github/workflows/release.yml
     with:
       environment: uat
