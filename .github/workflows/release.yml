@@ -29,6 +29,19 @@ jobs:
             exit 1
           fi
 
+      - name: Determine Environment Input
+        id: determine-environment
+        run: |
+          if [[ -n "${{ github.event.inputs.environment }}" ]]; then
+            echo "environment=${{ github.event.inputs.environment }}" >> $GITHUB_ENV
+          elif [[ -n "${{ inputs.environment }}" ]]; then
+            echo "environment=${{ inputs.environment }}" >> $GITHUB_ENV
+          else
+            echo "No environment input provided."
+            exit 1
+          fi
+          echo "Final Environment: ${{ env.environment }}"
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -73,12 +86,12 @@ jobs:
             ["prod_frontend"]="${{ vars.EB_PROD_ENV_FRONTEND }}"
           )
 
-          if [[ -z "${{ github.event.inputs.environment }}" ]]; then
+          if [[ -z "${{ env.environment }}" ]]; then
             echo "missing environment variable."
             exit 1
           fi
 
-          key="${{ github.event.inputs.environment }}_${{ matrix.service }}"
+          key="${{ env.environment }}_${{ matrix.service }}"
           environment_name=${env_map[$key]}
 
           if [[ -z "$environment_name" ]]; then
@@ -95,7 +108,7 @@ jobs:
 
       - name: Log Environment Variables
         run: |
-          echo "Environment: ${{ github.event.inputs.environment }}"
+          echo "Environment: ${{ env.environment }}"
           echo "Service: ${{ matrix.service }}"
           echo "Environment Name: ${{ env.environment_name }}"
           echo "Version Timestamp: ${{ env.version_timestamp }}"
@@ -107,6 +120,6 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: ${{ matrix.service == 'backend' && vars.EB_APPLICATION_NAME || vars.EB_APPLICATION_NAME_FRONTEND }}
           environment_name: ${{ env.environment_name }}
-          VERSION_LABEL: "release-${{ github.run_number }}-${{ github.event.inputs.environment }}-${{ env.version_timestamp }}"
+          VERSION_LABEL: "release-${{ github.run_number }}-${{ env.environment }}-${{ env.version_timestamp }}"
           region: ${{ secrets.AWS_REGION }}
           deployment_package: Dockerrun.aws.json
