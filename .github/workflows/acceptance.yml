@@ -18,14 +18,6 @@ jobs:
       NODE_ENV: test
     continue-on-error: true
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 22
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -99,6 +91,14 @@ jobs:
       OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
       NODE_ENV: test
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+          
       - name: Install testing dependencies
         working-directory: ./system-test
         run: npm install
