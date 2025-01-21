@@ -59,10 +59,10 @@ jobs:
           DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
           if [ "$DIFF_MINUTES" -le 7000 ]; then
             IMAGES_UPDATED=true
-            echo "::set-output name=trigger::true"
-            echo "deploy=true" >> $GITHUB_OUTPUT
           fi
+          echo $IMAGES_UPDATED
           echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
+
       - name: No latest image found
         if: env.IMAGES_UPDATED == 'false'
         run: |
@@ -76,7 +76,7 @@ jobs:
       environment: acceptance
     secrets: inherit
 
-  finish:
+  skip-uat:
     runs-on: ubuntu-latest
     needs: check-images
     if: ${{ failure() && needs.check-images.conclusion == 'failure' }}
