@@ -9,11 +9,6 @@ on:
     # - cron: '*/5 * * * *'
 jobs:
   # trigger-uat-release:
-  #   uses: ./.github/workflows/release.yml
-  #   needs: [check_images]
-  #   with:
-  #     environment: uat
-  #   secrets: inherit
 
   check-images:
     runs-on: ubuntu-latest
@@ -75,6 +70,11 @@ jobs:
       - name: Stop Workflow if No Images Have Updated Recently
         if: env.IMAGES_UPDATED == 'false'
         run: exit 0
+      - name: Deploy to uat environment
+        uses: ./.github/workflows/release.yml
+        with:
+          environment: uat
+        secrets: inherit
 
   acceptance-test:
     runs-on: ubuntu-latest
