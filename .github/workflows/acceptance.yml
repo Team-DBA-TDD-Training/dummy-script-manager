@@ -43,8 +43,6 @@ jobs:
           LAST_UPDATED=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails[0].imagePushedAt')
           LAST_UPDATED_EPOCH=$(date -d "$LAST_UPDATED" +%s)
           DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
-          echo $LAST_UPDATED
-          echo $DIFF_MINUTES
           if [ "$DIFF_MINUTES" -le 5 ]; then
             IMAGES_UPDATED=true
             echo "::set-output name=trigger::true"
@@ -56,18 +54,13 @@ jobs:
         env: 
           ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY_FRONTEND }}
         run: |
-          IMAGES_UPDATED=false
           CURRENT_TIME=$(date +%s)
           LAST_UPDATED=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails[0].imagePushedAt')
           LAST_UPDATED_EPOCH=$(date -d "$LAST_UPDATED" +%s)
           DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
-          echo $LAST_UPDATED
-          echo $DIFF_MINUTES
-          if [ "$DIFF_MINUTES" -le 5 ]; then
-            IMAGES_UPDATED=true
+          if [ "$DIFF_MINUTES" -le 6000 ]; then
             echo "::set-output name=trigger::true"
           fi
-          echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
 
   trigger-uat-release:
     needs: [check-images]
