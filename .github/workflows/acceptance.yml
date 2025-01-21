@@ -8,8 +8,20 @@ on:
   # schedule:
     # - cron: '*/5 * * * *'
 jobs:
-  check_images:
+  # trigger-uat-release:
+  #   uses: ./.github/workflows/release.yml
+  #   needs: [check_images]
+  #   with:
+  #     environment: uat
+  #   secrets: inherit
+
+  acceptance-test:
     runs-on: ubuntu-latest
+    needs: [trigger-uat-release]
+    env:
+      MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
+      OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+      NODE_ENV: test
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -61,21 +73,6 @@ jobs:
           fi
           echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
 
-  # trigger-uat-release:
-  #   uses: ./.github/workflows/release.yml
-  #   needs: [check_images]
-  #   with:
-  #     environment: uat
-  #   secrets: inherit
-
-  acceptance-test:
-    runs-on: ubuntu-latest
-    needs: [trigger-uat-release]
-    env:
-      MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
-      OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
-      NODE_ENV: test
-    steps:
         if: env.IMAGES_UPDATED == 'false'
         run: echo "Workflow checked for updates but found no recent image updates."
 
