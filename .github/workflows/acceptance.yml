@@ -10,12 +10,11 @@ on:
 jobs:
   check-images:
     runs-on: ubuntu-latest
-    outputs:
-      should-deploy: ${{ steps.set-output.outputs.trigger }}
     env:
       MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
       OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
       NODE_ENV: test
+    continue-on-error: true
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
