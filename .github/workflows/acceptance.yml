@@ -61,7 +61,6 @@ jobs:
           echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
 
   trigger-uat-release:
-    if: env.IMAGES_UPDATED == 'false'
     uses: ./.github/workflows/release.yml
     needs: [check_images]
     with:
