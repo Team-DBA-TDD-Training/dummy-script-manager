@@ -1,9 +1,12 @@
 name: Acceptance Stage
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '*/5 * * * *'
+  push:
+    branches:
+      - 193-move-acceptance-test-stage-to-a-separate-file
+  # workflow_dispatch:
+  # schedule:
+    # - cron: '*/5 * * * *'
 jobs:
   acceptance-test:
     runs-on: ubuntu-latest
@@ -19,6 +22,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 22
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -26,12 +30,29 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Check image is Published
+      - name: Check if backend image is published
         env:
           ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
+          IMAGES_UPDATED=false
+          CURRENT_TIME=$(date +%s)
+          LAST_UPDATED=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails[0].imagePushedAt')
+          LAST_UPDATED_EPOCH=$(date -d "$LAST_UPDATED" +%s)
+          DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
+          echo $LAST_UPDATED
+          echo $DIFF_MINUTES
+          if [ "$DIFF_MINUTES" -le 5 ]; then
+            IMAGES_UPDATED=true
+          fi
+          echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
+      
+      - name: Check if frontend image is published
+        if: env.IMAGES_UPDATED == 'false'
+        env: 
+          ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY_FRONTEND }}
+        run: 
           IMAGES_UPDATED=false
           CURRENT_TIME=$(date +%s)
           LAST_UPDATED=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails[0].imagePushedAt')
