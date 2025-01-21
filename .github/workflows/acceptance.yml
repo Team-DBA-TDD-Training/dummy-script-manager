@@ -10,8 +10,6 @@ on:
 jobs:
   check-images:
     runs-on: ubuntu-latest
-    outputs:
-      should-deploy: ${{ steps.set-output-step.outputs.trigger }}
     env:
       MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
       OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
@@ -45,7 +43,6 @@ jobs:
           DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
           if [ "$DIFF_MINUTES" -le 5 ]; then
             IMAGES_UPDATED=true
-            echo "::set-output name=trigger::true"
           fi
           echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
       
@@ -58,20 +55,19 @@ jobs:
           LAST_UPDATED=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails[0].imagePushedAt')
           LAST_UPDATED_EPOCH=$(date -d "$LAST_UPDATED" +%s)
           DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
-          if [ "$DIFF_MINUTES" -le 6000 ]; then
-            echo "::set-output name=trigger::true"
+          if [ "$DIFF_MINUTES" -le 7000 ]; then
+            IMAGES_UPDATED=true
+            echo "should_trigger=true" >> $GITHUB_ENV
           fi
+          echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
 
-       - name: Trigger deployment
-         uses: ./.github/workflows/release.yml
-         with:
-          enviroment: uat
 
-  # trigger-uat-release:
-  #   needs: [check-images]
-  #   uses: ./.github/workflows/release.yml
-  #   with:
-  #     environment: uat
+  trigger-uat-release:
+    needs: [check-images]
+    if: env.should_trigger == 'true'
+    uses: ./.github/workflows/release.yml
+    with:
+      environment: uat
 
   # acceptance-test:
   #   runs-on: ubuntu-latest
