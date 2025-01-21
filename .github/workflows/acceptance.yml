@@ -10,6 +10,8 @@ on:
 jobs:
   check-images:
     runs-on: ubuntu-latest
+    outputs:
+      should-deploy: ${{ steps.set-output-step.outputs.trigger }}
     env:
       MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
       OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
@@ -45,6 +47,7 @@ jobs:
           echo $DIFF_MINUTES
           if [ "$DIFF_MINUTES" -le 5 ]; then
             IMAGES_UPDATED=true
+            echo "::set-output name=trigger::true"
           fi
           echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
       
@@ -62,6 +65,7 @@ jobs:
           echo $DIFF_MINUTES
           if [ "$DIFF_MINUTES" -le 5 ]; then
             IMAGES_UPDATED=true
+            echo "::set-output name=trigger::true"
           fi
           echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
 
@@ -72,6 +76,7 @@ jobs:
   trigger-uat-release:
     needs: [check-images]
     uses: ./.github/workflows/release.yml
+    if: needs.set-variable.outputs.should-deploy== 'true'
     with:
       environment: uat
     secrets: inherit
