@@ -1,12 +1,9 @@
 name: Acceptance Stage
 
 on:
-  push:
-    branches:
-      - 193-move-acceptance-test-stage-to-a-separate-file
-  # workflow_dispatch:
-  # schedule:
-    # - cron: '*/5 * * * *'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *'
 jobs:
   check-images:
     runs-on: ubuntu-latest
