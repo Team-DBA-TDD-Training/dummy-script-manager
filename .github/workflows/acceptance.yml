@@ -10,7 +10,6 @@ on:
 jobs:
   check-images:
     runs-on: ubuntu-latest
-    secrets: inherit
     outputs:
       should-deploy: ${{ steps.set-output-step.outputs.trigger }}
     env:
