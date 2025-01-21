@@ -67,7 +67,7 @@ jobs:
 
       - name: Stop Workflow if No Images Have Updated Recently
         if: env.IMAGES_UPDATED == 'false'
-        run: exit 0
+        run: exit 1
 
   acceptance-test:
     runs-on: ubuntu-latest
@@ -80,7 +80,7 @@ jobs:
       - name: Test env
         run: |
           echo $GITHUB_ENV
-          
+
       - name: Install testing dependencies
         if: env.IMAGES_UPDATED == 'true'
         working-directory: ./system-test
