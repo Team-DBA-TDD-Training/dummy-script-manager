@@ -61,13 +61,36 @@ jobs:
           fi
           echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
 
+      - name: Trigger Generic System Release
+        if: env.IMAGES_UPDATED == 'true'
+        uses: actions/github-script@v4
+        id: trigger-release
+        with:
+          github-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          script: |
+            const workflow = 'Release Stage';
+            const response = await github.actions.listRepoWorkflows({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100,
+            });
 
-  trigger-uat-release:
-    if: $GITHUB_ENV.should_trigger == 'true'
-    needs: [check-images]
-    uses: ./.github/workflows/release.yml
-    with:
-      environment: uat
+            const workflow_id = response.data.workflows.find(w => w.name === workflow)?.id;
+
+            if (!workflow_id) {
+              throw new Error(`No workflow found with name: ${workflow}`);
+            }
+
+            await github.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: workflow_id,
+              ref: context.ref,
+              inputs: {
+                environment: 'uat'
+              }
+            });
+
 
   # acceptance-test:
   #   runs-on: ubuntu-latest
