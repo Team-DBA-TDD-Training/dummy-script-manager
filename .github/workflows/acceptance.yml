@@ -75,7 +75,7 @@ jobs:
     if: ${{ needs.check-images.outputs.images-found == 'true' }}
     uses: ./.github/workflows/release.yml
     with:
-      environment: acceptance
+      environment: uat
     secrets: inherit
 
   skip-uat:
