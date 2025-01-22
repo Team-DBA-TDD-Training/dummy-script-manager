@@ -1,0 +1,9 @@
+{
+    "choices": [
+        {
+            "message": {
+                "content": "db.customers.find({})"
+            }
+        }
+    ]
+}
