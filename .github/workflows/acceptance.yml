@@ -84,8 +84,8 @@ jobs:
 
   acceptance-test-with-stub:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-    needs: [trigger-uat-release]
+    if: ${{ always() }}
+    needs: [check-images]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
