@@ -38,7 +38,7 @@ jobs:
           LAST_UPDATED_EPOCH=$(date -d "$LAST_UPDATED" +%s)
           echo $LAST_UPDATED
           DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
-          if [ "$DIFF_MINUTES" -le 5 ]; then
+          if [ "$DIFF_MINUTES" -le 120 ]; then
             IMAGES_UPDATED=true
           fi
           echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
@@ -54,7 +54,8 @@ jobs:
           echo $ECR_REPOSITORY
           echo $LAST_UPDATED
           DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
-          if [ "$DIFF_MINUTES" -le 5 ]; then
+          echo $DIFF_MINUTES
+          if [ "$DIFF_MINUTES" -le 120 ]; then
             IMAGES_UPDATED=true
           fi
           echo $IMAGES_UPDATED
