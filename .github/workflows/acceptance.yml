@@ -47,7 +47,7 @@ jobs:
           LAST_UPDATED=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails[0].imagePushedAt')
           LAST_UPDATED_EPOCH=$(date -d "$LAST_UPDATED" +%s)
           DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
-          if [ "$DIFF_MINUTES" -le 7000 ]; then
+          if [ "$DIFF_MINUTES" -le 5 ]; then
             IMAGES_UPDATED=true
           fi
           echo $IMAGES_UPDATED
