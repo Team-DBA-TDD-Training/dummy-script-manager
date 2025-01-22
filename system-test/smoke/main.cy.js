@@ -2,10 +2,10 @@ const SCRIPT_URL = `/api/scripts`
 
 describe('Backend spec', () => {
   it('Basic health check', () => {
-    cy.visit("/")
+  cy.visit("http://localhost:4000/c")
   })
 
   it('Script List', () => {
-    cy.request(SCRIPT_URL)
+    cy.request("http://localhost:4000/api/scripts")
   })
 })

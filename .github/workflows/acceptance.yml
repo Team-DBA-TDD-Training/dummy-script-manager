@@ -111,7 +111,7 @@ jobs:
       - name: Run acceptance tests
         working-directory: ./system-test
         run: |
-          npm run test:acceptance
+          npm run test:acceptance-docker
   
   # acceptance-test:
   #   runs-on: ubuntu-latest

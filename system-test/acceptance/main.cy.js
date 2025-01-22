@@ -12,10 +12,6 @@ describe('External stub', () => {
    */
 
   it('Generate script with the suggestion from AI tool', () => {
-    if (Cypress.env('NODE_ENV') !== 'uat-docker') {
-      cy.log('Skipping this test as NODE_ENV is not uat-docker');
-      return;
-    }
     cy.visit('/')
     cy.get('.askAIButton').click()
     cy.get('.aiInput').type('List all movies in the collection')
