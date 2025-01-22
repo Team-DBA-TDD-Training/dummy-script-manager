@@ -84,7 +84,7 @@ jobs:
 
   acceptance-test-with-stub:
     runs-on: ubuntu-latest
-    if: ${{ always() }}
+    if: ${{ needs.check-images.outputs.images-found == 'false' }}
     needs: [check-images]
     steps:
       - name: Checkout repository
@@ -113,28 +113,28 @@ jobs:
         run: |
           npm run test:acceptance-docker
   
-  # acceptance-test:
-  #   runs-on: ubuntu-latest
-  #   if: ${{ success() }}
-  #   needs: [trigger-uat-release]
-  #   env:
-  #     MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
-  #     OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
-  #     NODE_ENV: uat
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
+  acceptance-test:
+    runs-on: ubuntu-latest
+    if: ${{ success() }}
+    needs: [trigger-uat-release]
+    env:
+      MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
+      OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+      NODE_ENV: uat
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-  #     - name: Set up Node.js
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 22
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
 
-  #     - name: Install testing dependencies
-  #       working-directory: ./system-test
-  #       run: npm install
+      - name: Install testing dependencies
+        working-directory: ./system-test
+        run: npm install
 
-  #     - name: Run acceptance tests
-  #       working-directory: ./system-test
-  #       run: |
-  #         npm run test:acceptance
+      - name: Run acceptance tests
+        working-directory: ./system-test
+        run: |
+          npm run test:acceptance
