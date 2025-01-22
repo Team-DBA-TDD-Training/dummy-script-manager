@@ -24,9 +24,7 @@ export const generateScript = async (
         },
       ],
     });
-    console.info(response.choices[0].message.content);
-    console.info(JSON.stringify(response, null, 2))
-    const code = response.choices[0].message.content ?? "{\"code\":\"\"}";
+    const code = response.choices[0].message.content ?? "";
     res.status(201).json({ code });
   } catch (error) {
     console.error(error);
