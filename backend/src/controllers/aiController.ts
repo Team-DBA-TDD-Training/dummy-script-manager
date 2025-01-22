@@ -6,9 +6,7 @@ export const generateScript = async (
   res: Response,
 ): Promise<void> => {
   const { message } = req.body;
-  const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
+  const openai = new OpenAI({});
   try {
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",

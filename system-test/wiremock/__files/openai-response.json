@@ -2,7 +2,7 @@
     "choices": [
         {
             "message": {
-                "content": "db.customers.find({})"
+                "content": "db.movies.find({})"
             }
         }
     ]

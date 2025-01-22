@@ -6,21 +6,6 @@ services:
     container_name: db_container
     image: mongo:latest
     restart: always
-
-  # Node api service
-  api:
-    build:
-      context: ../backend
-    ports:
-      # local->container
-      - 3000:3000
-    environment:
-      PORT: 3000
-      MONGO_DB_URI: mongodb://mongo_db:27017/script
-      OPENAI_API_KEY: sk_test
-      OPENAI_BASE_URL: http://wiremock:8080/ai
-    depends_on: 
-      - mongo_db
   wiremock:
     image: "wiremock/wiremock:latest"
     ports:
@@ -29,3 +14,29 @@ services:
     volumes:
       - ./wiremock:/home/wiremock
     entrypoint: ["/docker-entrypoint.sh", "--global-response-templating", "--disable-gzip", "--verbose"]
+
+  frontend:
+    build:
+      context: ../frontend
+      args:
+        VITE_API_BASE_URL: http://localhost:4000/api/scripts
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+  # Node api service
+  api:
+    build:
+      context: ../backend
+    ports:
+      # local->container
+      - 4000:4000
+    environment:
+      PORT: 4000
+      MONGO_DB_URI: mongodb://mongo_db:27017/script
+      OPENAI_API_KEY: sk_test
+      # override original openAI request to our stub
+      OPENAI_BASE_URL: http://wiremock:8080/ai
+    depends_on: 
+      - mongo_db
+      - wiremock
