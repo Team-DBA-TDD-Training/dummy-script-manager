@@ -26,6 +26,7 @@
     ]
   },
   "dependencies": {
+    "@cypress/skip-test": "^2.6.1",
     "cypress": "^13.17.0"
   }
 }

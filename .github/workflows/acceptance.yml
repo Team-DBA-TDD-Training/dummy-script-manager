@@ -1,9 +1,13 @@
 name: Acceptance Stage
 
+# on:
+#   workflow_dispatch:
+#   schedule:
+#     - cron: '*/5 * * * *'
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '*/5 * * * *'
+  push:
+    branches:
+      - 128-p2---acc-testable-architecture-step-4---create-external-system-stub
 jobs:
   check-images:
     runs-on: ubuntu-latest
@@ -77,14 +81,11 @@ jobs:
     steps:
       - name: Log skipping UAT
         run: echo "Skipping UAT as no updated images were found."
-  acceptance-test:
+
+  acceptance-test-with-stub:
     runs-on: ubuntu-latest
     if: ${{ success() }}
     needs: [trigger-uat-release]
-    env:
-      MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
-      OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
-      NODE_ENV: uat
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -93,6 +94,17 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 22
+      - name: Install docker compose
+        if: env.IMAGES_UPDATED == 'true'
+        run: |
+          curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
+
+      - name: Run docker-compose
+         if: env.IMAGES_UPDATED == 'true'
+         working-directory: ./system-test
+         run: |
+           docker-compose up -d
 
       - name: Install testing dependencies
         working-directory: ./system-test
@@ -102,3 +114,29 @@ jobs:
         working-directory: ./system-test
         run: |
           npm run test:acceptance
+  
+  # acceptance-test:
+  #   runs-on: ubuntu-latest
+  #   if: ${{ success() }}
+  #   needs: [trigger-uat-release]
+  #   env:
+  #     MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
+  #     OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+  #     NODE_ENV: uat
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 22
+
+  #     - name: Install testing dependencies
+  #       working-directory: ./system-test
+  #       run: npm install
+
+  #     - name: Run acceptance tests
+  #       working-directory: ./system-test
+  #       run: |
+  #         npm run test:acceptance

@@ -16,6 +16,7 @@ const getBaseUrl = () => {
 }
 
 module.exports = defineConfig({
+  NODE_ENV: process.env.NODE_ENV || 'development', // Default to 'development'
   e2e: {
     baseUrl: getBaseUrl(),
     specPattern: [
