@@ -13,7 +13,7 @@ app.use(express.json());
  * Basic health check
  */
 app.get("/", (_req, res) => {
-  res.send("Tdd team training");
+  res.send("Tdd team test deployment");
 });
 
 app.use("/api/scripts", scriptsRoutes);
