@@ -6,9 +6,7 @@ export const generateScript = async (
   res: Response,
 ): Promise<void> => {
   const { message } = req.body;
-  const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
+  const openai = new OpenAI({});
   try {
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
@@ -24,9 +22,8 @@ export const generateScript = async (
         },
       ],
     });
-
-    const code = JSON.parse(response.choices[0].message.content ?? "{}");
-    res.status(201).json(code);
+    const code = response.choices[0].message.content ?? "";
+    res.status(201).json({ code });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
