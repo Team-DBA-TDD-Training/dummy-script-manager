@@ -1,9 +1,13 @@
 name: Acceptance Stage
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 */2 * * *'
+  push:
+    branches:
+      - 209-check-only-latest-images
+# on:
+  # workflow_dispatch:
+  # schedule:
+  #   - cron: '0 */2 * * *'
 jobs:
   check-images:
     runs-on: ubuntu-latest
@@ -30,7 +34,7 @@ jobs:
         run: |
           IMAGES_UPDATED=false
           CURRENT_TIME=$(date +%s)
-          LAST_UPDATED=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails[0].imagePushedAt')
+          LAST_UPDATED=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails | sort_by(.imagePushedAt) | last(.[]).imagePushedAt')
           LAST_UPDATED_EPOCH=$(date -d "$LAST_UPDATED" +%s)
           echo $LAST_UPDATED
           DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
@@ -45,7 +49,7 @@ jobs:
           ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY_FRONTEND }}
         run: |
           CURRENT_TIME=$(date +%s)
-          LAST_UPDATED=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails[0].imagePushedAt')
+          LAST_UPDATED=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails | sort_by(.imagePushedAt) | last(.[]).imagePushedAt')
           LAST_UPDATED_EPOCH=$(date -d "$LAST_UPDATED" +%s)
           echo $ECR_REPOSITORY
           echo $LAST_UPDATED
