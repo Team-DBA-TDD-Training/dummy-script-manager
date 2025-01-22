@@ -3,7 +3,7 @@ name: Acceptance Stage
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */2 * * *'
+    - cron: '*/5 * * * *'
 jobs:
   check-images:
     runs-on: ubuntu-latest
