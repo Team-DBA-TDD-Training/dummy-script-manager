@@ -1,13 +1,9 @@
 name: Acceptance Stage
 
-# on:
-#   workflow_dispatch:
-#   schedule:
-#     - cron: '*/5 * * * *'
 on:
-  push:
-    branches:
-      - 128-p2---acc-testable-architecture-step-4---create-external-system-stub
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
 jobs:
   check-images:
     runs-on: ubuntu-latest
