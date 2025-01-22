@@ -1,0 +1,13 @@
+{
+    "request": {
+      "method": "POST",
+      "url": "/ai/chat/completions"
+    },
+    "response": {
+      "status": 200,
+      "bodyFileName": "openai-response.json",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    }
+}
