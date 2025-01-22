@@ -1,6 +1,3 @@
-const SCRIPT_URL = `/api/scripts`
-import {onlyOn, skipOn} from '@cypress/skip-test'
-
 describe('External stub', () => {
   /**
    * Feature: Generate script with the suggestion from AI tool
