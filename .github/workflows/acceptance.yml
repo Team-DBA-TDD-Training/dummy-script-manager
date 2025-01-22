@@ -1,0 +1,104 @@
+name: Acceptance Stage
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
+jobs:
+  check-images:
+    runs-on: ubuntu-latest
+    outputs:
+      images-found: ${{ steps.set-output.outputs.images_found }}
+    env:
+      MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
+      OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+      NODE_ENV: test
+    continue-on-error: true
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Check if backend image is published
+        env:
+          ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: |
+          IMAGES_UPDATED=false
+          CURRENT_TIME=$(date +%s)
+          LAST_UPDATED=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails[0].imagePushedAt')
+          LAST_UPDATED_EPOCH=$(date -d "$LAST_UPDATED" +%s)
+          DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
+          if [ "$DIFF_MINUTES" -le 5 ]; then
+            IMAGES_UPDATED=true
+          fi
+          echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
+      
+      - name: Check if frontend image is published
+        if: env.IMAGES_UPDATED == 'false'
+        env: 
+          ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY_FRONTEND }}
+        run: |
+          CURRENT_TIME=$(date +%s)
+          LAST_UPDATED=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails[0].imagePushedAt')
+          LAST_UPDATED_EPOCH=$(date -d "$LAST_UPDATED" +%s)
+          DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
+          if [ "$DIFF_MINUTES" -le 7000 ]; then
+            IMAGES_UPDATED=true
+          fi
+          echo $IMAGES_UPDATED
+          echo "IMAGES_UPDATED=$IMAGES_UPDATED" >> $GITHUB_ENV
+
+      - name: Set image found output
+        id: set-output
+        run: |
+          if [ "$IMAGES_UPDATED" = "true" ]; then
+            echo "::set-output name=images_found::true"
+          else
+            echo "::set-output name=images_found::false"
+          fi
+
+  trigger-uat-release:
+    needs: check-images
+    if: ${{ needs.check-images.outputs.images-found == 'true' }}
+    uses: ./.github/workflows/release.yml
+    with:
+      environment: acceptance
+    secrets: inherit
+
+  skip-uat:
+    runs-on: ubuntu-latest
+    needs: check-images
+    if: ${{ needs.check-images.outputs.images-found == 'false' }}
+    steps:
+      - name: Log skipping UAT
+        run: echo "Skipping UAT as no updated images were found."
+  acceptance-test:
+    runs-on: ubuntu-latest
+    if: ${{ success() }}
+    needs: [trigger-uat-release]
+    env:
+      MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
+      OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+      NODE_ENV: uat
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+
+      - name: Install testing dependencies
+        working-directory: ./system-test
+        run: npm install
+
+      - name: Run acceptance tests
+        working-directory: ./system-test
+        run: |
+          npm run test:acceptance
