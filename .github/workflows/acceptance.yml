@@ -1,9 +1,13 @@
 name: Acceptance Stage
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 */2 * * *'
+  push:
+    branches:
+      - 128-p2---acc-testable-architecture-step-4---create-external-system-stub
+# on:
+#   workflow_dispatch:
+#   schedule:
+#     - cron: '0 */2 * * *'
 jobs:
   check-images:
     runs-on: ubuntu-latest
@@ -47,7 +51,7 @@ jobs:
           LAST_UPDATED=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION | jq -r '.imageDetails[0].imagePushedAt')
           LAST_UPDATED_EPOCH=$(date -d "$LAST_UPDATED" +%s)
           DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
-          if [ "$DIFF_MINUTES" -le 5 ]; then
+          if [ "$DIFF_MINUTES" -le 10000 ]; then
             IMAGES_UPDATED=true
           fi
           echo $IMAGES_UPDATED
@@ -62,7 +66,7 @@ jobs:
             echo "::set-output name=images_found::false"
           fi
 
-  trigger-uat-release:
+  uat-deployment:
     needs: check-images
     if: ${{ needs.check-images.outputs.images-found == 'true' }}
     uses: ./.github/workflows/release.yml
@@ -78,7 +82,7 @@ jobs:
       - name: Log skipping UAT
         run: echo "Skipping UAT as no updated images were found."
 
-  acceptance-test-with-stub:
+  uat-with-stub:
     runs-on: ubuntu-latest
     if: ${{ needs.check-images.outputs.images-found == 'true' }}
     needs: [check-images]
@@ -109,10 +113,10 @@ jobs:
         run: |
           npm run test:acceptance-docker
   
-  acceptance-test:
+  uat:
     runs-on: ubuntu-latest
     if: ${{ success() }}
-    needs: [trigger-uat-release]
+    needs: [uat-deployment]
     env:
       MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
       OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
