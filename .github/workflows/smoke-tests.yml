@@ -1,0 +1,30 @@
+name: Run Smoke Tests
+
+on:
+  workflow_call:
+    inputs:
+      backend_url:
+        required: true
+        type: string
+
+jobs:
+  smoke-tests:
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: production
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check if server is running
+        run: |
+          echo "Checking if the backend server is up..."
+          curl -f ${{ inputs.backend_url }} || exit 1
+
+      - name: Install Dependencies
+        run: |
+          npm run install:system-test
+
+      - name: Run Smoke Tests
+        run: |
+          npm run test:smoke

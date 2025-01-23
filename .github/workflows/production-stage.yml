@@ -10,24 +10,8 @@ jobs:
       environment: prod
     secrets: inherit
 
-  system-tests:
-    runs-on: ubuntu-latest
+  smoke-tests:
     needs: trigger-production-release
-    env:
-      NODE_ENV: production
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Check if server is running
-        run: |
-          echo "Checking if the backend server is up..."
-          curl -f ${{ vars.BACKEND_PROD_ENV_URL }}|| exit 1
-
-      - name: Install Dependencies
-        run: |
-          npm run install:system-test
-
-      - name: Run Smoke Tests
-        run: |
-          npm run test:smoke
+    uses: ./.github/workflows/smoke-tests.yml
+    with:
+      backend_url: ${{ vars.BACKEND_PROD_ENV_URL }}
