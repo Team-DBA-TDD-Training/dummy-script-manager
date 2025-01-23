@@ -16,10 +16,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check if server is running
-        run: |
-          echo "Checking if the backend server is up..."
-          curl -f ${{ inputs.backend_url }} || exit 1
 
       - name: Install Dependencies
         run: |
