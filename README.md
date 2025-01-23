@@ -40,6 +40,8 @@ This will consequently train and enable us to apply the same transformation to t
 
 ![System Architecture](system.png)
 
+**Architecture Style:** Frontend + Monolithic Backend
+
 ## Tech Stack
 
 |               | Frontend   | Backend       | Database      |
