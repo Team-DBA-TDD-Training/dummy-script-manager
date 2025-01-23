@@ -63,6 +63,7 @@ const MainScreen = () => {
           value={state.currentScript.code}
           width={"541px"}
           height={"300px"}
+          className="scriptInput"
           placeholder={"Write your script here.."}
         ></TextAreaComponent>
         <AiHelper callback={handleScriptCode}/>

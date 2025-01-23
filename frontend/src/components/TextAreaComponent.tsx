@@ -5,6 +5,7 @@ export interface TextInputProps {
   width: string;
   height: string;
   value?: string;
+  className?: string;
   onChange?: (value: string) => void;
 }
 
@@ -22,6 +23,7 @@ const TextAreaComponent = (props: TextInputProps) => {
       value={props.value}
       $width={props.width}
       $height={props.height}
+      className={props.className}
     ></StyledTextInput>
   );
 };

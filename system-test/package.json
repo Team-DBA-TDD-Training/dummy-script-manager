@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "test:acceptance": "cypress run"
+    "test:acceptance": "cypress run --config-file cypress.config.uat.js",
+    "test:acceptance-docker": "cypress run --config-file cypress.config.uat.docker.js",
+    "test:e2e": "cypress run --config-file cypress.config.e2e.js"
   },
   "author": "",
   "license": "ISC",
