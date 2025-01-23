@@ -3,7 +3,7 @@ name: Acceptance Stage
 on:
   push:
     branches:
-      - 209-check-only-latest-images
+      - main
 # on:
   # workflow_dispatch:
   # schedule:
@@ -116,6 +116,11 @@ jobs:
         working-directory: ./system-test
         run: |
           npm run test:acceptance-docker
+
+      - name: Run e2e tests
+        working-directory: ./system-test
+        run: |
+          npm run test:e2e
   
   uat:
     runs-on: ubuntu-latest
@@ -142,3 +147,8 @@ jobs:
         working-directory: ./system-test
         run: |
           npm run test:acceptance
+
+      - name: Run e2e tests
+        working-directory: ./system-test
+        run: |
+          npm run test:e2e
