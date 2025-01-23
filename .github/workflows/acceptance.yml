@@ -1,13 +1,9 @@
 name: Acceptance Stage
 
 on:
-  push:
-    branches:
-      - main
-# on:
-  # workflow_dispatch:
-  # schedule:
-  #   - cron: '0 */2 * * *'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */2 * * *'
 jobs:
   check-images:
     runs-on: ubuntu-latest
