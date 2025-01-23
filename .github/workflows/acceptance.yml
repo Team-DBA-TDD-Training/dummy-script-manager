@@ -3,7 +3,7 @@ name: Acceptance Stage
 on:
   push:
     branches:
-      - 209-check-only-latest-images
+      - main
 # on:
   # workflow_dispatch:
   # schedule:
