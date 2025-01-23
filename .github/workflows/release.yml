@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: "Deployment target (acceptance, uat or prod)"
+        description: "Deployment target (acceptance, e2e, uat or prod)"
         required: true
         default: "uat"
 
@@ -84,6 +84,8 @@ jobs:
             ["acceptance_frontend"]="${{ vars.EB_ACCEPTANCE_FRONTEND }}"
             ["prod_backend"]="${{ vars.EB_PROD_ENV }}"
             ["prod_frontend"]="${{ vars.EB_PROD_ENV_FRONTEND }}"
+            ["e2e_backend"]="${{ vars.EB_E2E_BACKEND }}"
+            ["e2e_frontend"]="${{ vars.EB_E2E_FRONTEND }}"
           )
 
           if [[ -z "${{ env.environment }}" ]]; then
