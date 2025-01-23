@@ -156,3 +156,11 @@ The frontend should start running in the following URL: [http://localhost:5173/]
 
 ### Manual Testing
 [Link to the Manual Test Procedure](manual-test-procedure)
+
+### Environments
+
+[REST API](http://script-manager-backend-production.us-east-1.elasticbeanstalk.com/)
+
+[FRONTEND](http://script-manager-frontend-production.us-east-1.elasticbeanstalk.com/)
+
+Note that in the workflows, we mention deploying to uat, production, acceptance and e2e environments however, to avoid high costs we only have 2 AWS EB environment (1 for frontend and 1 for backend)
