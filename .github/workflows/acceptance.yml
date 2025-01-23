@@ -147,3 +147,8 @@ jobs:
         working-directory: ./system-test
         run: |
           npm run test:acceptance
+
+      - name: Run e2e tests
+        working-directory: ./system-test
+        run: |
+          npm run test:e2e
