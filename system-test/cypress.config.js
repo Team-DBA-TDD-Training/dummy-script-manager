@@ -20,8 +20,15 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: getBaseUrl(),
     specPattern: [
-      'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
-      'smoke/*.cy.{js,jsx,ts,tsx}',
+      'e2e/*.cy.{js,jsx,ts,tsx}'
     ],
+    setupNodeEvents(on, config) {
+      on('task', {
+        log(message) {
+          console.log(message);
+          return null;
+        },
+      });
+    },
   },
 });
