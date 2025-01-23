@@ -13,5 +13,3 @@ jobs:
   smoke-tests:
     needs: trigger-production-release
     uses: ./.github/workflows/smoke-tests.yml
-    with:
-      backend_url: http://${{ vars.EB_PROD_ENV }}.us-east-1.elasticbeanstalk.com

@@ -13,5 +13,3 @@ jobs:
   smoke-tests:
     needs: trigger-uat-release
     uses: ./.github/workflows/smoke-tests.yml
-    with:
-      backend_url: http://${{ vars.EB_UAT_ENV }}.us-east-1.elasticbeanstalk.com
