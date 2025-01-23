@@ -152,7 +152,7 @@ const HistoryPanel = () => {
   return (
     <Panel className="history">
       <Header>
-        <div>History ---test----</div>
+        <div>History</div>
         <CloseOutlined
           onClick={toggleHistoryPanel}
           style={{ cursor: "pointer" }}
