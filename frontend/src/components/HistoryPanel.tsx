@@ -161,7 +161,7 @@ const HistoryPanel = () => {
       <Row>
         <Toolbar>
           <FaEdit
-            id={"edit-icon-test-id"}
+            data-testid={"edit-icon-test-id"}
             onClick={OnEditClicked}
             style={
               selectionLength === 1
