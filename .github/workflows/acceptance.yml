@@ -3,7 +3,7 @@ name: Acceptance Stage
 on:
   push:
     branches:
-      - Script-manager-105-e2e-tests
+      - 209-check-only-latest-images
 # on:
   # workflow_dispatch:
   # schedule:
