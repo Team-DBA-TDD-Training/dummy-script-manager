@@ -160,8 +160,9 @@ The frontend should start running in the following URL: [http://localhost:5173/]
 
 ### Environments
 
-[REST API](http://script-manager-backend-production.us-east-1.elasticbeanstalk.com/)
-
-[FRONTEND](http://script-manager-frontend-production.us-east-1.elasticbeanstalk.com/)
-
-Note that in the workflows, we mention deploying to uat, production, acceptance and e2e environments however, to avoid high costs we only have 2 AWS EB environment (1 for frontend and 1 for backend)
+| ENVIRONMENT | FRONTEND                                                                          | BACKEND                                                                            |
+| ----------- | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Acceptance  | [AWS EB](http://script-manager-frontend-acceptance.us-east-1.elasticbeanstalk.com)| [AWS EB](http://script-manager-backend-acceptance.us-east-1.elasticbeanstalk.com/) |
+| E2E         | [AWS EB](http://script-manager-frontend-e2e.us-east-1.elasticbeanstalk.com)       | [AWS EB](http://script-manager-backend-e2e.us-east-1.elasticbeanstalk.com)         |
+| Production  | [AWS EB](http://script-manager-frontend-production.us-east-1.elasticbeanstalk.com)| [AWS EB](http://script-manager-backend-production.us-east-1.elasticbeanstalk.com)  |
+| Uat         | [AWS EB](http://script-manager-frontend-uat.us-east-1.elasticbeanstalk.com)       | [AWS EB](http://script-manager-backend-uat.us-east-1.elasticbeanstalk.com)         |
