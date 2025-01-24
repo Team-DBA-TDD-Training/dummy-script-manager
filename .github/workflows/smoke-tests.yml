@@ -2,20 +2,13 @@ name: Run Smoke Tests
 
 on:
   workflow_call:
-    inputs:
-      backend_url:
-        required: true
-        type: string
 
 jobs:
   smoke-tests:
     runs-on: ubuntu-latest
-    env:
-      NODE_ENV: production
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
 
       - name: Install Dependencies
         run: |
