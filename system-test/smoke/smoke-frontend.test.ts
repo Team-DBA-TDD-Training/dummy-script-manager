@@ -1,4 +1,4 @@
-const FRONT_END_URL = process.env.frontend_url;
+const FRONT_END_URL = "http://script-manager-frontend-production.us-east-1.elasticbeanstalk.com";// process.env.frontend_url;
 const jsdom = require("jsdom")
 const { JSDOM } = jsdom
 
@@ -8,11 +8,11 @@ describe("Frontend smoke tests", () => {
       expect(response.ok).toBe(true);
   });
 
-  // it("checks if the title is being displayed and is correct", async () => {
-  //   const response = await fetch(FRONT_END_URL);
-  //   const htmlText = await response.text();
-  //   const jsdom = new JSDOM(htmlText);
-  //   const pageTitle = jsdom.window.document.querySelector('title')?.textContent || 'No title found';
-  //   expect(pageTitle).toBe("Script Manager");
-  // });
+  it("checks if the title is being displayed and is correct", async () => {
+    const response = await fetch(FRONT_END_URL);
+    const htmlText = await response.text();
+    const jsdom = new JSDOM(htmlText);
+    const pageTitle = jsdom.window.document.querySelector('title')?.textContent || 'No title found';
+    expect(pageTitle).toBe("Script Manager");
+  });
 });

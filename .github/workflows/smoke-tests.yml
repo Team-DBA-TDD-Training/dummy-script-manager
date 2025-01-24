@@ -3,7 +3,7 @@ name: Run Smoke Tests
 on:
   workflow_call:
     inputs:
-      backend_url:
+      environment:
         required: true
         type: string
 
@@ -12,10 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NODE_ENV: production
+      backend_url: ${{ vars.BACKEND_UAT_ENV_URL }}
+      frontend_url: ${{ vars.FRONTEND_UAT_ENV_URL }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
 
       - name: Install Dependencies
         run: |
