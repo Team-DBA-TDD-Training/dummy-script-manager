@@ -24,8 +24,8 @@ jobs:
         run: npm install
 
       - name: Run Smoke Tests
-        working-directory: ./system-test
         env:
-          backend_url: ${{ inputs.BACKEND_UAT_ENV_URL }}
-          frontend_url: ${{ inputs.FRONTEND_UAT_ENV_URL }}
+          BACKEND_URL: ${{ inputs.BACKEND_UAT_ENV_URL }}
+          FRONTEND_URL: ${{ inputs.FRONTEND_UAT_ENV_URL }}
+        working-directory: ./system-test
         run: npx jest smoke
