@@ -10,8 +10,31 @@ jobs:
       environment: uat
     secrets: inherit
 
-  smoke-tests:
+#  smoke-tests:
+#    needs: trigger-uat-release
+#    uses: ./.github/workflows/smoke-tests.yml
+#    with:
+#      backend_url: ${{ vars.BACKEND_UAT_ENV_URL }}
+#
+
+  system-tests:
+    runs-on: ubuntu-latest
     needs: trigger-uat-release
-    uses: ./.github/workflows/smoke-tests.yml
-    with:
-      backend_url: ${{ vars.BACKEND_UAT_ENV_URL }}
+    env:
+      NODE_ENV: uat
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          npm run install:system-test
+
+      - name: Run Smoke Tests
+        run: |
+          npm run test:smoke
+
+      - name: Check if server is running
+        run: |
+          echo "Checking if the backend server is up..."
+          curl -f ${{ vars.BACKEND_UAT_ENV_URL }}|| exit 1
