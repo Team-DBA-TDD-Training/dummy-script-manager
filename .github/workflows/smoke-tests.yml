@@ -18,9 +18,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          backend_url: ${{ inputs.backend_url }}
-          frontend_url: ${{ inputs.frontend_url }}
 
       - name: Install Dependencies
         working-directory: ./system-test
