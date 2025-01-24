@@ -1,4 +1,4 @@
-const FRONT_END_URL = 'http://script-manager-frontend-uat.us-east-1.elasticbeanstalk.com';
+const FRONT_END_URL = process.env.frontend_url;;
 const jsdom = require("jsdom")
 const { JSDOM } = jsdom
 

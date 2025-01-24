@@ -1,6 +1,6 @@
 const frisby = require('frisby');
 const Joi = frisby.Joi;
-export const REST_API_BASE_URL = "http://script-manager-backend-uat.us-east-1.elasticbeanstalk.com"; //process.env.backend_url;
+export const REST_API_BASE_URL =  process.env.backend_url;
 export const SCRIPT_API_EXT = '/api/scripts';
 
 describe("Tests health checks", () => {
