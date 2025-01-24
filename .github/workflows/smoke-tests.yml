@@ -19,9 +19,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install Dependencies
-        run: |
-          npm run install:system-test
+        working-directory: ./system-test
+        run: npm install
 
       - name: Run Smoke Tests
-        run: |
-          npm run test:smoke
+        working-directory: ./system-test
+        run: npx jest smoke

@@ -23,7 +23,7 @@
     "test:acceptance": "cd system-test && npm run test acceptance",
     "test:e2e": "cd system-test && cypress run --config-file cypress.config.e2e.js",
     "test:external-contract": "cd system-test && npm run test external-contract",
-    "test:smoke": "cd system-test && npx jest smoke",
+    "test:smoke": "cd system-test && npm run test smoke",
     "lint:backend": "cd backend && npm run lint",
     "deploy:frontend": "cd frontend && npm run deploy",
     "deploy:backend": "cd backend && npm run deploy"
