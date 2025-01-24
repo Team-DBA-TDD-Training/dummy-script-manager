@@ -16,7 +16,7 @@ jobs:
       frontend_url: ${{ vars.FRONTEND_UAT_ENV_URL }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Install Dependencies
         run: |
