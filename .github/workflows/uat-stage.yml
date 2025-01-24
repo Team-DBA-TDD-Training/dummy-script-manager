@@ -23,7 +23,7 @@ jobs:
     env:
       NODE_ENV: uat
       backend_url: ${{ vars.BACKEND_UAT_ENV_URL }}
-      frontend_url: ${{ vars.FRONTEND_UAT_ENV_URL }}
+      frontend_url: ${{ vars.BACKEND_UAT_ENV_URL }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
