@@ -15,4 +15,3 @@ jobs:
     uses: ./.github/workflows/smoke-tests.yml
     with:
       environment: uat
-    secrets: inherit
