@@ -4,7 +4,7 @@
   "scripts": {
     "install:frontend": "cd frontend && npm install",
     "install:backend": "cd backend && npm install",
-    "install:system-test":"cd system-test && npm ci",
+    "install:system-test":"cd system-test && npm install",
     "dev:frontend": "cd frontend && npm run dev",
     "dev:backend": "cd backend && npm run dev",
     "start:frontend": "cd frontend && npm run start",
