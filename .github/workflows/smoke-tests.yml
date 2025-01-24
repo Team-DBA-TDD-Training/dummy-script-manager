@@ -3,18 +3,17 @@ name: Run Smoke Tests
 on:
   workflow_call:
     inputs:
-      environment:
+      backend_url:
         required: true
         type: string
+      frontend_url:
+          required: true
+          type: string
 
 jobs:
   smoke-tests:
     name: Run smoke tests
     runs-on: ubuntu-latest
-#    env:
-#      NODE_ENV: production
-#      backend_url: ${{ vars.BACKEND_UAT_ENV_URL }}
-#      frontend_url: ${{ vars.FRONTEND_UAT_ENV_URL }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -24,5 +23,8 @@ jobs:
         run: npm install
 
       - name: Run Smoke Tests
+        with:
+          backend_url: ${{ inputs.backend_url }}
+          frontend_url: ${{ inputs.frontend_url }}
         working-directory: ./system-test
         run: npx jest smoke
