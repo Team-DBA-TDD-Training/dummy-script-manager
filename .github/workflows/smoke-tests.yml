@@ -9,13 +9,16 @@ on:
 
 jobs:
   smoke-tests:
+    name: Run smoke tests
     runs-on: ubuntu-latest
-    env:
-      NODE_ENV: production
-      backend_url: ${{ vars.BACKEND_UAT_ENV_URL }}
-      frontend_url: ${{ vars.FRONTEND_UAT_ENV_URL }}
+#    env:
+#      NODE_ENV: production
+#      backend_url: ${{ vars.BACKEND_UAT_ENV_URL }}
+#      frontend_url: ${{ vars.FRONTEND_UAT_ENV_URL }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Install Dependencies
         working-directory: ./system-test
         run: npm install
