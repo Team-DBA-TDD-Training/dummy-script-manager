@@ -25,7 +25,7 @@ jobs:
 
       - name: Run Smoke Tests
         env:
-          BACKEND_URL: ${{ inputs.BACKEND_UAT_ENV_URL }}
-          FRONTEND_URL: ${{ inputs.FRONTEND_UAT_ENV_URL }}
+          BACKEND_URL: ${{ inputs.backend_url }}
+          FRONTEND_URL: ${{ inputs.frontend_url }}
         working-directory: ./system-test
         run: npx jest smoke
