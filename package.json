@@ -4,7 +4,7 @@
   "scripts": {
     "install:frontend": "cd frontend && npm install",
     "install:backend": "cd backend && npm install",
-    "install:system-test":"cd system-test && npm install",
+    "install:system-test":"cd system-test && npm ci",
     "dev:frontend": "cd frontend && npm run dev",
     "dev:backend": "cd backend && npm run dev",
     "start:frontend": "cd frontend && npm run start",
@@ -23,7 +23,7 @@
     "test:acceptance": "cd system-test && npm run test acceptance",
     "test:e2e": "cd system-test && cypress run --config-file cypress.config.e2e.js",
     "test:external-contract": "cd system-test && npm run test external-contract",
-    "test:smoke": "cd system-test && npm run test smoke",
+    "test:smoke": "cd system-test && npx jest smoke",
     "lint:backend": "cd backend && npm run lint",
     "deploy:frontend": "cd frontend && npm run deploy",
     "deploy:backend": "cd backend && npm run deploy"
