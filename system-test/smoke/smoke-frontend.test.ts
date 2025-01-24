@@ -1,4 +1,4 @@
-export const FRONT_END_URL = process.env.frontend_url;
+export const FRONT_END_URL = process.env.FRONTEND_URL;
 const jsdom = require("jsdom")
 const { JSDOM } = jsdom
 
