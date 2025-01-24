@@ -1,4 +1,4 @@
-const FRONT_END_URL = 'http://tdd-team-training.s3-website-us-east-1.amazonaws.com/';
+const FRONT_END_URL = 'http://script-manager-frontend-uat.us-east-1.elasticbeanstalk.com';
 const jsdom = require("jsdom")
 const { JSDOM } = jsdom
 
