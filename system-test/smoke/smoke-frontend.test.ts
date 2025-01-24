@@ -1,8 +1,8 @@
-export const FRONT_END_URL = process.env.FRONTEND_URL;
 const jsdom = require("jsdom")
-const { JSDOM } = jsdom
+const { JSDOM } = jsdom;
 
 describe("Frontend smoke tests", () => {
+  const FRONT_END_URL = process.env.FRONTEND_URL;
   it("checks if the website is up and running", async () => {
       const response = await fetch(FRONT_END_URL);
       expect(response.ok).toBe(true);
