@@ -4,11 +4,12 @@
 
 ## Pipeline Dashboards
 
-### Component Stages
-| Component | Commit Stage | UAT Stage | Production Stage |
-| --------- | ------------ | --------- | ---------------- |
-| front-end | ![Commit](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/commit.yml/badge.svg)| ![UAT](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/uat-stage.yml/badge.svg) | ![Prod](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/production-stage.yml/badge.svg) |
-| back-end | ![Commit](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/commit.yml/badge.svg)| ![UAT](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/uat-stage.yml/badge.svg)| ![Prod](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/production-stage.yml/badge.svg) |
+### System Stages
+
+|                    | Commit Stage         | UAT Stage             |  Production Stage     |
+| ------------------ | -------------------- |-----------------------|-----------------------|
+| **System**         | [![Commit](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/commit.yml/badge.svg)](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/commit.yml)| [![UAT Stage](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/uat-stage.yml/badge.svg)](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/uat-stage.yml) | [![Production Stage](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/production-stage.yml/badge.svg)](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/production-stage.yml) |
+
 
 ## Contributors
 
