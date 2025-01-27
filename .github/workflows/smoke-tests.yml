@@ -7,8 +7,8 @@ on:
         required: true
         type: string
       frontend_url:
-          required: true
-          type: string
+        required: true
+        type: string
 
 jobs:
   smoke-tests:
