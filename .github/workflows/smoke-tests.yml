@@ -6,21 +6,26 @@ on:
       backend_url:
         required: true
         type: string
+      frontend_url:
+          required: true
+          type: string
 
 jobs:
   smoke-tests:
+    name: Run smoke tests
     runs-on: ubuntu-latest
-    env:
-      NODE_ENV: production
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
-
+        uses: actions/checkout@v3
 
       - name: Install Dependencies
-        run: |
-          npm run install:system-test
+        working-directory: ./system-test
+        run: npm install
 
       - name: Run Smoke Tests
-        run: |
-          npm run test:smoke
+        env:
+          BACKEND_URL: ${{ inputs.backend_url }}
+          FRONTEND_URL: ${{ inputs.frontend_url }}
+        working-directory: ./system-test
+        run: npx jest smoke
