@@ -1,6 +1,10 @@
 const frisby = require('frisby');
 const Joi = frisby.Joi;
-export const REST_API_BASE_URL = process.env.BACKEND_URL;
+
+const REST_API_BASE_URL = process.env.BACKEND_URL;
+if (!REST_API_BASE_URL) {
+  throw new Error("REST_API_BASE_URL environment variable is not set");
+}
 export const SCRIPT_API_EXT = '/api/scripts';
 
 describe("Tests health checks", () => {

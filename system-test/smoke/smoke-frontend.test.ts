@@ -1,8 +1,13 @@
 const jsdom = require("jsdom")
 const { JSDOM } = jsdom;
 
+const FRONT_END_URL = process.env.FRONTEND_URL;
+  
+if (!FRONT_END_URL) {
+  throw new Error("FRONTEND_URL is not defined");
+}
+
 describe("Frontend smoke tests", () => {
-  const FRONT_END_URL = process.env.FRONTEND_URL;
   it("checks if the website is up and running", async () => {
       const response = await fetch(FRONT_END_URL);
       expect(response.ok).toBe(true);
