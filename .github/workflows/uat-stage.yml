@@ -13,3 +13,6 @@ jobs:
   smoke-tests:
     needs: trigger-uat-release
     uses: ./.github/workflows/smoke-tests.yml
+    with:
+      backend_url: ${{ vars.BACKEND_UAT_ENV_URL }}
+      frontend_url: ${{ vars.FRONTEND_UAT_ENV_URL }}
