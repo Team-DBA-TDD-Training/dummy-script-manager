@@ -165,4 +165,4 @@ The frontend should start running in the following URL: [http://localhost:5173/]
 | Acceptance  | [AWS EB](http://script-manager-frontend-acceptance.us-east-1.elasticbeanstalk.com)| [AWS EB](http://script-manager-backend-acceptance.us-east-1.elasticbeanstalk.com/) |
 | E2E         | [AWS EB](http://script-manager-frontend-e2e.us-east-1.elasticbeanstalk.com)       | [AWS EB](http://script-manager-backend-e2e.us-east-1.elasticbeanstalk.com)         |
 | Production  | [AWS EB](http://script-manager-frontend-production.us-east-1.elasticbeanstalk.com)| [AWS EB](http://script-manager-backend-production.us-east-1.elasticbeanstalk.com)  |
-| Uat         | [AWS EB](http://script-manager-frontend-uat.us-east-1.elasticbeanstalk.com)       | [AWS EB](http://script-manager-backend-uat.us-east-1.elasticbeanstalk.com)         |
+| UAT         | [AWS EB](http://script-manager-frontend-uat.us-east-1.elasticbeanstalk.com)       | [AWS EB](http://script-manager-backend-uat.us-east-1.elasticbeanstalk.com)         |
