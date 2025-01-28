@@ -8,7 +8,7 @@
 
 |                    | Commit Stage         | UAT Stage             |  Production Stage     |
 | ------------------ | -------------------- |-----------------------|-----------------------|
-| **System**         | [![Commit Stage](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/commit.yml/badge.svg)](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/commit.yml) | [![UAT Stage](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/uat-stage.yml/badge.svg)](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/uat-stage.yml) | [![Production Stage](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/production-stage.yml/badge.svg)](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/production-stage.yml) |
+| **System**         | [![Commit Stage](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/commit.yml/badge.svg)](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/commit.yml) | [![UAT Stage](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/uat-stage.yml/badge.svg?event=workflow_dispatch)](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/uat-stage.yml) | [![Production Stage](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/production-stage.yml/badge.svg?event=workflow_dispatch)](https://github.com/Team-DBA-TDD-Training/dummy-script-manager/actions/workflows/production-stage.yml) |
 
 
 ## Contributors
