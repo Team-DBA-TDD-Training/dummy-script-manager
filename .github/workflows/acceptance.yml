@@ -66,12 +66,19 @@ jobs:
             echo "::set-output name=images_found::false"
           fi
 
-  uat-deployment:
+  acceptance-deployment:
     needs: check-images
     if: ${{ needs.check-images.outputs.images-found == 'true' }}
     uses: ./.github/workflows/release.yml
     with:
-      environment: uat
+      environment: acceptance
+    secrets: inherit
+  e2e-deployment:
+    needs: check-images
+    if: ${{ needs.check-images.outputs.images-found == 'true' }}
+    uses: ./.github/workflows/release.yml
+    with:
+      environment: e2e
     secrets: inherit
 
   skip-uat:
@@ -124,7 +131,7 @@ jobs:
   uat:
     runs-on: ubuntu-latest
     if: ${{ success() }}
-    needs: [uat-deployment]
+    needs: [acceptance-deployment]
     env:
       MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
       OPENAI_KEY: ${{ secrets.OPENAI_KEY }}

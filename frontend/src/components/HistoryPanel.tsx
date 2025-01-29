@@ -170,6 +170,7 @@ const HistoryPanel = () => {
             }
           />
           <AiTwotoneDelete
+            data-testid="delete-script"
             onClick={onDeleteClicked}
             style={
               selectionLength
@@ -213,6 +214,7 @@ const HistoryPanel = () => {
                     <div>
                       {script.isFavorite ? (
                         <FaStar
+                        data-testid={"mark-favorite-test-id" + script._id}
                           onClick={() => {
                             markUnmarkFavorite(
                               UNMARK_FAVORITE_API_URL + script._id
@@ -222,6 +224,7 @@ const HistoryPanel = () => {
                         />
                       ) : (
                         <AiOutlineStar
+                        data-testid={"mark-favorite-test-id" + script._id}
                           onClick={() => {
                             markUnmarkFavorite(
                               MARK_FAVORITE_API_URL + script._id

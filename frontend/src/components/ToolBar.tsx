@@ -113,6 +113,7 @@ const ToolBar = () => {
         onClick={onNewScriptClicked}
       ></ToolBarButton>
       <ToolBarButton
+        data-testid="save-script"
         caption="Save Script"
         onClick={onSaveScriptClicked}
       ></ToolBarButton>

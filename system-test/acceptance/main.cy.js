@@ -1,6 +1,6 @@
 describe('Acceptance tests', () => {
   
-    it('Generate script with the suggestion from AI tool', () => {
+    it('Create new script', () => {
       cy.visit('/')
     })
   })

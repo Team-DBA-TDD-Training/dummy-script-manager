@@ -9,28 +9,22 @@ export interface TextInputProps {
   onChange?: (value: string) => void;
 }
 
-const TextInputComponent = (props: TextInputProps) => {
+const TextInputComponent = ({ onChange, ...rest }: TextInputProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (props.onChange) {
-      props.onChange(event.target.value);
-    }
+    onChange && onChange(event.target.value);
   };
 
   return (
     <StyledTextInput
       onChange={handleChange}
-      value={props.value}
-      $width={props.width}
-      $height={props.height}
-      $isBold={props.isBold}
-      placeholder={props.placeholder!}
+      {...rest}
     ></StyledTextInput>
   );
 };
 
 interface InputProps {
-  $width: string;
-  $height: string;
+  width: string;
+  height: string;
   $isBold?: boolean;
 }
 
@@ -38,8 +32,8 @@ const StyledTextInput = styled.input<InputProps>`
   margin: 5px;
   padding: 5px;
   background-color: white;
-  width: ${(props) => `${props.$width}`};
-  height: ${(props) => `${props.$height}`};
+  width: ${(props) => `${props.width}`};
+  height: ${(props) => `${props.height}`};
   border-radius: 5px;
   color: black;
   box-shadow: none;

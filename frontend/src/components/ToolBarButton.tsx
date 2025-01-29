@@ -1,11 +1,11 @@
 import styled from "styled-components";
 export interface ButtonProps {
-    caption: string;
-    className?: string;
-    onClick: () => void;
+  caption: string;
+  className?: string;
+  onClick: () => void;
 }
-const ToolBarButton = (props: ButtonProps) => {
-    return <StyledButton onClick={props.onClick} className={props.className}>{props.caption}</StyledButton>
+const ToolBarButton = ({ caption, ...rest }: ButtonProps) => {
+  return <StyledButton {...rest}>{caption}</StyledButton>
 }
 
 const StyledButton = styled.button`

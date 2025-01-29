@@ -7,7 +7,6 @@ describe('External stub', () => {
       And clicks ‘Ask AI’
       Then the generated script should appear in the code editor
    */
-
   it('Generate script with the suggestion from AI tool', () => {
     cy.visit('/')
     cy.get('.askAIButton').click()
