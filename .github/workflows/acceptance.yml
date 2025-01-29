@@ -1,9 +1,13 @@
 name: Acceptance Stage
 
+# on:
+#   workflow_dispatch:
+#   schedule:
+#     - cron: '0 */2 * * *'
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 */2 * * *'
+  push:
+    branches:
+      - 215-update-acceptance-stage
 jobs:
   check-images:
     runs-on: ubuntu-latest
@@ -73,6 +77,7 @@ jobs:
     with:
       environment: acceptance
     secrets: inherit
+    
   e2e-deployment:
     needs: check-images
     if: ${{ needs.check-images.outputs.images-found == 'true' }}
@@ -135,9 +140,9 @@ jobs:
     env:
       MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
       OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
-      NODE_ENV: uat
-      BACKEND_URL: ${{ vars.BACKEND_UAT_ENV_URL }}
-      FRONTEND_URL: ${{ vars.FRONTEND_UAT_ENV_URL }}
+      NODE_ENV: acceptance
+      BACKEND_URL: ${{ vars.BACKEND_ACCEPTANCE_ENV_URL }}
+      FRONTEND_URL: ${{ vars.FRONTEND_ACCEPTANCE_ENV_URL }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -157,6 +162,10 @@ jobs:
           npm run test:acceptance
 
       - name: Run e2e tests
+        env:
+          NODE_ENV: e2e
+          BACKEND_URL: ${{ vars.BACKEND_E2E_ENV_URL }}
+          FRONTEND_URL: ${{ vars.FRONTEND_E2E_ENV_URL }}
         working-directory: ./system-test
         run: |
           npm run test:e2e
