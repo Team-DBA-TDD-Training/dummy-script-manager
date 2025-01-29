@@ -7,13 +7,15 @@ if (!REST_API_BASE_URL) {
 }
 export const SCRIPT_API_EXT = '/api/scripts';
 
-describe("Tests health checks", () => {
-  it("if backend server is up and running", async () => {
+describe("Basic backend health check test", () => {
+  it("If backend server is up and running", async () => {
     return frisby
       .get(REST_API_BASE_URL)
       .expect('status', 200)
   });
+});
 
+describe("Backend smoke test", () => {
   it("if GET API returns the required fields ", async () => {
     return frisby
       .get(REST_API_BASE_URL + SCRIPT_API_EXT)
