@@ -162,6 +162,11 @@ The frontend should start running in the following URL: [http://localhost:5173/]
 ### Manual Testing
 [Link to the Manual Test Procedure](manual-test-procedure)
 
+## Team Roles
+- Developers would be responsible to maintain Page Objects. Hence they are responsible to fix any and every test that fails due to changed in Page Objects.
+- Developers would also be responsible to keep handlers to Page Objects, so that QA and Developers both can use those handlers to write the test.
+- QA would think of the scenarios to test the application, and can write tests using Page Objects.
+
 ### Environments
 
 | ENVIRONMENT | FRONTEND                                                                          | BACKEND                                                                            |
