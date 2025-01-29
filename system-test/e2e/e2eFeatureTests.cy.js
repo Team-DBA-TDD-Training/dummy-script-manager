@@ -1,6 +1,6 @@
 
-const FRONTEND_URL = 'http://script-manager-frontend-uat.us-east-1.elasticbeanstalk.com'; //'http://localhost:5173';
-const BACKEND_URL = "http://script-manager-backend-uat.us-east-1.elasticbeanstalk.com/api/scripts/";
+const FRONTEND_URL = process.env.FRONTEND_URL;
+const BACKEND_URL = process.env.BACKEND_URL;
 
 describe('E2E flow feature tests', () => {
   it('Add a new script', () => {
