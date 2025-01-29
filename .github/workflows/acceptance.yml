@@ -115,6 +115,9 @@ jobs:
 
       - name: Run e2e tests
         working-directory: ./system-test
+        env:
+          BACKEND_URL: ${{ vars.BACKEND_UAT_ENV_URL }}
+          FRONTEND_URL: ${{ vars.FRONTEND_UAT_ENV_URL }}
         run: |
           npm run test:e2e
   
@@ -126,6 +129,8 @@ jobs:
       MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
       OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
       NODE_ENV: uat
+      BACKEND_URL: ${{ vars.BACKEND_UAT_ENV_URL }}
+      FRONTEND_URL: ${{ vars.FRONTEND_UAT_ENV_URL }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
