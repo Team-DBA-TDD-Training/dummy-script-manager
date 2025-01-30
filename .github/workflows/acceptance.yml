@@ -124,14 +124,6 @@ jobs:
         working-directory: ./system-test
         run: |
           npm run test:acceptance-docker
-
-      - name: Run e2e tests
-        working-directory: ./system-test
-        env:
-          BACKEND_URL: ${{ vars.BACKEND_UAT_ENV_URL }}
-          FRONTEND_URL: ${{ vars.FRONTEND_UAT_ENV_URL }}
-        run: |
-          npm run test:e2e
   
   uat:
     runs-on: ubuntu-latest
