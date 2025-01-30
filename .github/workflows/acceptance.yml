@@ -125,10 +125,10 @@ jobs:
         run: |
           npm run test:acceptance-docker
   
-  uat:
+  uat-e2e:
     runs-on: ubuntu-latest
     if: ${{ success() }}
-    needs: [acceptance-deployment]
+    needs: [acceptance-deployment, e2e-deployment]
     env:
       MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
       OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
