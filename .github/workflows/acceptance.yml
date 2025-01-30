@@ -66,12 +66,20 @@ jobs:
             echo "::set-output name=images_found::false"
           fi
 
-  uat-deployment:
+  acceptance-deployment:
     needs: check-images
     if: ${{ needs.check-images.outputs.images-found == 'true' }}
     uses: ./.github/workflows/release.yml
     with:
-      environment: uat
+      environment: acceptance
+    secrets: inherit
+
+  e2e-deployment:
+    needs: check-images
+    if: ${{ needs.check-images.outputs.images-found == 'true' }}
+    uses: ./.github/workflows/release.yml
+    with:
+      environment: e2e
     secrets: inherit
 
   skip-uat:
@@ -112,25 +120,17 @@ jobs:
         working-directory: ./system-test
         run: |
           npm run test:acceptance-docker
-
-      - name: Run e2e tests
-        working-directory: ./system-test
-        env:
-          BACKEND_URL: ${{ vars.BACKEND_UAT_ENV_URL }}
-          FRONTEND_URL: ${{ vars.FRONTEND_UAT_ENV_URL }}
-        run: |
-          npm run test:e2e
   
-  uat:
+  uat-e2e:
     runs-on: ubuntu-latest
     if: ${{ success() }}
-    needs: [uat-deployment]
+    needs: [acceptance-deployment, e2e-deployment]
     env:
       MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
       OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
-      NODE_ENV: uat
-      BACKEND_URL: ${{ vars.BACKEND_UAT_ENV_URL }}
-      FRONTEND_URL: ${{ vars.FRONTEND_UAT_ENV_URL }}
+      NODE_ENV: acceptance
+      BACKEND_URL: ${{ vars.BACKEND_ACCEPTANCE_ENV_URL }}
+      FRONTEND_URL: ${{ vars.FRONTEND_ACCEPTANCE_ENV_URL }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -150,6 +150,10 @@ jobs:
           npm run test:acceptance
 
       - name: Run e2e tests
+        env:
+          NODE_ENV: e2e
+          BACKEND_URL: ${{ vars.BACKEND_E2E_ENV_URL }}
+          FRONTEND_URL: ${{ vars.FRONTEND_E2E_ENV_URL }}
         working-directory: ./system-test
         run: |
           npm run test:e2e

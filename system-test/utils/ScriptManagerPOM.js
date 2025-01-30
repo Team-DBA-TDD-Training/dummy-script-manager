@@ -1,37 +1,49 @@
 export class ScriptManagerPOM {
   initiateAddingNewScript() {
-    cy.contains('button','New Script').click();
-  }
-  typeInTitle(title){
-    cy.get('input[placeholder="Script name"]').type(title);
+    cy.get('button[data-testid^="new-script"]').click()
   }
 
-  typeInDescription(description){
-    cy.get('input[placeholder="Script description"]').type(description);
+  typeInTitle(title) {
+    cy.get('input[data-testid^="script-name"]').clear().type(title);
   }
-  typeInCode(code){
-    cy.get('textarea[placeholder="Write your script here.."]').type(code);
+
+  typeInDescription(description) {
+    cy.get('input[data-testid^="script-description"]').clear().type(description);
   }
+
+  typeInCode(code) {
+    cy.get('textarea[data-testid^="script-code"]').clear().type(code);
+  }
+  
   saveScript() {
-    cy.contains('button','Save Script').click();
+    cy.get('button[data-testid^="save-script"]').click();
   }
+
   openHistory() {
-    cy.contains('button','Show History').click();
+    cy.get('button[data-testid^="show-history"]').click()
   }
 
   selectFirstScript() {
     cy.get('[data-testid^="checkbox-test-id"]').eq(0).check({ force: true });
   }
+
+  deleteSelectedScript() {
+    cy.get('[data-testid^="delete-script"]').click()
+  }
+
   startEditingSelectedScript() {
     cy.get('[data-testid^=edit-icon-test-id]').click();
   }
-  clearAndTypeInTitle(titleEdited){
-    cy.get('input[placeholder="Script name"]').clear().type(titleEdited);
+
+  clearAndTypeInTitle(titleEdited) {
+    cy.get('input[data-testid^="script-name"]').clear().type(titleEdited);
   }
-  clearAndTypeInDescription(descEdited){
-    cy.get('input[placeholder="Script description"]').clear().type(descEdited);
+
+  clearAndTypeInDescription(descEdited) {
+    cy.get('input[data-testid^="script-description"]').clear().type(descEdited);
   }
-  clearAndTypeInCode(codeEdited){
-    cy.get('textarea[placeholder="Write your script here.."]').clear().type(codeEdited);
+
+  clearAndTypeInCode(codeEdited) {
+    cy.get('textarea[data-testid^="script-code"]').clear().type(codeEdited);
   }
 }

@@ -9,36 +9,30 @@ export interface TextInputProps {
   onChange?: (value: string) => void;
 }
 
-const TextAreaComponent = (props: TextInputProps) => {
+const TextAreaComponent = ({ onChange, ...rest }: TextInputProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (props.onChange) {
-      props.onChange(event.target.value);
-    }
+    onChange && onChange(event.target.value);
   };
 
   return (
     <StyledTextInput
-      placeholder={props.placeholder}
       onChange={handleChange}
-      value={props.value}
-      $width={props.width}
-      $height={props.height}
-      className={props.className}
+      {...rest}
     ></StyledTextInput>
   );
 };
 
 interface InputProps {
-  $width: string;
-  $height: string;
+  width: string;
+  height: string;
 }
 
 const StyledTextInput = styled.textarea<InputProps>`
   margin: 5px;
   padding: 5px;
   background-color: white;
-  width: ${(props) => `${props.$width}`};
-  height: ${(props) => `${props.$height}`};
+  width: ${(props) => `${props.width}`};
+  height: ${(props) => `${props.height}`};
   border-radius: 5px;
   color: black;
   box-shadow: none;

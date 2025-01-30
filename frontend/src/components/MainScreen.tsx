@@ -47,6 +47,7 @@ const MainScreen = () => {
           onChange={handleScriptTitle}
           value={state.currentScript.title}
           width={"541px"}
+          data-testid="script-name"
           height={"40px"}
           isBold={true}
           placeholder="Script name"
@@ -55,6 +56,7 @@ const MainScreen = () => {
           onChange={handleScriptDescription}
           value={state.currentScript.description}
           width={"541px"}
+          data-testid="script-description"
           height={"40px"}
           placeholder="Script description"
         ></TextInputComponent>
@@ -62,6 +64,7 @@ const MainScreen = () => {
           onChange={handleScriptCode}
           value={state.currentScript.code}
           width={"541px"}
+          data-testid="script-code"
           height={"300px"}
           className="scriptInput"
           placeholder={"Write your script here.."}
