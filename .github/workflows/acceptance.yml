@@ -55,7 +55,7 @@ jobs:
           echo $LAST_UPDATED
           DIFF_MINUTES=$(( (CURRENT_TIME - LAST_UPDATED_EPOCH) / 60 ))
           echo $DIFF_MINUTES
-          if [ "$DIFF_MINUTES" -le 120 ]; then
+          if [ "$DIFF_MINUTES" -le 1200 ]; then
             IMAGES_UPDATED=true
           fi
           echo $IMAGES_UPDATED
@@ -77,7 +77,7 @@ jobs:
     with:
       environment: acceptance
     secrets: inherit
-    
+
   e2e-deployment:
     needs: check-images
     if: ${{ needs.check-images.outputs.images-found == 'true' }}
