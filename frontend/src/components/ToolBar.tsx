@@ -109,6 +109,7 @@ const ToolBar = () => {
   return (
     <StyledDiv>
       <ToolBarButton
+        data-testid="new-script"
         caption="New Script"
         onClick={onNewScriptClicked}
       ></ToolBarButton>
@@ -118,7 +119,7 @@ const ToolBar = () => {
         onClick={onSaveScriptClicked}
       ></ToolBarButton>
       <ToolBarButton
-      className="showHistory"
+        data-testid="show-history"
         caption={state.showHistory ? "Hide History" : "Show History"}
         onClick={toggleHistoryPanel}
       ></ToolBarButton>

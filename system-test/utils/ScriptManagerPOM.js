@@ -1,7 +1,8 @@
 export class ScriptManagerPOM {
   initiateAddingNewScript() {
-    cy.contains('button', 'New Script').click();
+    cy.get('button[data-testid^="new-script"]').click()
   }
+
   typeInTitle(title) {
     cy.get('input[data-testid^="script-name"]').clear().type(title);
   }
@@ -19,7 +20,7 @@ export class ScriptManagerPOM {
   }
 
   openHistory() {
-    cy.get('.showHistory').click()
+    cy.get('button[data-testid^="show-history"]').click()
   }
 
   selectFirstScript() {
@@ -35,11 +36,11 @@ export class ScriptManagerPOM {
   }
 
   clearAndTypeInTitle(titleEdited) {
-    cy.get('input[placeholder="Script name"]').clear().type(titleEdited);
+    cy.get('input[data-testid^="script-name"]').clear().type(titleEdited);
   }
 
   clearAndTypeInDescription(descEdited) {
-    cy.get('input[placeholder="Script description"]').clear().type(descEdited);
+    cy.get('input[data-testid^="script-description"]').clear().type(descEdited);
   }
 
   clearAndTypeInCode(codeEdited) {
