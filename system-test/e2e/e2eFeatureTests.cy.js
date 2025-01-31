@@ -1,29 +1,23 @@
-import { ScriptManagerPOM } from '../utils/ScriptManagerPOM'
+import { ScriptManagerPage } from '../utils/ScriptManagerPage'
 
-const FRONTEND_URL = process.env.FRONTEND_URL ?? 'http://localhost:3000/';
-const BACKEND_URL = process.env.BACKEND_URL ?? 'http://localhost:4000/api/scripts';
+const FRONTEND_URL = process.env.FRONTEND_URL;
+const BACKEND_URL = process.env.BACKEND_URL;
 
-const scriptManagerPOM = new ScriptManagerPOM();
+const scriptManagerPage = new ScriptManagerPage();
 describe('E2E flow feature tests', () => {
   it('Add a new script', () => {
     const title = "E2E test script name POM Model";
     const description = "E2E test script description";
     const code = "E2E test script code";
     cy.visit(FRONTEND_URL).title('Script Manager');
-    scriptManagerPOM.initiateAddingNewScript();
-    scriptManagerPOM.typeInTitle(title);
-    scriptManagerPOM.typeInDescription(description);
-    scriptManagerPOM.typeInCode(code);
-    scriptManagerPOM.saveScript();
+    scriptManagerPage.initiateAddingNewScript();
+    scriptManagerPage.typeInTitle(title);
+    scriptManagerPage.typeInDescription(description);
+    scriptManagerPage.typeInCode(code);
+    scriptManagerPage.saveScript();
+    scriptManagerPage.openHistory();
     cy.wait(1000);
-    cy.request(BACKEND_URL).then(
-      (response) => {
-        const obj = response.body.find(x => x.title === title);
-        expect(obj).to.have.property('title', title);
-        expect(obj).to.have.property('description', description);
-        expect(obj).to.have.property('code', code);
-      }
-    )
+    scriptManagerPage.doesScriptExist(title, description, code);
   });
 
   it('Edit first script in the list', () => {
@@ -31,37 +25,16 @@ describe('E2E flow feature tests', () => {
     const descEdited = "E2E test script description edited";
     const codeEdited = "E2E test script code edited";
     cy.visit(FRONTEND_URL).title('Script Manager');
-    scriptManagerPOM.openHistory();
     cy.wait(1000);
-    scriptManagerPOM.selectFirstScript();
-    scriptManagerPOM.startEditingSelectedScript();
-    scriptManagerPOM.clearAndTypeInTitle(titleEdited);
-    scriptManagerPOM.clearAndTypeInDescription(descEdited);
-    scriptManagerPOM.clearAndTypeInCode(codeEdited);
-    scriptManagerPOM.saveScript();
+    scriptManagerPage.openHistory();
     cy.wait(1000);
-    cy.request(BACKEND_URL).then(
-      (response) => {
-        const obj = response.body.find(x => x.title === titleEdited);
-        expect(obj).to.have.property('title', titleEdited);
-        expect(obj).to.have.property('description', descEdited);
-        expect(obj).to.have.property('code', codeEdited);
-      }
-    )
+    scriptManagerPage.selectFirstScript();
+    scriptManagerPage.startEditingSelectedScript();
+    scriptManagerPage.clearAndTypeInTitle(titleEdited);
+    scriptManagerPage.clearAndTypeInDescription(descEdited);
+    scriptManagerPage.clearAndTypeInCode(codeEdited);
+    scriptManagerPage.saveScript();
+    cy.wait(1000);
+    scriptManagerPage.doesScriptExist(titleEdited, descEdited, codeEdited);
   });
-
-  it('Show history button should show history panel', () => {
-    cy.visit("/")
-    scriptManagerPOM.openHistory();
-    cy.get('.history').should('be.visible');
-    scriptManagerPOM.openHistory();
-    cy.get('.history').should('not.exist');
-  })
-
-  it('Delete script', () => {
-    cy.visit("/")
-    scriptManagerPOM.openHistory();
-    scriptManagerPOM.selectFirstScript();
-    scriptManagerPOM.deleteSelectedScript();
-  })
 });

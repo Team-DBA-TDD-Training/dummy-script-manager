@@ -1,4 +1,5 @@
 const jsdom = require("jsdom")
+const { ScriptManagerPage } = require("../utils/ScriptManagerPage");
 const { JSDOM } = jsdom;
 
 const FRONT_END_URL = process.env.FRONTEND_URL;
@@ -12,14 +13,14 @@ describe("Basic frontend health check test", () => {
       const response = await fetch(FRONT_END_URL);
       expect(response.ok).toBe(true);
   });
-
 });
 describe("Frontend smoke test", () => {
   it("checks if the title is being displayed and is correct", async () => {
+    const scriptManagerPage = new ScriptManagerPage();
     const response = await fetch(FRONT_END_URL);
     const htmlText = await response.text();
     const jsdom = new JSDOM(htmlText);
-    const pageTitle = jsdom.window.document.querySelector('title')?.textContent || 'No title found';
+    const pageTitle = scriptManagerPage.getWebsiteTitle(jsdom);
     expect(pageTitle).toBe("Script Manager");
   });
 });
