@@ -1,7 +1,6 @@
 import { ScriptManagerPage } from '../utils/ScriptManagerPage'
 
-const FRONTEND_URL = process.env.FRONTEND_URL;
-const BACKEND_URL = process.env.BACKEND_URL;
+const FRONTEND_URL = process.env.FRONTEND_URL ?? "http://script-manager-frontend-uat.us-east-1.elasticbeanstalk.com";
 
 const scriptManagerPage = new ScriptManagerPage();
 describe('E2E flow feature tests', () => {
@@ -17,7 +16,9 @@ describe('E2E flow feature tests', () => {
     scriptManagerPage.saveScript();
     scriptManagerPage.openHistory();
     cy.wait(1000);
-    scriptManagerPage.doesScriptExist(title, description, code);
+    scriptManagerPage.getScriptWithTitle(title).should('exist');
+    scriptManagerPage.getScriptWithDescription(description).should('exist');
+    scriptManagerPage.getScriptWithCode(code).should('exist');
   });
 
   it('Edit first script in the list', () => {
@@ -35,6 +36,8 @@ describe('E2E flow feature tests', () => {
     scriptManagerPage.clearAndTypeInCode(codeEdited);
     scriptManagerPage.saveScript();
     cy.wait(1000);
-    scriptManagerPage.doesScriptExist(titleEdited, descEdited, codeEdited);
+    scriptManagerPage.getScriptWithTitle(titleEdited).should('exist');
+    scriptManagerPage.getScriptWithDescription(descEdited).should('exist');
+    scriptManagerPage.getScriptWithCode(codeEdited).should('exist');
   });
 });

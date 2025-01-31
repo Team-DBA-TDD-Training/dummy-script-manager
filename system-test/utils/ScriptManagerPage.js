@@ -51,9 +51,13 @@ export class ScriptManagerPage {
    return jsdom.window.document.querySelector('title')?.textContent || 'No title found';
   }
 
-  doesScriptExist(title, description, code){
-    cy.get('div').contains(title)
-    cy.get('div[aria-label^="'+description+'"]')
-    cy.get('div').contains(code)
+  getScriptWithTitle(title){
+    return cy.get('div').contains(title);
+  }
+  getScriptWithDescription(description){
+    return cy.get('div[aria-label^="'+description+'"]');
+  }
+  getScriptWithCode(code){
+   return cy.get('div').contains(title);
   }
 }
