@@ -1,6 +1,6 @@
-export class ScriptManagerPOM {
+export class ScriptManagerPage {
   initiateAddingNewScript() {
-    cy.get('button[data-testid^="new-script"]').click()
+    cy.get('button[data-testid^="new-script"]').click();
   }
 
   typeInTitle(title) {
@@ -45,5 +45,15 @@ export class ScriptManagerPOM {
 
   clearAndTypeInCode(codeEdited) {
     cy.get('textarea[data-testid^="script-code"]').clear().type(codeEdited);
+  }
+
+  getWebsiteTitle(jsdom){
+   return jsdom.window.document.querySelector('title')?.textContent || 'No title found';
+  }
+
+  doesScriptExist(title, description, code){
+    cy.get('div').contains(title)
+    cy.get('div[aria-label^="'+description+'"]')
+    cy.get('div').contains(code)
   }
 }
