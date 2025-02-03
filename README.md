@@ -65,6 +65,27 @@ This will consequently train and enable us to apply the same transformation to t
 ## External Systems
 
 1. [Open AI](https://chatgpt.com)
+We are using OpenAI to generate script based on text. 
+```javascript
+ const openai = new OpenAI({
+  /**
+   * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
+   *
+   * Defaults to process.env['OPENAI_BASE_URL'].
+   */
+   //baseURL?: string | null | undefined;
+ });
+```
+The OpenAI library is being stubbed basically setting a value to
+OPENAI_BASE_URL environment variable.
+We are using Wiremock to Stub OpenAI.
+Please see `system-test/wiremock` directory.
+```docker-compose
+environment:
+    OPENAI_API_KEY: sk_test
+    # override original openAI request to our stub
+    OPENAI_BASE_URL: http://wiremock:8080/ai
+```
 
 ## Deployment
 
