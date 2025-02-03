@@ -1,7 +1,7 @@
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
-class ScriptManagerPage {
+class HomePage {
   initiateAddingNewScript() {
     cy.get('button[data-testid^="new-script"]').click();
   }
@@ -25,19 +25,6 @@ class ScriptManagerPage {
   openHistory() {
     cy.get('button[data-testid^="show-history"]').click()
   }
-
-  selectFirstScript() {
-    cy.get('[data-testid^="checkbox-test-id"]').eq(0).check({ force: true });
-  }
-
-  deleteSelectedScript() {
-    cy.get('[data-testid^="delete-script"]').click()
-  }
-
-  startEditingSelectedScript() {
-    cy.get('[data-testid^=edit-icon-test-id]').click();
-  }
-
   clearAndTypeInTitle(titleEdited) {
     cy.get('input[data-testid^="script-name"]').clear().type(titleEdited);
   }
@@ -68,4 +55,4 @@ class ScriptManagerPage {
   }
 }
 
-module.exports = { ScriptManagerPage };
+module.exports = { HomePage };
