@@ -1,4 +1,7 @@
-export class ScriptManagerPage {
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+
+class ScriptManagerPage {
   initiateAddingNewScript() {
     cy.get('button[data-testid^="new-script"]').click();
   }
@@ -47,7 +50,10 @@ export class ScriptManagerPage {
     cy.get('textarea[data-testid^="script-code"]').clear().type(codeEdited);
   }
 
-  getWebsiteTitle(jsdom){
+  async getWebsiteTitle(FRONT_END_URL){
+    const response = await fetch(FRONT_END_URL);
+    const htmlText = await response.text();
+    const jsdom = new JSDOM(htmlText);
    return jsdom.window.document.querySelector('title')?.textContent || 'No title found';
   }
 
@@ -58,6 +64,8 @@ export class ScriptManagerPage {
     return cy.get('div[aria-label^="'+description+'"]');
   }
   getScriptWithCode(code){
-   return cy.get('div').contains(title);
+   return cy.get('div').contains(code);
   }
 }
+
+module.exports = { ScriptManagerPage };

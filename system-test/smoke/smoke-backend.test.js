@@ -5,7 +5,7 @@ const REST_API_BASE_URL = process.env.BACKEND_URL;
 if (!REST_API_BASE_URL) {
   throw new Error("REST_API_BASE_URL environment variable is not set");
 }
-export const SCRIPT_API_EXT = '/api/scripts';
+const SCRIPT_API_EXT = '/api/scripts';
 
 describe("Basic backend health check test", () => {
   it("If backend server is up and running", async () => {
