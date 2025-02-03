@@ -1,7 +1,7 @@
 const frisby = require('frisby');
 const Joi = frisby.Joi;
 
-const REST_API_BASE_URL = process.env.BACKEND_URL;
+const REST_API_BASE_URL = process.env.BACKEND_URL ?? "http://script-manager-backend-uat.us-east-1.elasticbeanstalk.com";
 if (!REST_API_BASE_URL) {
   throw new Error("REST_API_BASE_URL environment variable is not set");
 }
