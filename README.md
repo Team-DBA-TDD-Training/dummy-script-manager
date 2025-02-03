@@ -65,6 +65,7 @@ This will consequently train and enable us to apply the same transformation to t
 ## External Systems
 
 1. [Open AI](https://chatgpt.com)
+
 We are using OpenAI to generate script based on text. 
 ```javascript
  const openai = new OpenAI({
