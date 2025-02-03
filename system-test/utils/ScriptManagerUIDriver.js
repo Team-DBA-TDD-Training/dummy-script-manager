@@ -1,53 +1,50 @@
-const { HomePage } = require("./HomePage");
-const { HistoryPage } = require("./HistoryPage");
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
 
 class ScriptManagerUIDriver {
 
-  homePage;
-  historyPage;
-
-  constructor(){
-    this.homePage = new HomePage();
-    this.historyPage = new HistoryPage();
+  visitFrontendURL(URL){
+    cy.visit(URL).title('Script Manager');
   }
+
   initiateAddingNewScript() {
-   this.homePage.initiateAddingNewScript();
+    cy.get('button[data-testid^="new-script"]').click();
   }
 
-  typeInNewScript(title, description, code){
-    this.homePage.typeInTitle(title);
-    this.homePage.typeInDescription(description);
-    this.homePage.typeInCode(code);
+  typeInScriptData(title, description, code){
+    cy.get('input[data-testid^="script-name"]').clear().type(title);
+    cy.get('input[data-testid^="script-description"]').clear().type(description);
+    cy.get('textarea[data-testid^="script-code"]').clear().type(code);
   }
   
   saveScript() {
-    this.homePage.saveScript();
+    cy.get('button[data-testid^="save-script"]').click();
+    cy.wait(1000);
   }
 
   openHistory(){
-    this.homePage.openHistory();
+    cy.get('button[data-testid^="show-history"]').click();
+    cy.wait(1000);
   }
   startEditingFirstScript() {
-   this.historyPage.selectFirstScript();
-   this.historyPage.clickEditIcon();
-  }
-  enterEditedData(title, description, code){
-    this.homePage.clearAndTypeInTitle(title);
-    this.homePage.clearAndTypeInDescription(description);
-    this.homePage.clearAndTypeInCode(code);
+    cy.get('[data-testid^="checkbox-test-id"]').eq(0).check({ force: true });
+    cy.get('[data-testid^=edit-icon-test-id]').click();
   }
 
   async getWebsiteTitle(FRONT_END_URL){
-   return await this.homePage.getWebsiteTitle(FRONT_END_URL);
+    const response = await fetch(FRONT_END_URL);
+    const htmlText = await response.text();
+    const jsdom = new JSDOM(htmlText);
+    return jsdom.window.document.querySelector('title')?.textContent || 'No title found';
   }
-  getScriptWithTitle(title){
-   return this.homePage.getScriptWithTitle(title);
+  shouldHaveScriptWithTitle(title){
+     cy.get('div').contains(title);
   }
-  getScriptWithDescription(description){
-   return this.homePage.getScriptWithDescription(description);
+  shouldHaveScriptWithDescription(description){
+     cy.get('div[aria-label^="'+description+'"]');
   }
-  getScriptWithCode(code){
-  return this.homePage.getScriptWithCode(code);
+  shouldHaveScriptWithCode(code){
+     cy.get('div').contains(code);
   }
 }
 

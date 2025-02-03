@@ -6,9 +6,12 @@ class ScriptManagerDsl {
     this.scriptManagerDriver = new ScriptManagerDrivers();
   }
 
+  visitFrontendURL(URL){
+   this.scriptManagerDriver.visitFrontendURL(URL);
+  }
   addNewScript(title, description, code){
     this.scriptManagerDriver.initiateAddingNewScript();
-    this.scriptManagerDriver.typeInNewScript(title, description, code);
+    this.scriptManagerDriver.typeInScriptData(title, description, code);
     this.scriptManagerDriver.saveScript();
   }
 
@@ -17,20 +20,21 @@ class ScriptManagerDsl {
   }
   editScript(title, description, code){
     this.scriptManagerDriver.startEditingFirstScript();
-    this.scriptManagerDriver.enterEditedData(title, description, code)
+    this.scriptManagerDriver.typeInScriptData(title, description, code);
+    this.scriptManagerDriver.saveScript();
   }
 
   async getWebsiteTitle(FRONT_END_URL){
    return await this.scriptManagerDriver.getWebsiteTitle(FRONT_END_URL);
   }
-  getScriptWithTitle(title){
-   return this.scriptManagerDriver.getScriptWithTitle(title);
+  shouldHaveScriptWithTitle(title){
+   return this.scriptManagerDriver.shouldHaveScriptWithTitle(title);
   }
-  getScriptWithDescription(description){
-   return this.scriptManagerDriver.getScriptWithDescription(description);
+  shouldHaveScriptWithDescription(description){
+   return this.scriptManagerDriver.shouldHaveScriptWithDescription(description);
   }
-  getScriptWithCode(code){
-  return this.scriptManagerDriver.getScriptWithCode(code);
+  shouldHaveScriptWithCode(code){
+  return this.scriptManagerDriver.shouldHaveScriptWithCode(code);
   }
 }
 

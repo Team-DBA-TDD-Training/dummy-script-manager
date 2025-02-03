@@ -1,18 +1,25 @@
 const { ScriptManagerUIDriver } = require("./ScriptManagerUIDriver");
+const { ScriptManagerAPIDriver } = require("./ScriptManagerAPIDriver");
 
 class ScriptManagerDrivers {
 
  UIDriver;
+ APIDriver;
 
   constructor(){
     this.UIDriver = new ScriptManagerUIDriver();
+    this.APIDriver =  new ScriptManagerAPIDriver();
+  }
+
+  visitFrontendURL(URL){
+    this.UIDriver.visitFrontendURL(URL);
   }
   initiateAddingNewScript() {
    this.UIDriver.initiateAddingNewScript();
   }
 
-  typeInNewScript(title, description, code){
-    this.UIDriver.typeInNewScript(title, description, code);
+  typeInScriptData(title, description, code){
+    this.UIDriver.typeInScriptData(title, description, code);
   }
   
   saveScript() {
@@ -25,21 +32,22 @@ class ScriptManagerDrivers {
   startEditingFirstScript() {
    this.UIDriver.startEditingFirstScript();
   }
-  enterEditedData(title, description, code){
-    this.UIDriver.enterEditedData(title, description, code)
-  }
   async getWebsiteTitle(FRONT_END_URL){
    return await this.UIDriver.getWebsiteTitle(FRONT_END_URL);
   }
-  getScriptWithTitle(title){
-   return this.UIDriver.getScriptWithTitle(title);
+  shouldHaveScriptWithTitle(title){
+    this.UIDriver.shouldHaveScriptWithTitle(title);
   }
-  getScriptWithDescription(description){
-   return this.UIDriver.getScriptWithDescription(description);
+  shouldHaveScriptWithDescription(description){
+    this.UIDriver.shouldHaveScriptWithDescription(description);
   }
-  getScriptWithCode(code){
-  return this.UIDriver.getScriptWithCode(code);
+  shouldHaveScriptWithCode(code){
+   this.UIDriver.shouldHaveScriptWithCode(code);
   }
+  shouldHaveScriptInDatabase(){
+      this.APIDriver.shouldHaveScriptInDatabase()
+  }
+
 }
 
-module.exports = { ScriptManagerDrivers: ScriptManagerDrivers };
+module.exports = { ScriptManagerDrivers };
