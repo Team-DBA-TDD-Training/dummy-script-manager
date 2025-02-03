@@ -2,7 +2,7 @@ const jsdom = require("jsdom");
 const { ScriptManagerDsl } = require("../utils/ScriptManagerDsl");
 const { JSDOM } = jsdom;
 
-const FRONT_END_URL = process.env.FRONTEND_URL ?? "http://script-manager-frontend-uat.us-east-1.elasticbeanstalk.com";
+const FRONT_END_URL = process.env.FRONTEND_URL;
   
 if (!FRONT_END_URL) {
   throw new Error("FRONTEND_URL is not defined");

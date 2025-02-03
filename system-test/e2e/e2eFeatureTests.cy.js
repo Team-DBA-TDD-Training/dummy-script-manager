@@ -1,6 +1,6 @@
 import { ScriptManagerDsl } from '../utils/ScriptManagerDsl'
 
-const FRONTEND_URL = process.env.FRONTEND_URL ?? "http://script-manager-frontend-uat.us-east-1.elasticbeanstalk.com";
+const FRONTEND_URL = process.env.FRONTEND_URL;
 
 const scriptManagerDsl = new ScriptManagerDsl();
 describe('E2E flow feature tests', () => {
