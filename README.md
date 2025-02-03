@@ -64,11 +64,7 @@ This will consequently train and enable us to apply the same transformation to t
 
 ## External Systems
 
-1. [REST APIs](http://script-manager-backend-production.us-east-1.elasticbeanstalk.com)
-    -  UAT and Production environment use the environment variable 'BACKEND_URL' for REST APIs from the following variables from Github:
-        - BACKEND_UAT_ENV_URL
-        - BACKEND_PROD_ENV_URL
-2. [Open AI](https://chatgpt.com)
+1. [Open AI](https://chatgpt.com)
 
 ## Deployment
 
