@@ -21,6 +21,10 @@ class ScriptManagerDrivers {
   typeInScriptData(title, description, code){
     this.UIDriver.typeInScriptData(title, description, code);
   }
+
+  askAI(message, expectation) {
+    this.UIDriver.askAI(message, expectation);
+  }
   
   saveScript() {
     this.UIDriver.saveScript();

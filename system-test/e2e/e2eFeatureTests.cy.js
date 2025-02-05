@@ -3,6 +3,7 @@ import { ScriptManagerDsl } from '../utils/ScriptManagerDsl'
 const FRONTEND_URL = process.env.FRONTEND_URL;
 
 const scriptManager = new ScriptManagerDsl();
+
 describe('E2E flow feature tests', () => {
   it('Add a new script', () => {
     const title = "E2E test script name POM Model";
