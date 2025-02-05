@@ -1,3 +1,6 @@
+import { ScriptManagerDsl } from '../utils/ScriptManagerDsl'
+const scriptManager = new ScriptManagerDsl();
+
 describe('External stub', () => {
   /**
    * Feature: Generate script with the suggestion from AI tool
@@ -9,9 +12,6 @@ describe('External stub', () => {
    */
   it('Generate script with the suggestion from AI tool', () => {
     cy.visit('/')
-    cy.get('.askAIButton').click()
-    cy.get('.aiInput').type('List all movies in the collection')
-    cy.get('.AIGenerateScript').click()
-    cy.get('.scriptInput').should('have.value', 'db.movies.find({})')
+    scriptManager.askAi('List all movies in the collection', 'db.movies.find({})')
   })
 })

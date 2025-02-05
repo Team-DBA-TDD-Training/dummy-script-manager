@@ -18,10 +18,15 @@ class ScriptManagerDsl {
   openHistory(){
     this.scriptManagerDriver.openHistory();
   }
+
   editScript(title, description, code){
     this.scriptManagerDriver.startEditingFirstScript();
     this.scriptManagerDriver.typeInScriptData(title, description, code);
     this.scriptManagerDriver.saveScript();
+  }
+
+  askAi(message, expectation) {
+    this.scriptManagerDriver.askAI(message, expectation)
   }
 
   async getWebsiteTitle(FRONT_END_URL){

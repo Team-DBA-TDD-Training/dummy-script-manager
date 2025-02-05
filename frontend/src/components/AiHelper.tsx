@@ -25,14 +25,14 @@ const Component: React.FC<{ callback: (value: string) => void }> = ({
 
   return (
     <div>
-      <Container onClick={toggleAiHelper} className="askAIButton">
+      <Container onClick={toggleAiHelper} data-testid="askAIButton">
         <FaBrain />
         <a style={{ cursor: "pointer" }}>Ask AI Helper</a>
       </Container>
       {visible && (
         <AiContainer>
           <TextAreaComponent
-            className="aiInput"
+            data-testid="aiInput"
             placeholder="Ask from AI. e.i I want to get total age of customers"
             onChange={setMessage}
             value={message}
@@ -43,7 +43,7 @@ const Component: React.FC<{ callback: (value: string) => void }> = ({
             onClick={onAsk}
             disabled={loading || message.length === 0}
             style={{ width: "550px", alignSelf: "center" }}
-            className="AIGenerateScript"
+            data-testid="aiGenerateScript"
           >
             {loading ? "Please wait" : "Ask"}
           </button>
